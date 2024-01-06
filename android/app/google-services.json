@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "189944227194",
+    "project_id": "advocate-d26b5",
+    "storage_bucket": "advocate-d26b5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:189944227194:android:b8c7b4de40d70eb0c022c3",
+        "android_client_info": {
+          "package_name": "com.saqlain.advocatepro_f"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw2fUzwUnNEuUMAgIcf0FzwxBCMhqTZuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
