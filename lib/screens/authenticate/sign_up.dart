@@ -1,12 +1,15 @@
+import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
+import 'package:advocatepro_f/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const String id = 'signup_screen';
-  final Function toggleView;
   const SignUpScreen({super.key,
-  required this.toggleView});
+  });
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -19,7 +22,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController controllerphone = TextEditingController();  
   late TextEditingController controllerSecondName = TextEditingController();
   late TextEditingController controllerDoB = TextEditingController();
-  // late TextEditingController controllerConfirmPassword = TextEditingController();
+  late TextEditingController controllerPassword = TextEditingController();
+  bool boolSignUpSuccessfull = false;
+  
+  final AuthService _auth = AuthService();
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final DateFormat format = DateFormat('yyyy-MM-dd');
   late DateTime dateTime;
 
@@ -159,22 +167,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 20,
                       ),
-                      // TextFormField(
-                      //   controller: controllerConfirmPassword,
-                      //   decoration: InputDecoration(
-                      //       prefixIcon: const Icon(Icons.lock),
-                      //       label: const Text('Confirm Password'),
-                      //       hintText: 'Enter your Confirm Password',
-                      //       border: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(10),
-                      //           borderSide: const BorderSide(width: 4))),
-                      //   validator: (value) => value != null && value.isEmpty
-                      //       ? 'Enter Confirm Password'
-                      //       : null,
-                      // ),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
+                      TextFormField(
+                        controller: controllerPassword,
+                        decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.lock),
+                            label: const Text('Password'),
+                            hintText: 'Enter your Password',
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(width: 4))),
+                        validator: (value) => value != null && value.isEmpty
+                            ? 'Enter Password'
+                            : null,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       // if (error)
                       //   const Text(
                       //     'Check Password',
@@ -189,12 +197,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               final form = _formkey.currentState!;
                               final isValid = form.validate();
                               if (isValid) {
+                                signUp();
                                 // final pass = controllerpassword.text;
                                 // final confirmPass = controllerConfirmPassword.text;
                                 // if (pass == confirmPass) {
-                                  
-                                
-                                  
                                   // Future.delayed(Duration.zero, () {
                                   //   Navigator.pushNamed(context, UserScreen.id);
                                   // }
@@ -213,8 +219,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               decoration: BoxDecoration(
                                 color: Colors.pink,
                                 borderRadius: BorderRadius.circular(50)),
-                              child: const Center(
-                                child: Text(
+                              child: Center(
+                                child: boolSignUpSuccessfull ? const CircularProgressIndicator(color: Colors.white,) : const Text(
                                   'Sign up',
                                   style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -238,8 +244,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                       TextButton(
                           onPressed: () {
-                            widget.toggleView();
-                            // Navigator.pushNamed(context, LogIn.id);
+                            // widget.toggleView();
+                            Navigator.pushNamed(context, SignIn.id);
                           },
                           child: const Text(
                             'Sign in',
@@ -254,5 +260,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
         )),
       ),
     );
+  }
+
+  void signUp() async {
+    setState(() {
+      boolSignUpSuccessfull = true;
+    });
+    // String f_name = controllerFirstName.text;
+    String email = controllerEmail.text;
+    String password = controllerPassword.text;
+
+    User? user = await _auth.signUpWithEmailAndPassword(email, password);
+
+    setState(() {
+      boolSignUpSuccessfull = false;
+    });
+
+    if (user != null){
+      showToast(message: "User is successfully created");
+      Navigator.pushNamed(context, "/home");
+    } else {
+      showToast(message: "Some error happend");
+    }
+
   }
 }
