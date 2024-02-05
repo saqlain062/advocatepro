@@ -1,4 +1,5 @@
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
@@ -9,7 +10,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class SignIn extends StatefulWidget {
   static const String id = 'login';
-  const SignIn({super.key,});
+  const SignIn({
+    super.key,
+  });
 
   @override
   State<SignIn> createState() => _SignInState();
@@ -128,18 +131,24 @@ class _SignInState extends State<SignIn> {
                           borderSide:
                               const BorderSide(color: Color(0xffE4E7Eb)))),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 30),
+// Forgot Password
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
                   child:
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          decoration: TextDecoration.underline,
-                          color: Colors.blue),
-                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, ForgetPasswordScreen.id);
+                      },
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            decoration: TextDecoration.underline,
+                            color: Colors.blue),
+                      ),
+                    )
                   ]),
                 ),
                 const SizedBox(
@@ -185,7 +194,9 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
 // Sign with google
                 TextButton(
                   onPressed: () async {
@@ -201,14 +212,19 @@ class _SignInState extends State<SignIn> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(FontAwesomeIcons.google,color: Colors.white,),
-                          SizedBox(width: 5,),
+                          Icon(
+                            FontAwesomeIcons.google,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
                           Text('Sign in with Google',
-                                  style: TextStyle(
-                                      fontFamily: 'Rubik Regular',
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
+                              style: TextStyle(
+                                  fontFamily: 'Rubik Regular',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white)),
                         ],
                       ),
                     ),
@@ -243,6 +259,7 @@ class _SignInState extends State<SignIn> {
     );
   }
 
+// Methods for SignIn which call sign in with email and password massage form other file
   void signIn() async {
     setState(() {
       boolLginSuccessful = true;
@@ -252,6 +269,8 @@ class _SignInState extends State<SignIn> {
     String password = passwordController.text;
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
+    String userUid = user!.uid;
+    print(user);
 
     setState(() {
       boolLginSuccessful = false;
@@ -269,10 +288,12 @@ class _SignInState extends State<SignIn> {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
     try {
-      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
-      
-      if(googleSignInAccount != null){
-        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+      final GoogleSignInAccount? googleSignInAccount =
+          await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
           idToken: googleSignInAuthentication.idToken,
@@ -280,10 +301,10 @@ class _SignInState extends State<SignIn> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
-        Navigator.pushNamed(context, "/home");
+        Navigator.pushNamed(context, SignIn.id);
       }
     } catch (e) {
-     showToast(message: "some error occured $e"); 
+      showToast(message: "some error occured $e");
     }
   }
 }

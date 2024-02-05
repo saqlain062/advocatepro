@@ -2,6 +2,7 @@ import 'package:advocatepro_f/check_method.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenDesgine extends StatefulWidget {
@@ -78,6 +79,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
               leading: const Icon(Icons.logout),
               title: const Text('Log out'),
               onTap: () {
+                FirebaseAuth.instance.signOut();
                 Navigator.pushNamed(context, SignIn.id);
               },
             )

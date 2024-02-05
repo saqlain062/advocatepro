@@ -1,6 +1,7 @@
 import 'package:advocatepro_f/screens/Forms/form_screen.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
+import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const FormScreen(),
     const InboxScreen(),
     const AdvocateScreen(),
+    const ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -326,20 +326,16 @@ class _FormScreenState extends State<FormScreen> {
   
   void _createData() {
     final userCollection = FirebaseFirestore.instance.collection("users");
-
     String id = userCollection.doc().id;
-
     final newUser = FormAttribute(
         id: id,
         serial: serialNoController.text,
         name: nameController.text,
         phone: phoneController.text,
         previousDate: previousDateController.text,
-        nextAppearance:
-            nextAppearanceController.text,
+        nextAppearance: nextAppearanceController.text,
         nextAction: nextActionController.text)
     .toJson();
-
     userCollection.doc(id).set(newUser);
   }
  
