@@ -5,6 +5,7 @@ import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -260,7 +261,7 @@ class _SignInState extends State<SignIn> {
   }
 
 // Methods for SignIn which call sign in with email and password massage form other file
-  void signIn() async {
+  Future<String> signIn() async {
     setState(() {
       boolLginSuccessful = true;
     });
@@ -269,18 +270,24 @@ class _SignInState extends State<SignIn> {
     String password = passwordController.text;
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
-    String userUid = user!.uid;
+
+    print("---------------------------");
     print(user);
+    print("---------------------------");
 
     setState(() {
       boolLginSuccessful = false;
     });
 
     if (user != null) {
+      String userUid = user.uid;
+
       showToast(message: "User is successfully SignIn");
       Navigator.pushNamed(context, HomeScreen.id);
+      return userUid;
     } else {
       showToast(message: "Some error happend");
+      return '';
     }
   }
 

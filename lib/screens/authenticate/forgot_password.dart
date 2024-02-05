@@ -13,7 +13,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   final contorlloremail = TextEditingController();
-  final auth = FirebaseAuth.instance ;
+  final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,28 +23,32 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-        
-          TextFormField(
-            controller: contorlloremail,
-            decoration: const InputDecoration(hintText: 'Email'),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          RoundButton(title: "Forgot Password",onTop: (){
-            auth.sendPasswordResetEmail(email: contorlloremail.text.toString()).then((value){
-              showToast(message: "We have sent you email to recover password, please check your password");
-
-            }).onError((error, stackTrace){
-            showToast(message: error.toString());
-            }); 
-          },),
-          
-          
-        ]),
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: contorlloremail,
+                decoration: const InputDecoration(hintText: 'Email'),
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              RoundButton(
+                title: "Forgot Password",
+                onTop: () {
+                  auth
+                      .sendPasswordResetEmail(
+                          email: contorlloremail.text.toString())
+                      .then((value) {
+                    showToast(
+                        message:
+                            "We have sent you email to recover password, please check your password");
+                  }).onError((error, stackTrace) {
+                    showToast(message: error.toString());
+                  });
+                },
+              ),
+            ]),
       ),
     );
   }

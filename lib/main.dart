@@ -11,18 +11,18 @@ import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:advocatepro_f/config/config.dart';
 
 Future main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   Platform.isAndroid
       ? await Firebase.initializeApp(
           options: const FirebaseOptions(
-              apiKey: 'AIzaSyCw2fUzwUnNEuUMAgIcf0FzwxBCMhqTZuI',
-              appId: '1:189944227194:android:b8c7b4de40d70eb0c022c3',
-              messagingSenderId: '189944227194',
-              projectId: 'advocate-d26b5',
-              ))
+          apiKey: apiKey,
+          appId: appId,
+          messagingSenderId: messagingSenderId,
+          projectId: projectId,
+        ))
       : await Firebase.initializeApp();
   runApp(const MyApp());
 }
@@ -38,17 +38,17 @@ class MyApp extends StatelessWidget {
       title: 'My App',
       initialRoute: SignIn.id,
       routes: {
-        SignIn.id : (context) => const SignIn(),
-        SignUpScreen.id :(context) => const SignUpScreen(),
-        UploadImage.id :(context) => const UploadImage(),
-        HomeScreen.id : (context) => const HomeScreen(),
-        HomeScreenDesgine.id :(context) => const HomeScreenDesgine(),
-        AdvocateScreen.id :(context) => const AdvocateScreen(),
-        FormScreen.id : (context) => const FormScreen(),
-        InboxScreen.id :(context) => const InboxScreen(),
-        ProfileScreen.id :(context) => const ProfileScreen(),
-        ForgetPasswordScreen.id :(context) => const ForgetPasswordScreen(),
-        
+        SignIn.id: (context) => const SignIn(),
+        SignUpScreen.id: (context) => const SignUpScreen(),
+        UploadImage.id: (context) => const UploadImage(),
+        HomeScreen.id: (context) => const HomeScreen(),
+        HomeScreenDesgine.id: (context) => const HomeScreenDesgine(),
+        AdvocateScreen.id: (context) => const AdvocateScreen(),
+        FormScreen.id: (context) => const FormScreen(),
+        InboxScreen.id: (context) => const InboxScreen(),
+        ProfileScreen.id: (context) => const ProfileScreen(),
+        ForgetPasswordScreen.id: (context) => const ForgetPasswordScreen(),
+
         // Add more routes as needed
       },
     );

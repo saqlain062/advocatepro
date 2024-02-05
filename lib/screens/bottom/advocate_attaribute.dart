@@ -1,6 +1,3 @@
-
-
-
 // class AdvocateFields{
 //   static const String id = 'ID';
 //   static const String fname = 'Fast Name';
@@ -36,8 +33,8 @@ class AdvocateAttribute {
   //   email:byId[AdvocateFields.email],
   //   laywerOrNot: byId[AdvocateFields.laywerOrNot],
   // );
-  // } 
-  
+  // }
+
   // Map<String, dynamic > toJson() => {
   //   AdvocateFields.id: id,
   //   AdvocateFields.fname: fname,
@@ -47,7 +44,8 @@ class AdvocateAttribute {
   //   AdvocateFields.laywerOrNot: laywerOrNot,
   // };
 }
-  Future<List<AdvocateAttribute>> fetchDataFromLawyersCollection() async {
+
+Future<List<AdvocateAttribute>> fetchDataFromLawyersCollection() async {
   List<AdvocateAttribute> lawyersList = [];
 
   try {

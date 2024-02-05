@@ -51,13 +51,14 @@ class _InboxScreenState extends State<InboxScreen> {
               );
             } else {
               return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index){
-                  return ListTile(
-                    title: Text(snapshot.data![index],),
-                  );
-
-              });
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(
+                        snapshot.data![index],
+                      ),
+                    );
+                  });
             }
           },
         ));

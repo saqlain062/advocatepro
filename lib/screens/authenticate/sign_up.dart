@@ -2,6 +2,7 @@ import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/check_method.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +32,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isChecked = false;
   bool isPasswordVisible = false;
   String lawyerID = 'Null';
-  
 
   final AuthService _auth = AuthService();
   // final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -234,8 +234,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             prefixIcon: const Icon(Icons.lock),
                             suffixIcon: IconButton(
                               icon: Icon(isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off),
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
                               onPressed: () {
                                 setState(() {
                                   isPasswordVisible = !isPasswordVisible;
@@ -335,6 +335,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     String password = controllerPassword.text;
 
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
+    // Access the user UID after a successful sign-up
+    // String userUid = user!.uid;
 
     setState(() {
       boolSignUpSuccessfull = false;
@@ -342,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (user != null) {
       showToast(message: "User is successfully created");
-      Navigator.pushNamed(context, "/home");
+      Navigator.pushNamed(context, HomeScreen.id);
     } else {
       showToast(message: "Some error happend");
     }

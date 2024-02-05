@@ -14,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
- 
   @override
   void initState() {
     super.initState();
@@ -33,8 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         body: IndexedStack(
           index: currentIndex,
-          children: screens,),
-        
+          children: screens,
+        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.blue,
@@ -49,14 +48,14 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Form"),
             BottomNavigationBarItem(icon: Icon(Icons.email), label: 'Inbox'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_search), label: 'Advocate'),
-            BottomNavigationBarItem(icon: Icon(Icons.person_pin), label: "Profile")
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_search), label: 'Advocate'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_pin), label: "Profile")
           ],
-        )
-        );
-      
+        ));
   }
 }

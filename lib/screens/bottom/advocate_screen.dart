@@ -24,35 +24,32 @@ class _AdvocateScreenState extends State<AdvocateScreen> {
       body: FutureBuilder<List<AdvocateAttribute>>(
         future: fetchDataFromLawyersCollection(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting){
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
-          } else if (snapshot.hasError){
+          } else if (snapshot.hasError) {
             return Text('Error:${snapshot.error}');
-
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty ){
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return const Text('No data available');
           } else {
             return ListView.builder(
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            AdvocateAttribute advocate = snapshot.data![index];
-            return ListTile(
-              leading: GestureDetector(
-                child: const Icon(Icons.image),
-              ),
-              title: Text('${advocate.fname} ${advocate.lname}'),
-              subtitle: Text(advocate.id),
-              trailing: GestureDetector(
-                child: const Icon(Icons.star),
-              ),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                AdvocateAttribute advocate = snapshot.data![index];
+                return ListTile(
+                  leading: GestureDetector(
+                    child: const Icon(Icons.image),
+                  ),
+                  title: Text('${advocate.fname} ${advocate.lname}'),
+                  subtitle: Text(advocate.id),
+                  trailing: GestureDetector(
+                    child: const Icon(Icons.star),
+                  ),
+                );
+              },
             );
-          },
-        );
           }
-        }, 
+        },
       ),
     );
   }
-
-
 }

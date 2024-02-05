@@ -1,4 +1,3 @@
-
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +21,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               accountName: Text("Saqlain"),
               accountEmail: Text("gmail")),
           const ListTile(
-            
-              title:
-                   Text("My AdvocatePro", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold))),
+              title: Text("My AdvocatePro",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
           ListTile(
             leading: const Icon(Icons.favorite_border),
             title: const Text("Saved List"),
@@ -41,7 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Divider(), // Automatic divider
           const ListTile(
-              title: Text("Settings", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+              title: Text("Settings",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
           ListTile(
             leading: const Icon(Icons.photo_camera_front_sharp),
             title: const Text("Account"),
@@ -51,7 +50,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           const Divider(),
           const ListTile(
-              title: Text("Resource", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+              title: Text("Resource",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
           ListTile(
             leading: const Icon(Icons.support_agent_rounded),
             title: const Text("Support"),
