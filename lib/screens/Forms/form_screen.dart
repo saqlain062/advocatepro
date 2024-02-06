@@ -91,9 +91,7 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -321,8 +319,7 @@ class _FormScreenState extends State<FormScreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   void _createData() {

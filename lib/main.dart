@@ -5,6 +5,7 @@ import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
+import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      
       title: 'My App',
       initialRoute: SignIn.id,
       routes: {
@@ -48,6 +50,7 @@ class MyApp extends StatelessWidget {
         InboxScreen.id: (context) => const InboxScreen(),
         ProfileScreen.id: (context) => const ProfileScreen(),
         ForgetPasswordScreen.id: (context) => const ForgetPasswordScreen(),
+        ProfileEditScreen.id:(context) => const ProfileEditScreen(),
 
         // Add more routes as needed
       },

@@ -263,13 +263,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               final form = _formkey.currentState!;
                               final isValid = form.validate();
                               if (isValid) {
-                                _insertSignupData();
-                                controllerFirstName.clear;
-                                controllerLawyerID.clear;
-                                controllerPassword.clear;
-                                controllerSecondName.clear;
-                                controllerphone.clear;
-                                controllerEmail.clear;
                                 signUp();
                               }
                             },
@@ -337,6 +330,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
     User? user = await _auth.signUpWithEmailAndPassword(email, password);
     // Access the user UID after a successful sign-up
     // String userUid = user!.uid;
+    _insertSignupData();
+    controllerFirstName.clear;
+    controllerLawyerID.clear;
+    controllerPassword.clear;
+    controllerSecondName.clear;
+    controllerphone.clear;
+    controllerEmail.clear;
 
     setState(() {
       boolSignUpSuccessfull = false;
@@ -351,30 +351,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _insertSignupData() {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    print("------------------------");
+    print(uid);
     if (lawyerID == 'Null') {
-      final userCollection = FirebaseFirestore.instance.collection("users");
-      String id = userCollection.doc().id;
+      
+      final userCollection = FirebaseFirestore.instance.collection("users").doc(uid).collection("profile_data");
       final newUser = SignupAttribute(
-        id: id,
+        id: uid,
         fname: controllerFirstName.text,
         lname: controllerSecondName.text,
         phone: controllerPassword.text,
         email: controllerEmail.text,
         laywerOrNot: lawyerID,
+        specialization: lawyerID,
+        dateofbirth: lawyerID,
       ).toJson();
-      userCollection.doc(id).set(newUser);
+      userCollection.doc(uid).set(newUser);
+      print(newUser);
+      print(userCollection);
     } else {
-      final userCollection = FirebaseFirestore.instance.collection("lawyers");
-      String id = userCollection.doc().id;
+      final userCollection = FirebaseFirestore.instance.collection("lawyers").doc(uid).collection("profile_data");
       final newUser = SignupAttribute(
-        id: id,
+        id: uid,
         fname: controllerFirstName.text,
         lname: controllerSecondName.text,
         phone: controllerPassword.text,
         email: controllerEmail.text,
         laywerOrNot: lawyerID,
+        specialization: lawyerID,
+        dateofbirth: lawyerID,
       ).toJson();
-      userCollection.doc(id).set(newUser);
+      userCollection.doc(uid).set(newUser);
     }
   }
 }

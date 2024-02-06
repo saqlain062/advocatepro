@@ -5,9 +5,9 @@ import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
   static const String id = 'login';
@@ -20,8 +20,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
   final AuthService _auth = AuthService();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -33,6 +34,9 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    getValue();
   }
 
   void check() {
@@ -171,6 +175,9 @@ class _SignInState extends State<SignIn> {
 //  Login Button
                 TextButton(
                   onPressed: () async {
+                    var perfs  = await SharedPreferences.getInstance();
+                    perfs.setString("email",emailController.text);
+                    perfs.setString("password",passwordController.text);
                     signIn();
                     // final email = emailController.text;
                     // final pass = passwordController.text;
@@ -261,7 +268,7 @@ class _SignInState extends State<SignIn> {
   }
 
 // Methods for SignIn which call sign in with email and password massage form other file
-  Future<String> signIn() async {
+  void signIn() async {
     setState(() {
       boolLginSuccessful = true;
     });
@@ -280,14 +287,10 @@ class _SignInState extends State<SignIn> {
     });
 
     if (user != null) {
-      String userUid = user.uid;
-
       showToast(message: "User is successfully SignIn");
       Navigator.pushNamed(context, HomeScreen.id);
-      return userUid;
     } else {
       showToast(message: "Some error happend");
-      return '';
     }
   }
 
@@ -313,5 +316,16 @@ class _SignInState extends State<SignIn> {
     } catch (e) {
       showToast(message: "some error occured $e");
     }
+  }
+  
+  void getValue() async {
+    var perfs = await SharedPreferences.getInstance();
+    var emailValue = perfs.getString("email");
+    var passwordValue = perfs.getString("password");
+    setState(() {
+      emailController.text = emailValue ?? "";
+      passwordController.text = passwordValue ?? "";
+    });
+    
   }
 }

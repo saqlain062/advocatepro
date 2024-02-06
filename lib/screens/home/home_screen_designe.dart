@@ -1,6 +1,7 @@
 import 'package:advocatepro_f/check_method.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
+import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,45 +48,63 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-                currentAccountPicture: const CircleAvatar(
-                  backgroundImage: AssetImage('images/lawyerIcon.png'),
-                ),
-                accountName: Text(username),
-                accountEmail: Text(email)),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: () {
-                Navigator.pushNamed(context, HomeScreen.id);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('Update Client Info'),
-              onTap: () {
-                Navigator.pushNamed(context, FormFields.id);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.share),
-              title: const Text('Share'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.logout),
-              title: const Text('Log out'),
-              onTap: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.pushNamed(context, SignIn.id);
-              },
-            )
-          ],
-        ),
-      ),
+          child: FutureBuilder<List<ProfileAttribute>>(
+              future: fetchDataOfCurrentUser(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('Error:${snapshot.error}');
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Text('No data available');
+                } else {
+                  // Get the user profile data
+                  ProfileAttribute userProfile = snapshot.data!.first;
+                  // Set the initial values for controllers
+                  final fname = userProfile.object.fname;
+                  final lname = userProfile.object.lname;
+                  final gmail = userProfile.email;
+                  return ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      UserAccountsDrawerHeader(
+                          currentAccountPicture: const CircleAvatar(
+                            backgroundImage:
+                                AssetImage('images/lawyerIcon.png'),
+                          ),
+                          accountName: Text('$fname $lname'),
+                          accountEmail: Text(gmail)),
+                      ListTile(
+                        leading: const Icon(Icons.home),
+                        title: const Text('Home'),
+                        onTap: () {
+                          Navigator.pushNamed(context, HomeScreen.id);
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.edit),
+                        title: const Text('Update Client Info'),
+                        onTap: () {
+                          Navigator.pushNamed(context, FormFields.id);
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.share),
+                        title: const Text('Share'),
+                        onTap: () {},
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.logout),
+                        title: const Text('Log out'),
+                        onTap: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pushNamed(context, SignIn.id);
+                        },
+                      )
+                    ],
+                  );
+                }
+              })),
       body: SafeArea(
         child: Column(children: [
           if (internet) const InternetError(),
