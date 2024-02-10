@@ -4,6 +4,7 @@ import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
+import 'package:advocatepro_f/screens/bottom/inbox/chat_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
@@ -51,7 +52,6 @@ class MyApp extends StatelessWidget {
         ProfileScreen.id: (context) => const ProfileScreen(),
         ForgetPasswordScreen.id: (context) => const ForgetPasswordScreen(),
         ProfileEditScreen.id:(context) => const ProfileEditScreen(),
-
         // Add more routes as needed
       },
     );

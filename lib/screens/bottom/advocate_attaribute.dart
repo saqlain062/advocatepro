@@ -80,11 +80,12 @@ Future<List<AdvocateAttribute>> fetchDataFromLawyersCollection() async {
       // Get the documents in the 'profile_data' subcollection
       QuerySnapshot<Map<String, dynamic>> profileSnapshot =
           await profileCollection.get();
-          print(profileCollection);
+          print('---------------${profileCollection.doc}');
 
       // Iterate through the profile documents and create AdvocateAttribute objects
       for (QueryDocumentSnapshot<Map<String, dynamic>> profileDoc
           in profileSnapshot.docs) {
+             print('------p---------${profileCollection.doc()}');
         // Access data fields from the profile document
         var data = profileDoc.data();
 

@@ -1,7 +1,9 @@
+import 'package:advocatepro_f/Methods/share.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = "profile_screen";
@@ -54,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       leading: const Icon(Icons.share_outlined),
                       title: const Text("Invite Friends"),
                       onTap: () {
-                        // Handle Invite Friends navigation
+                        shareApp();
                       },
                     ),
                     const Divider(), // Automatic divider
@@ -111,4 +113,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
               }
             }));
   }
+
 }

@@ -311,7 +311,7 @@ class _SignInState extends State<SignIn> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
-        Navigator.pushNamed(context, SignIn.id);
+        Navigator.pushNamed(context, HomeScreen.id);
       }
     } catch (e) {
       showToast(message: "some error occured $e");

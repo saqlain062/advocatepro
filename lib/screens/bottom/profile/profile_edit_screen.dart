@@ -29,6 +29,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Edit profile"),
+          actions: const [Text('Save'),Icon(Icons.gpp_good_outlined)],
         ),
         body: SafeArea(
             child: FutureBuilder<List<ProfileAttribute>>(

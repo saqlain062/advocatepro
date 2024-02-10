@@ -46,17 +46,17 @@ Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
     QuerySnapshot<Map<String, dynamic>> userDocLawyerCollection =
         await lawyersCollection.get();
 
-        print(userDocLawyerCollection);
+        print('----------L------------${userDocLawyerCollection.docs}');
 
     CollectionReference<Map<String, dynamic>> usersCollection =
         FirebaseFirestore.instance.collection('users').doc(uid).collection('profile_data');
     // Get the documents in the collection
     QuerySnapshot<Map<String, dynamic>> userDocUserCollection =
         await usersCollection.get();
+    
+    print('-----------U-----------${userDocUserCollection.docs}');
 
-    if(userDocUserCollection.size == 0){
-     // Iterate through the documents and create Lawyer objects
-    // Check if the 'lawyers' document exists
+    if(userDocUserCollection.docs.isEmpty){
     profileList = userDocLawyerCollection.docs.map((doc) {
       return ProfileAttribute(
         object: AdvocateAttribute(
@@ -70,7 +70,7 @@ Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
         dateofbirth: doc['DOB'] ?? '',
       );
     }).toList(); 
-    } else if (userDocUserCollection.size == 0){
+    } else if (userDocUserCollection.docs.isNotEmpty){
       profileList = userDocUserCollection.docs.map((doc) {
       return ProfileAttribute(
         object: AdvocateAttribute(
@@ -89,7 +89,7 @@ Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
     }
   }
   catch (e) {
-    print('--------------------$e');
+    print('---------E-----------$e');
     showToast(message: 'Error fetching data: $e');
     
   }

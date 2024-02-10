@@ -1,4 +1,6 @@
+import 'package:advocatepro_f/screens/bottom/inbox/chat_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class InboxScreen extends StatefulWidget {
   static const String id = 'inbox_screen';
@@ -51,14 +53,43 @@ class _InboxScreenState extends State<InboxScreen> {
               );
             } else {
               return ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(
-                        snapshot.data![index],
-                      ),
-                    );
-                  });
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  String message = snapshot.data![index];
+                  // Get the current time
+                  String currentTime =
+                      DateFormat('h:mm a').format(DateTime.now());
+
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatScreen(chatName: message),
+                        ),
+                      );
+                    },
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  message,
+                                ),
+                              ),
+                              Text(currentTime)
+                            ],
+                          ),
+                          subtitle: const Text('message in the chat'),
+                        ),
+                        const Divider(), // Add a divider between each ListTile
+                      ],
+                    ),
+                  );
+                },
+              );
             }
           },
         ));

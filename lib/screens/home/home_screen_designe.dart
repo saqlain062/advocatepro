@@ -1,3 +1,4 @@
+import 'package:advocatepro_f/Methods/share.dart';
 import 'package:advocatepro_f/check_method.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
@@ -91,7 +92,9 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(Icons.share),
                         title: const Text('Share'),
-                        onTap: () {},
+                        onTap: () {
+                          shareApp();
+                        },
                       ),
                       ListTile(
                         leading: const Icon(Icons.logout),
