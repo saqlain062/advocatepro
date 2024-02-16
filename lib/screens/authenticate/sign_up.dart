@@ -344,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     if (user != null) {
       showToast(message: "User is successfully created");
-      Navigator.pushNamed(context, HomeScreen.id);
+      Navigator.pushNamed(context, SignIn.id);
     } else {
       showToast(message: "Some error happend");
     }

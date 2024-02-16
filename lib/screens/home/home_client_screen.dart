@@ -1,18 +1,19 @@
 import 'package:advocatepro_f/screens/Forms/form_screen.dart';
+import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
-import 'package:advocatepro_f/screens/bottom/profile/advocate_profile.dart';
+import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String id = 'home_screen';
-  const HomeScreen({super.key});
+class ClientHomeScreen extends StatefulWidget {
+  static const String id = 'client_home_screen';
+  const ClientHomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ClientHomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<ClientHomeScreen> {
   @override
   void initState() {
     super.initState();
@@ -23,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     const HomeScreenDesgine(),
     const FormScreen(),
     const InboxScreen(),
-    const AdvocateProfileScreen(),
+    const AdvocateScreen(),
+    const ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.chat), label: "Form"),
             BottomNavigationBarItem(icon: Icon(Icons.email), label: 'Inbox'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_search), label: 'Advocate'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_pin), label: "Profile")
           ],

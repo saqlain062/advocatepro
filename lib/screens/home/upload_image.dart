@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,12 +19,8 @@ class UploadImage extends StatefulWidget {
 class __UploadImagState extends State<UploadImage> {
   File? _image;
   final picker = ImagePicker();
-
-  // FirebaseStorage storage = FirebaseStorage.instance;
-  // DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Profile_Image") ;
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
+  DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Profile_Image") ;
 
   @override
   Widget build(BuildContext context) {
@@ -60,26 +57,11 @@ class __UploadImagState extends State<UploadImage> {
             RoundButton(
                 title: "Uplaod",
                 onTop: () async {
-                  // Reference ref = FirebaseStorage.instance.ref("/foldername"+"11234");
-
-                  // // UploadTask uploadTask = ref.putFile(_image!.absolute);
-
-                  // // await Future.value(uploadTask);
-
-                  // // var newUrl = ref.getDownloadURL();
-
-                  // // databaseReference.child('1').set({
-                  // //   'id' : "1212",
-                  // //   'title' : newUrl.toString()
-                  // // });
-
-                  // Get the current user
-                  User? user = _auth.currentUser;
 
                   // Reference to the user's folder in Firebase Storage
-                  Reference storageRef = _storage
+                  Reference storageRef = storage
                       .ref()
-                      .child('users/${user!.uid}/profile-pic.jpg');
+                      .child('users/profile-pic.jpg');
 
                   // Display loading indicator or disable the button
                   // while the image is being uploaded

@@ -1,6 +1,7 @@
 import 'package:advocatepro_f/Methods/share.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
+import 'package:advocatepro_f/screens/bottom/profile/support/support_screen.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -80,7 +81,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       leading: const Icon(Icons.support_agent_rounded),
                       title: const Text("Support"),
                       onTap: () {
-                        // Handle Support navigation
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const SupportScreen()));
                       },
                     ),
                     const Divider(),

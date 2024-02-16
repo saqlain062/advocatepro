@@ -1,9 +1,12 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -175,9 +178,9 @@ class _SignInState extends State<SignIn> {
 //  Login Button
                 TextButton(
                   onPressed: () async {
-                    var perfs  = await SharedPreferences.getInstance();
-                    perfs.setString("email",emailController.text);
-                    perfs.setString("password",passwordController.text);
+                    var perfs = await SharedPreferences.getInstance();
+                    perfs.setString("email", emailController.text);
+                    perfs.setString("password", passwordController.text);
                     signIn();
                     // final email = emailController.text;
                     // final pass = passwordController.text;
@@ -285,10 +288,28 @@ class _SignInState extends State<SignIn> {
     setState(() {
       boolLginSuccessful = false;
     });
-
     if (user != null) {
-      showToast(message: "User is successfully SignIn");
-      Navigator.pushNamed(context, HomeScreen.id);
+      final userCollection = FirebaseFirestore.instance
+          .collection("users")
+          .doc(user.uid)
+          .collection("profile_data");
+      // Check if the user already exists in Firestore
+      final userDocument = await userCollection.doc(user.uid).get();
+      if (userDocument.exists) {
+        showToast(message: "User is successfully SignIn");
+        Navigator.pushNamed(context, ClientHomeScreen.id);
+      } else {
+        final lawyerCollection = FirebaseFirestore.instance
+            .collection("lawyers")
+            .doc(user.uid)
+            .collection("profile_data");
+        // Check if the user already exists in Firestore
+        final lawyerDocument = await lawyerCollection.doc(user.uid).get();
+        if (lawyerDocument.exists) {
+          showToast(message: "User is successfully SignIn");
+          Navigator.pushNamed(context, HomeScreen.id);
+        }
+      }
     } else {
       showToast(message: "Some error happend");
     }
@@ -296,6 +317,9 @@ class _SignInState extends State<SignIn> {
 
   _signInWithGoogle() async {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    // Sign out the user from any previously signed-in Google accounts
+    await _googleSignIn.signOut();
 
     try {
       final GoogleSignInAccount? googleSignInAccount =
@@ -311,13 +335,45 @@ class _SignInState extends State<SignIn> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
+
+        // Access the signed-in user's information
+        final user = _firebaseAuth.currentUser;
+        final name = user?.displayName; // User's display name
+        final email = user?.email; // User's email address
+
+        // Store user data in Firestore
+        if (user != null) {
+          final userCollection = FirebaseFirestore.instance
+              .collection("users")
+              .doc(user.uid)
+              .collection("profile_data");
+
+          // Check if the user already exists in Firestore
+          final userDocument = await userCollection.doc(user.uid).get();
+
+          if (userDocument.exists) {
+            Navigator.pushNamed(context, ClientHomeScreen.id);
+          } else {
+            final newUser = SignupAttribute(
+              id: user.uid,
+              fname: name ?? '',
+              lname: '',
+              phone: user.phoneNumber ?? '',
+              email: email ?? '',
+              laywerOrNot: 'Google Sign in',
+              specialization: 'Google Sign in',
+              dateofbirth: 'Google Sign in',
+            ).toJson();
+            await userCollection.doc(user.uid).set(newUser);
+          }
+        }
         Navigator.pushNamed(context, HomeScreen.id);
       }
     } catch (e) {
       showToast(message: "some error occured $e");
     }
   }
-  
+
   void getValue() async {
     var perfs = await SharedPreferences.getInstance();
     var emailValue = perfs.getString("email");
@@ -326,6 +382,5 @@ class _SignInState extends State<SignIn> {
       emailController.text = emailValue ?? "";
       passwordController.text = passwordValue ?? "";
     });
-    
   }
 }

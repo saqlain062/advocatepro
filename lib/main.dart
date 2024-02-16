@@ -4,10 +4,10 @@ import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
-import 'package:advocatepro_f/screens/bottom/inbox/chat_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
+import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
@@ -24,6 +24,7 @@ Future main() async {
           appId: appId,
           messagingSenderId: messagingSenderId,
           projectId: projectId,
+          storageBucket: storageBucket,
         ))
       : await Firebase.initializeApp();
   runApp(const MyApp());
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         SignUpScreen.id: (context) => const SignUpScreen(),
         UploadImage.id: (context) => const UploadImage(),
         HomeScreen.id: (context) => const HomeScreen(),
+        ClientHomeScreen.id: (context) => const ClientHomeScreen(),
         HomeScreenDesgine.id: (context) => const HomeScreenDesgine(),
         AdvocateScreen.id: (context) => const AdvocateScreen(),
         FormScreen.id: (context) => const FormScreen(),
