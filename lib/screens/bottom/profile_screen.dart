@@ -4,7 +4,6 @@ import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile/support/support_screen.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const String id = "profile_screen";

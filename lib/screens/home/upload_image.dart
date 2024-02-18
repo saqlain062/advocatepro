@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +84,6 @@ class __UploadImagState extends State<UploadImage> {
                   } catch (e) {
                     showToast(message: 'Error: $e');
                   }
-
                   showToast(message: "SuccessFully down");
                 })
           ],

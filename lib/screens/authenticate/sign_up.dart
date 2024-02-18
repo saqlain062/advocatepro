@@ -2,7 +2,6 @@ import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/check_method.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
-import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,8 +68,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       const Image(
-                          height: 100,
-                          width: 100,
+                          height: 200,
+                          width: 200,
                           image: AssetImage('images/lawyer.png')),
                       const Center(
                           child: Text(

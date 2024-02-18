@@ -1,7 +1,7 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
+import 'package:advocatepro_f/screens/authenticate/lawyer_or_user.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
@@ -64,17 +64,18 @@ class _SignInState extends State<SignIn> {
           child: Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 70,
                 ),
-                const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Image(
-                        height: 100,
-                        width: 100,
+                        height: 50,
+                        width: 50,
                         image: AssetImage('images/lawyerIcon.png')),
                     SizedBox(
                       width: 10,
@@ -82,31 +83,42 @@ class _SignInState extends State<SignIn> {
                     Text(
                       'AdvocatePro',
                       style:
-                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 70,
+                ),
+                const Text(
+                  'Sign In',
+                  style: TextStyle(fontSize: 20),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text('Enter the following detail to continue'),
+                const SizedBox(
+                  height: 20,
                 ),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      label: const Text("Username"),
-                      hintText: 'Username',
+                      label: const Text("Email"),
+                      hintText: 'Email',
                       fillColor: const Color.fromARGB(255, 255, 255, 255),
                       filled: true,
                       prefixIcon: const Icon(
                         Icons.person_2_rounded,
                       ),
                       focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xffE4E7Eb)),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 0, 0, 0)),
                           borderRadius: BorderRadius.circular(10)),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Color(0xffE4E7Eb)))),
+                          borderSide: const BorderSide(
+                              color: Color.fromRGBO(224, 224, 224, 1)))),
                 ),
                 const SizedBox(
                   height: 20,
@@ -122,8 +134,8 @@ class _SignInState extends State<SignIn> {
                       prefixIcon: const Icon(Icons.lock_open),
                       suffixIcon: IconButton(
                         icon: Icon(isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                            ? Icons.visibility_outlined
+                            : Icons.visibility_off_outlined),
                         onPressed: () {
                           setState(() {
                             isPasswordVisible = !isPasswordVisible;
@@ -140,25 +152,24 @@ class _SignInState extends State<SignIn> {
                               const BorderSide(color: Color(0xffE4E7Eb)))),
                 ),
 // Forgot Password
-                Padding(
-                  padding: const EdgeInsets.only(left: 30),
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, ForgetPasswordScreen.id);
-                      },
-                      child: const Text(
-                        'Forgot Password?',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            decoration: TextDecoration.underline,
-                            color: Colors.blue),
-                      ),
-                    )
-                  ]),
-                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, ForgetPasswordScreen.id);
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              // decoration: TextDecoration.underline,
+                              color: Colors.blue),
+                        ),
+                      )
+                    ]),
                 const SizedBox(
                   height: 40,
                 ),
@@ -187,20 +198,20 @@ class _SignInState extends State<SignIn> {
                   },
                   child: Container(
                     height: 55,
-                    width: 335,
+                    width: 327,
                     decoration: BoxDecoration(
                         color: const Color.fromARGB(255, 0, 110, 255),
-                        borderRadius: BorderRadius.circular(30)),
+                        borderRadius: BorderRadius.circular(45)),
                     child: Center(
                       child: boolLginSuccessful
                           ? const CircularProgressIndicator(
                               color: Colors.white,
                             )
-                          : const Text('log In',
+                          : const Text('Sign In',
                               style: TextStyle(
                                   fontFamily: 'Rubik Regular',
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  // fontWeight: FontWeight.bold,
                                   color: Colors.white)),
                     ),
                   ),
@@ -230,16 +241,19 @@ class _SignInState extends State<SignIn> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text('Sign in with Google',
+                          Text('Sign In with Google',
                               style: TextStyle(
                                   fontFamily: 'Rubik Regular',
                                   fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                                  // fontWeight: FontWeight.bold,
                                   color: Colors.white)),
                         ],
                       ),
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 40,
                 ),
 // Sign Up Screen if you do not have account
                 Row(
@@ -281,9 +295,9 @@ class _SignInState extends State<SignIn> {
 
     User? user = await _auth.signInWithEmailAndPassword(email, password);
 
-    print("---------------------------");
+    print("-----------User Detial----------------");
     print(user);
-    print("---------------------------");
+    print("-------------End User Detail--------------");
 
     setState(() {
       boolLginSuccessful = false;
@@ -335,39 +349,34 @@ class _SignInState extends State<SignIn> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
-
         // Access the signed-in user's information
         final user = _firebaseAuth.currentUser;
-        final name = user?.displayName; // User's display name
-        final email = user?.email; // User's email address
-
         // Store user data in Firestore
         if (user != null) {
           final userCollection = FirebaseFirestore.instance
               .collection("users")
               .doc(user.uid)
               .collection("profile_data");
-
           // Check if the user already exists in Firestore
           final userDocument = await userCollection.doc(user.uid).get();
 
+          final lawyerCollection = FirebaseFirestore.instance
+              .collection("lawyers")
+              .doc(user.uid)
+              .collection("profile_data");
+          // Check if the user already exists in Firestore
+          final lawyerDocument = await lawyerCollection.doc(user.uid).get();
           if (userDocument.exists) {
             Navigator.pushNamed(context, ClientHomeScreen.id);
+          } else if (lawyerDocument.exists) {
+            Navigator.pushNamed(context, HomeScreen.id);
           } else {
-            final newUser = SignupAttribute(
-              id: user.uid,
-              fname: name ?? '',
-              lname: '',
-              phone: user.phoneNumber ?? '',
-              email: email ?? '',
-              laywerOrNot: 'Google Sign in',
-              specialization: 'Google Sign in',
-              dateofbirth: 'Google Sign in',
-            ).toJson();
-            await userCollection.doc(user.uid).set(newUser);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const LawyerOrUserScreen()));
           }
         }
-        Navigator.pushNamed(context, HomeScreen.id);
       }
     } catch (e) {
       showToast(message: "some error occured $e");

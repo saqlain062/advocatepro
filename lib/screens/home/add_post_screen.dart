@@ -66,25 +66,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
     final databaseReference = FirebaseDatabase.instance.ref(databasePath);
     String id = DateTime.now().millisecondsSinceEpoch.toString();
 
-    // Format time
-    String formattedTime = '';
-    DateTime postTime = DateTime.now();
-    DateTime currentTime = DateTime.now();
-    Duration difference = currentTime.difference(postTime);
-    if (difference.inDays == 0) {
-      // Post was made today, show time
-      formattedTime = DateFormat('h:mm a').format(postTime);
-    } else if (difference.inDays >= 1) {
-      // Post is older than a day, show date and year
-      formattedTime = DateFormat('MMM dd').format(postTime);
-    } else {
-      formattedTime = DateFormat('MMM dd, yyyy').format(postTime);
-    }
-
     databaseReference.child(id).set({
       'id': id,
       'Caption or Content': _captionController.text.toString(),
-      'time': formattedTime,
+      'time': DateTime.now().toString(),
     }).then((value) {
       setState(() {
         loading = false;
@@ -100,3 +85,5 @@ class _AddPostScreenState extends State<AddPostScreen> {
     });
   }
 }
+
+

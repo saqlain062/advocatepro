@@ -2,7 +2,7 @@ import 'package:advocatepro_f/screens/Forms/form_screen.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
-import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
+import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:flutter/material.dart';
 
 class ClientHomeScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<ClientHomeScreen> {
 
   int currentIndex = 0;
   final List<Widget> screens = [
-    const HomeScreenDesgine(),
+    const HomePostScreen(),
     const FormScreen(),
     const InboxScreen(),
     const AdvocateScreen(),
