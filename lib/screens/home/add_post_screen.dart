@@ -1,10 +1,8 @@
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:advocatepro_f/screens/bottom/profile/advocate_profile.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:intl/intl.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({Key? key}) : super(key: key);
@@ -48,7 +46,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       title: 'Add',
                       onTop: () {
                         addPost();
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AdvocateProfileScreen()));
+                        Navigator.pop(context);
                       })
             ],
           ),

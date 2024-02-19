@@ -1,7 +1,6 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_attaribute.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileAttribute {
   AdvocateAttribute object;
@@ -37,11 +36,10 @@ class ProfileAttribute {
 
 Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
   List<ProfileAttribute> profileList = [];
-  String uid = FirebaseAuth.instance.currentUser!.uid;
   try {
     // Get a reference to the Firestore collection
     CollectionReference<Map<String, dynamic>> lawyersCollection =
-        FirebaseFirestore.instance.collection('lawyers').doc(uid).collection('profile_data');
+        FirebaseFirestore.instance.collection('lawyers');
     // Get the documents in the collection
     QuerySnapshot<Map<String, dynamic>> userDocLawyerCollection =
         await lawyersCollection.get();
@@ -49,7 +47,7 @@ Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
         print('----------L------------${userDocLawyerCollection.docs}');
 
     CollectionReference<Map<String, dynamic>> usersCollection =
-        FirebaseFirestore.instance.collection('users').doc(uid).collection('profile_data');
+        FirebaseFirestore.instance.collection('users');
     // Get the documents in the collection
     QuerySnapshot<Map<String, dynamic>> userDocUserCollection =
         await usersCollection.get();

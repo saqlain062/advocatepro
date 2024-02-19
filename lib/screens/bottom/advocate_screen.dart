@@ -1,5 +1,4 @@
-import 'package:advocatepro_f/screens/bottom/profile/advocate_profile.dart';
-import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
+import 'package:advocatepro_f/screens/home/client/advocate/advocate_post_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,7 @@ class AdvocateScreen extends StatefulWidget {
 }
 
 class _AdvocateScreenState extends State<AdvocateScreen> {
-  final firestore = FirebaseFirestore.instance;
+  final firestore = FirebaseFirestore.instance.collection('lawyers').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +21,28 @@ class _AdvocateScreenState extends State<AdvocateScreen> {
         // backgroundColor: Colors.blue,
         automaticallyImplyLeading: false,
       ),
-      body: FutureBuilder<List<ProfileAttribute>>(
-          future: fetchDataOfAllLawyers(),
-          builder: (context, snapshot) {
+      body: StreamBuilder<QuerySnapshot>(
+          stream: firestore,
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text('Error:${snapshot.error}');
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            } else if (!snapshot.hasData) {
               return const Text('No data available');
             } else {
               return ListView.builder(
-                  itemCount: snapshot.data!.length,
+                  itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    ProfileAttribute advocate = snapshot.data![index];
+                    final String id = snapshot.data!.docs[index]['ID'];
+                    // ProfileAttribute advocate = snapshot.data!.docs[index] as ProfileAttribute;
                     return ListTile(
+
                       leading: GestureDetector(
                         child: const Icon(Icons.image),
                       ),
-                      title: Text('${advocate.object.fname} ${advocate.object.lname}'),
-                      subtitle: Text(advocate.email),
+                      title: Text('${snapshot.data!.docs[index]['First Name']} ${snapshot.data!.docs[index]['Last Name']}'),
+                      subtitle: Text('${snapshot.data!.docs[index]['ID']}'),
                       trailing: GestureDetector(
                         child: const Icon(Icons.star),
                       ),
@@ -49,7 +50,7 @@ class _AdvocateScreenState extends State<AdvocateScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AdvocateProfileScreen()));
+                                builder: (context) => AdvocatePostAndProfileScreen(id: id,)));
                       },
                     );
                   });

@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/screens/Forms/form_screen.dart';
 import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
-import 'package:advocatepro_f/screens/bottom/profile/advocate_profile.dart';
+import 'package:advocatepro_f/screens/bottom/profile/advocate_profile_post.dart';
 import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
 import 'package:flutter/material.dart';
 
@@ -34,9 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
+          backgroundColor: const Color(0xFFFFFFFF),
+          iconSize: 30,
+          selectedItemColor: const Color(0xff0000ff),
+          unselectedItemColor: const Color.fromRGBO(141, 141, 141, 1),
           showUnselectedLabels: false,
           showSelectedLabels: false,
           currentIndex: currentIndex,

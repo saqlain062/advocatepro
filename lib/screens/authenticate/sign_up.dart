@@ -355,7 +355,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     print(uid);
     if (lawyerID == 'Null') {
       
-      final userCollection = FirebaseFirestore.instance.collection("users").doc(uid).collection("profile_data");
+      final userCollection = FirebaseFirestore.instance.collection("users");
       final newUser = SignupAttribute(
         id: uid,
         fname: controllerFirstName.text,
@@ -370,7 +370,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       print(newUser);
       print(userCollection);
     } else {
-      final userCollection = FirebaseFirestore.instance.collection("lawyers").doc(uid).collection("profile_data");
+      final userCollection = FirebaseFirestore.instance.collection("lawyers");
       final newUser = SignupAttribute(
         id: uid,
         fname: controllerFirstName.text,

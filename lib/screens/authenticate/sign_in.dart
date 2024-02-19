@@ -33,6 +33,7 @@ class _SignInState extends State<SignIn> {
   bool boolLginSuccessful = false;
   String userType = "Lawyer";
   bool isPasswordVisible = false;
+  bool LginSuccessful = false;
 
   @override
   void initState() {
@@ -222,6 +223,7 @@ class _SignInState extends State<SignIn> {
 // Sign with google
                 TextButton(
                   onPressed: () async {
+
                     _signInWithGoogle();
                   },
                   child: Container(
@@ -230,8 +232,12 @@ class _SignInState extends State<SignIn> {
                     decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(30)),
-                    child: const Center(
-                      child: Row(
+                    child: Center(
+                      child: LginSuccessful
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
@@ -304,22 +310,18 @@ class _SignInState extends State<SignIn> {
     });
     if (user != null) {
       final userCollection = FirebaseFirestore.instance
-          .collection("users")
-          .doc(user.uid)
-          .collection("profile_data");
+          .collection("users");
       // Check if the user already exists in Firestore
       final userDocument = await userCollection.doc(user.uid).get();
-      if (userDocument.exists) {
+      if (userDocument.id == user.uid) {
         showToast(message: "User is successfully SignIn");
         Navigator.pushNamed(context, ClientHomeScreen.id);
       } else {
         final lawyerCollection = FirebaseFirestore.instance
-            .collection("lawyers")
-            .doc(user.uid)
-            .collection("profile_data");
+            .collection("lawyers");
         // Check if the user already exists in Firestore
         final lawyerDocument = await lawyerCollection.doc(user.uid).get();
-        if (lawyerDocument.exists) {
+        if (lawyerDocument.id == user.uid) {
           showToast(message: "User is successfully SignIn");
           Navigator.pushNamed(context, HomeScreen.id);
         }
@@ -330,6 +332,9 @@ class _SignInState extends State<SignIn> {
   }
 
   _signInWithGoogle() async {
+    setState(() {
+      LginSuccessful = true;
+    });
     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
     // Sign out the user from any previously signed-in Google accounts
@@ -351,26 +356,33 @@ class _SignInState extends State<SignIn> {
         await _firebaseAuth.signInWithCredential(credential);
         // Access the signed-in user's information
         final user = _firebaseAuth.currentUser;
+        print('-----------------$user');
         // Store user data in Firestore
         if (user != null) {
           final userCollection = FirebaseFirestore.instance
-              .collection("users")
-              .doc(user.uid)
-              .collection("profile_data");
+              .collection("users");
           // Check if the user already exists in Firestore
           final userDocument = await userCollection.doc(user.uid).get();
 
           final lawyerCollection = FirebaseFirestore.instance
-              .collection("lawyers")
-              .doc(user.uid)
-              .collection("profile_data");
+              .collection("lawyers");
           // Check if the user already exists in Firestore
           final lawyerDocument = await lawyerCollection.doc(user.uid).get();
           if (userDocument.exists) {
+              setState(() {
+                LginSuccessful = false
+                ;
+              });
             Navigator.pushNamed(context, ClientHomeScreen.id);
           } else if (lawyerDocument.exists) {
+            setState(() {
+              LginSuccessful = false;
+            });
             Navigator.pushNamed(context, HomeScreen.id);
           } else {
+            setState(() {
+              LginSuccessful = false;
+            });
             Navigator.push(
                 context,
                 MaterialPageRoute(

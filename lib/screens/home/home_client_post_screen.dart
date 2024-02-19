@@ -1,5 +1,4 @@
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
-import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
@@ -22,9 +21,12 @@ class _HomePostScreenState extends State<HomePostScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        backgroundColor: const Color(
+          0xff0000ff
+        ),
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: const Text('AdvocatePro'),
+        title: const Text('AdvocatePro',style: TextStyle(color: Colors.white),),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

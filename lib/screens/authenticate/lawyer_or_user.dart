@@ -145,11 +145,9 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
     final email = user?.email; // User's email address
     // Store user data in Firestore
       final userCollection = FirebaseFirestore.instance
-          .collection("users")
-          .doc(user!.uid)
-          .collection("profile_data");
+          .collection("users");
       final newUser = SignupAttribute(
-        id: user.uid,
+        id: user!.uid,
         fname: name ?? '',
         lname: '',
         phone: user.phoneNumber ?? '',
@@ -169,11 +167,9 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
     final name = user?.displayName; // User's display name
     final email = user?.email; // User's email address
     final lawyerCollection = FirebaseFirestore.instance
-        .collection("lawyers")
-        .doc(user!.uid)
-        .collection("profile_data");
+        .collection("lawyers");
     final newUser = SignupAttribute(
-      id: user.uid,
+      id: user!.uid,
       fname: name ?? '',
       lname: '',
       phone: user.phoneNumber ?? '',

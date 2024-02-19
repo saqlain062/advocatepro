@@ -10,6 +10,13 @@ class ClientManagementScreen extends StatefulWidget {
 class _ClientManagementScreenState extends State<ClientManagementScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text('Cases'),
+        centerTitle: true,
+        ),
+      );
+    
   }
 }

@@ -6,8 +6,8 @@ import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/support/supportscreen/feedback_screen.dart';
 import 'package:advocatepro_f/screens/home/add_post_screen.dart';
 import 'package:advocatepro_f/screens/home/case/case_screen.dart';
-import 'package:advocatepro_f/screens/home/client/client_management_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
+import 'package:advocatepro_f/screens/home/notification/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -46,26 +46,29 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('AdvocatePro'),
-        // backgroundColor: Colors.blue,
+        iconTheme: const IconThemeData(color: Colors.white),
+        centerTitle: true,
+        backgroundColor: const Color(0xFF0000FF),
+        title: const Text(
+          'AdvocatePro',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
+            icon: const Icon(Icons.notifications_none_rounded),
             onPressed: () {
-              // Handle notifications
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to settings screen
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NotificationScreen()));
             },
           ),
         ],
       ),
       drawer: Drawer(
+          backgroundColor: Colors.white,
           child: FutureBuilder<List<ProfileAttribute>>(
               future: fetchDataOfCurrentUser(),
               builder: (context, snapshot) {
@@ -86,35 +89,40 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                     padding: EdgeInsets.zero,
                     children: [
                       UserAccountsDrawerHeader(
-                          currentAccountPicture: const CircleAvatar(
-                            backgroundImage:
-                                AssetImage('images/lawyerIcon.png'),
-                          ),
-                          accountName: Text('$fname $lname'),
-                          accountEmail: Text(gmail)),
+                        currentAccountPicture: const CircleAvatar(
+                          backgroundImage: AssetImage('images/lawyerIcon.png'),
+                        ),
+                        accountName: Text('$fname $lname'),
+                        accountEmail: Text(gmail),
+                        decoration: const BoxDecoration(
+                          color: Color(0xFF0000ff),
+                        ),
+                      ),
                       ListTile(
-                        leading: const Icon(Icons.home),
+                        leading: const Icon(
+                          Icons.home,
+                          color: Color(0xff0000ff),
+                        ),
                         title: const Text('Home'),
                         onTap: () {
                           Navigator.pushNamed(context, HomeScreen.id);
                         },
                       ),
                       ListTile(
-                        leading: const Icon(Icons.edit),
-                        title: const Text('Update Client Info'),
-                        onTap: () {
-                          Navigator.pushNamed(context, FormFields.id);
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.share),
+                        leading: const Icon(
+                          Icons.share,
+                          color: Color(0xff0000ff),
+                        ),
                         title: const Text('Share'),
                         onTap: () {
                           shareApp();
                         },
                       ),
                       ListTile(
-                        leading: const Icon(Icons.logout),
+                        leading: const Icon(
+                          Icons.logout,
+                          color: Color(0xff0000ff),
+                        ),
                         title: const Text('Log out'),
                         onTap: () {
                           FirebaseAuth.instance.signOut();
@@ -126,37 +134,24 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                 }
               })),
       body: SafeArea(
-        
         child: SingleChildScrollView(
           child: Column(
-            
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-            if (internet) const InternetError(),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Center(
-                  child: Text(
-                'Welcome to AdvocatePro!',
-                style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
-              )),
-            ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+              Container(
+                color: const Color(0xff0000ff),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 15, left: 15, top: 10, bottom: 20),
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: const [
                         BoxShadow(
-                          color: Color.fromRGBO(224, 224, 224, 1),
-                          offset: Offset(0, 10),
-                          blurRadius: 20,
+                          color: Color(0xFF000000),
+                          offset: Offset(1, 1),
+                          blurRadius: 5,
                         )
                       ],
                       borderRadius: BorderRadius.circular(10),
@@ -172,7 +167,8 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                                 left: 6, right: 6, top: 6, bottom: 4),
                             child: Container(
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey, width: 1),
+                                border:
+                                    Border.all(color: Colors.grey, width: 1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: ListTile(
@@ -193,140 +189,271 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                     ),
                   ),
                 ),
+              ),
 
-            
-            const SizedBox(height: 20),
-    //for search bar
-    //         Container(
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: TextField(
-    //     controller: controllersearch,
-    //     decoration: InputDecoration(
-    //       hintText: 'Search...',
-    //       prefixIcon: const Icon(Icons.search),
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(10.0),
-    //       ),
-    //     ),
-    //     onChanged: (value) {
-    //       // Perform search operation based on the value entered in the search bar
-    //       // You can use this value to filter your data or perform any other search-related tasks
-    //     },
-    //   ),
-    // ),
-    SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-
-      child: Row(
-        children: [
-          _card(title: 'Add Post', description: 'Null', icon: Icons.photo_size_select_actual_rounded, screen: const AddPostScreen()),
-          _card(title: 'Add Post', description: 'Null', icon: Icons.photo_size_select_actual_rounded, screen: const AddPostScreen()),
-          _card(title: 'Add Post', description: 'Null', icon: Icons.photo_size_select_actual_rounded, screen: const AddPostScreen()),
-          _card(title: 'Add Post', description: 'Null', icon: Icons.photo_size_select_actual_rounded, screen: const AddPostScreen()),
-          _card(title: 'Add Post', description: 'Null', icon: Icons.photo_size_select_actual_rounded, screen: const AddPostScreen()), 
-        ],
-      ),
-    ),
-    const SizedBox(height: 20),
-            _homeCard(title: 'Cases', description: "Manage your Client Case here", icon: Icons.file_copy, screen: const CaseManagementScreen(),imageUrl: 'images/lawyerIcon.png'),
-            _homeCard(title: 'Clients', description: "Manage your Client", icon: Icons.person_add_alt_1, screen: const ClientManagementScreen(),imageUrl: 'images/lawyer.png'),
-            _homeCard(title: 'Feedback', description: "Feedback or Suggestion", icon: Icons.feedback, screen: const FeedbackScreen(),imageUrl: 'images/IMG_20230814_230618_015.jpg'),
-              ],
-            ),
-          ]),
+              const SizedBox(height: 20),
+              //for search bar
+              //         Container(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: TextField(
+              //     controller: controllersearch,
+              //     decoration: InputDecoration(
+              //       hintText: 'Search...',
+              //       prefixIcon: const Icon(Icons.search),
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(10.0),
+              //       ),
+              //     ),
+              //     onChanged: (value) {
+              //       // Perform search operation based on the value entered in the search bar
+              //       // You can use this value to filter your data or perform any other search-related tasks
+              //     },
+              //   ),
+              // ),
+              Row(
+                children: [
+                  _card(
+                      title: 'Add Post',
+                      description: 'Null',
+                      icon: Icons.add_comment_outlined,
+                      screen: const AddPostScreen()),
+                  _card(
+                      title: 'Cases',
+                      description: 'Null',
+                      icon: Icons.cases_outlined,
+                      screen: const CaseManagementScreen()),
+                  _card(
+                      title: 'Client',
+                      description: 'Null',
+                      icon: Icons.group_add_outlined,
+                      screen: const CaseManagementScreen()),
+                ],
+              ),
+              const SizedBox(height: 15),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: Text(
+                  'More with advocatepro',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 15.0, right: 15, top: 10, bottom: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Color.fromARGB(255, 118, 118, 118),
+                        offset: Offset(1, 1),
+                        blurRadius: 5,
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          _container(
+                              title: 'option',
+                              icon: Icons.access_alarm_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.ac_unit,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.pageview_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.account_balance_outlined,
+                              screen: const NotificationScreen()),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          _container(
+                              title: 'option',
+                              icon: Icons.palette_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.qr_code,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.wallet_giftcard,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.earbuds,
+                              screen: const NotificationScreen()),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          _container(
+                              title: 'option',
+                              icon: Icons.radar_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.tab_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.yard_outlined,
+                              screen: const NotificationScreen()),
+                          _container(
+                              title: 'option',
+                              icon: Icons.u_turn_left_sharp,
+                              screen: const NotificationScreen()),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              _homeCard(
+                  title: 'Help & Customer Support',
+                  description: "Register a complaint or get quick help on queries related to AdvocatePro",
+                  icon: Icons.support_agent_outlined,
+                  screen: const FeedbackScreen(),)
+            ],
+          ),
         ),
       ),
     );
   }
-   Widget _card({
-  required String title,
-  required String description,
-  required IconData icon, 
-  required Widget screen,
-}) {
-  return Container(
-    width: 150,
-    height: 170, // Adjust the height of the container as needed
-    decoration: const BoxDecoration(
-      boxShadow: [BoxShadow(
-        color: Color.fromRGBO(224, 224, 224, 1),
-        offset: Offset(5,5),
-        blurRadius: 10,
-      )]    ),
-    child: Card(
-      margin: const EdgeInsets.all(8.0),
-      elevation: 2.0,
-      color: Colors.white,
+
+  Widget _card({
+    required String title,
+    required String description,
+    required IconData icon,
+    required Widget screen,
+  }) {
+    return Container(
+      color: Colors.grey[200],
+      width: 130,
+      height: 130, // Adjust the height of the container as needed
+      child: Card(
+        margin: const EdgeInsets.all(15.0),
+        elevation: 10.0,
+        color: const Color(0xFFFFFFFF),
+        surfaceTintColor: Colors.white,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => screen));
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: 30,
+                color: const Color(0xff0000ff),
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _container({
+    required String title,
+    required IconData icon,
+    required Widget screen,
+  }) {
+    return Card(
+      margin: const EdgeInsets.all(20.0),
+      elevation: 0,
+      color: const Color(0xFFFFFFFF),
+      surfaceTintColor: Colors.white,
       child: InkWell(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => screen));
         },
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 36),
+            Icon(
+              icon,
+              size: 30,
+              color: const Color(0xff0000ff),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
             Text(
-            title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),),
-            Text(
-            description,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
           ],
         ),
       ),
-    ),
-  );
-}
+    );
+  }
+
   Widget _homeCard({
     required String title,
     required String description,
-    required IconData icon, 
-    required String imageUrl,
+    required IconData icon,
     required screen,
   }) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
-      elevation: 2.0,
-      color: Colors.white,
-      child: InkWell(
-        onTap: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
-
-        },
-      child:  Column(
-        children: [
-          AspectRatio(
-                aspectRatio: 16 / 9, // Adjust the aspect ratio as needed
-                child: Image.asset(
-                  imageUrl,
-                  fit: BoxFit.cover,
+        margin: const EdgeInsets.all(8.0),
+        elevation: 2.0,
+        color: Colors.white,
+        surfaceTintColor: Colors.white,
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => screen));
+          },
+          child: Column(
+            children: [
+              ListTile(
+                leading: Icon(icon, size: 40,color: const Color(0xff0000ff),),
+                title: Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                subtitle: Text(
+                  description,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-      
-      ListTile(
-        leading: Icon(icon, size: 36),
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+            ],
           ),
-        ),
-        subtitle: Text(
-          description,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-        ],
-      ),
-      )
-    );
+        ));
   }
+
   @override
   void dispose() {
     controllersearch.dispose();

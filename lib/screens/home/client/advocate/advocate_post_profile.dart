@@ -1,21 +1,24 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AdvocateProfileScreen extends StatefulWidget {
-  const AdvocateProfileScreen({super.key});
+class AdvocatePostAndProfileScreen extends StatefulWidget {
+  final String id;
+  const AdvocatePostAndProfileScreen({super.key, required this.id,});
 
   @override
-  State<AdvocateProfileScreen> createState() => _AdvocateProfileScreenState();
+  State<AdvocatePostAndProfileScreen> createState() => _AdvocatePostAndProfileScreenState();
 }
 
-class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
+class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScreen> {
   final ref = FirebaseDatabase.instance.ref(databasePathPost());
+  final firestore = FirebaseFirestore.instance.collection('lawyers').snapshots();
   final controllerEdit = TextEditingController();
   bool verified = false;
 
@@ -62,41 +65,41 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
               ],
             ),
             Row(
-              children: [
-                FutureBuilder<List<ProfileAttribute>>(
-                    future: fetchDataOfCurrentUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        print('-----------1--------$snapshot.error');
-                        return Text('Error:${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Text('No data available');
-                      } else {
-                        // Get the user profile data
-                        ProfileAttribute userProfile = snapshot.data!.first;
-                        // Set the initial values for controllers
-                        final fname = userProfile.object.fname;
-                        final lname = userProfile.object.lname;
-
-                        return Text(
-                          '$fname $lname',
-                          style: const TextStyle(
-                            // color: Colors.white,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      }
-                    }),
-                const SizedBox(width: 8),
-                Visibility(
-                  visible: verified,
-                  child: const Icon(Icons.verified_user, color: Colors.green),
-                )
-              ],
-            ),
+  children: [
+    StreamBuilder<QuerySnapshot>(
+      stream: firestore,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          print('-----------1--------${snapshot.error}');
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData ) {
+          return const Text('No data available');
+        } else {
+          // Check if the ID matches and return the username if true
+          final matchingDoc = snapshot.data!.docs.firstWhere(
+            (doc) => doc.id == widget.id,
+          );
+         
+            return Text(
+              '${matchingDoc['First Name']} ${matchingDoc['Last Name']}',
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          
+        }
+      },
+    ),
+    const SizedBox(width: 8),
+    Visibility(
+      visible: verified,
+      child: const Icon(Icons.verified_user, color: Colors.green),
+    )
+  ],
+),
             const Text('@Username'),
             const SizedBox(
               height: 20,
