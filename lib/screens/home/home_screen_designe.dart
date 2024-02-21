@@ -1,14 +1,19 @@
 import 'package:advocatepro_f/Methods/share.dart';
 import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/support/supportscreen/feedback_screen.dart';
 import 'package:advocatepro_f/screens/home/add_post_screen.dart';
 import 'package:advocatepro_f/screens/home/case/case_screen.dart';
+import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/screens/home/notification/notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenDesgine extends StatefulWidget {
@@ -26,7 +31,6 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   // int userid = LogIn.userid;
   String username = 'Null';
   String email = 'Email';
-
   final dates = DateTime.now();
   bool internet = false;
   @override
@@ -41,19 +45,17 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     return format.isAtSameMomentAs(today);
   }
 
-  void refreshpage() {}
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: colorbackground,
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: colorAppbarText),
         centerTitle: true,
-        backgroundColor: const Color(0xFF0000FF),
+        backgroundColor: colorAppbar,
         title: const Text(
           'AdvocatePro',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: colorAppbarText),
         ),
         actions: [
           IconButton(
@@ -69,7 +71,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
       ),
       drawer: Drawer(
           backgroundColor: Colors.white,
-          child: FutureBuilder<List<ProfileAttribute>>(
+          child: FutureBuilder<List<SignupAttribute>>(
               future: fetchDataOfCurrentUser(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -80,28 +82,40 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                   return const Text('No data available');
                 } else {
                   // Get the user profile data
-                  ProfileAttribute userProfile = snapshot.data!.first;
+                  SignupAttribute userProfile = snapshot.data!.first;
                   // Set the initial values for controllers
-                  final fname = userProfile.object.fname;
-                  final lname = userProfile.object.lname;
+                  final fname = userProfile.fname;
+                  final lname = userProfile.lname;
                   final gmail = userProfile.email;
                   return ListView(
                     padding: EdgeInsets.zero,
                     children: [
                       UserAccountsDrawerHeader(
-                        currentAccountPicture: const CircleAvatar(
-                          backgroundImage: AssetImage('images/lawyerIcon.png'),
-                        ),
+                        currentAccountPicture: FirebaseAnimatedList(
+                          query: FirebaseDatabase.instance
+                              .ref('Post_${uid()}_profile'),
+                          itemBuilder: (context, snapshots, animation, index) {
+                            final imageUrl =
+                                snapshots.child('url').value.toString();
+                            return CircleAvatar(
+                                child: imageUrl.isNotEmpty
+                                    ? Image.network(
+                                        imageUrl,
+                                     
+                                      )
+                                    : const CircularProgressIndicator());
+                          }),
+                        
                         accountName: Text('$fname $lname'),
                         accountEmail: Text(gmail),
                         decoration: const BoxDecoration(
-                          color: Color(0xFF0000ff),
+                          color: colorAppbar,
                         ),
                       ),
                       ListTile(
                         leading: const Icon(
                           Icons.home,
-                          color: Color(0xff0000ff),
+                          color: colorIcon,
                         ),
                         title: const Text('Home'),
                         onTap: () {
@@ -111,7 +125,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(
                           Icons.share,
-                          color: Color(0xff0000ff),
+                          color: colorIcon,
                         ),
                         title: const Text('Share'),
                         onTap: () {
@@ -121,7 +135,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(
                           Icons.logout,
-                          color: Color(0xff0000ff),
+                          color: colorIcon,
                         ),
                         title: const Text('Log out'),
                         onTap: () {
@@ -139,7 +153,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: const Color(0xff0000ff),
+                color: colorAppbar,
                 child: Padding(
                   padding: const EdgeInsets.only(
                       right: 15, left: 15, top: 10, bottom: 20),
@@ -151,7 +165,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                         BoxShadow(
                           color: Color(0xFF000000),
                           offset: Offset(1, 1),
-                          blurRadius: 5,
+                          blurRadius: 1,
                         )
                       ],
                       borderRadius: BorderRadius.circular(10),
@@ -168,7 +182,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                             child: Container(
                               decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.grey, width: 1),
+                                    Border.all(color: colorBorder, width: 1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: ListTile(
@@ -210,7 +224,8 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
               //     },
               //   ),
               // ),
-              Row(
+
+              Row(// Row before More with advocatepro
                 children: [
                   _card(
                       title: 'Add Post',
@@ -242,14 +257,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                     left: 15.0, right: 15, top: 10, bottom: 10),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Color.fromARGB(255, 118, 118, 118),
-                        offset: Offset(1, 1),
-                        blurRadius: 5,
-                      )
-                    ],
+                    color: colorWhite,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -319,10 +327,12 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                 ),
               ),
               _homeCard(
-                  title: 'Help & Customer Support',
-                  description: "Register a complaint or get quick help on queries related to AdvocatePro",
-                  icon: Icons.support_agent_outlined,
-                  screen: const FeedbackScreen(),)
+                title: 'Help & Customer Support',
+                description:
+                    "Register a complaint or get quick help on queries related to AdvocatePro",
+                icon: Icons.support_agent_outlined,
+                screen: const FeedbackScreen(),
+              )
             ],
           ),
         ),
@@ -337,14 +347,14 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     required Widget screen,
   }) {
     return Container(
-      color: Colors.grey[200],
+      color: colorbackground,
       width: 130,
       height: 130, // Adjust the height of the container as needed
       child: Card(
         margin: const EdgeInsets.all(15.0),
         elevation: 10.0,
-        color: const Color(0xFFFFFFFF),
-        surfaceTintColor: Colors.white,
+        surfaceTintColor: colorWhite,
+        shadowColor: Colors.white,
         child: InkWell(
           onTap: () {
             Navigator.push(
@@ -357,7 +367,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
               Icon(
                 icon,
                 size: 30,
-                color: const Color(0xff0000ff),
+                color: colorIcon,
               ),
               const SizedBox(
                 height: 8,
@@ -384,8 +394,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     return Card(
       margin: const EdgeInsets.all(20.0),
       elevation: 0,
-      color: const Color(0xFFFFFFFF),
-      surfaceTintColor: Colors.white,
+      surfaceTintColor: colorWhite,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -398,7 +407,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
             Icon(
               icon,
               size: 30,
-              color: const Color(0xff0000ff),
+              color: colorIcon,
             ),
             const SizedBox(
               height: 8,
@@ -425,8 +434,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     return Card(
         margin: const EdgeInsets.all(8.0),
         elevation: 2.0,
-        color: Colors.white,
-        surfaceTintColor: Colors.white,
+        surfaceTintColor: colorWhite,
         child: InkWell(
           onTap: () {
             Navigator.push(
@@ -435,7 +443,11 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
           child: Column(
             children: [
               ListTile(
-                leading: Icon(icon, size: 40,color: const Color(0xff0000ff),),
+                leading: Icon(
+                  icon,
+                  size: 40,
+                  color: colorIcon,
+                ),
                 title: Text(
                   title,
                   style: const TextStyle(

@@ -1,6 +1,8 @@
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_attaribute.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileAttribute {
   AdvocateAttribute object;
@@ -34,62 +36,50 @@ class ProfileAttribute {
   }
 }
 
-Future<List<ProfileAttribute>> fetchDataOfCurrentUser() async {
-  List<ProfileAttribute> profileList = [];
-  try {
-    // Get a reference to the Firestore collection
-    CollectionReference<Map<String, dynamic>> lawyersCollection =
-        FirebaseFirestore.instance.collection('lawyers');
-    // Get the documents in the collection
-    QuerySnapshot<Map<String, dynamic>> userDocLawyerCollection =
-        await lawyersCollection.get();
-
-        print('----------L------------${userDocLawyerCollection.docs}');
-
-    CollectionReference<Map<String, dynamic>> usersCollection =
-        FirebaseFirestore.instance.collection('users');
-    // Get the documents in the collection
-    QuerySnapshot<Map<String, dynamic>> userDocUserCollection =
-        await usersCollection.get();
+Future<List<SignupAttribute>> fetchDataOfCurrentUser() async {
+  List<SignupAttribute> profileList = [];
+   try {
+    // Get the current user's UID
+    String uid = FirebaseAuth.instance.currentUser!.uid;
     
-    print('-----------U-----------${userDocUserCollection.docs}');
+    // Check if the user is a lawyer
+    DocumentSnapshot<Map<String, dynamic>> userDocLawyerCollection =
+        await FirebaseFirestore.instance.collection('lawyers').doc(uid).get();
 
-    if(userDocUserCollection.docs.isEmpty){
-    profileList = userDocLawyerCollection.docs.map((doc) {
-      return ProfileAttribute(
-        object: AdvocateAttribute(
-          id: doc['ID'] ?? '',
-          fname: doc["First Name"] ?? '',
-          lname: doc['Last Name'] ?? '',
-          specialization: doc['Specialization'] ?? '',
-        ),
-        email: doc['Email'] ?? '',
-        phone: doc['Phone'] ?? '',
-        dateofbirth: doc['DOB'] ?? '',
-      );
-    }).toList(); 
-    } else if (userDocUserCollection.docs.isNotEmpty){
-      profileList = userDocUserCollection.docs.map((doc) {
-      return ProfileAttribute(
-        object: AdvocateAttribute(
-          id: doc['ID'] ?? '',
-          fname: doc["First Name"] ?? '',
-          lname: doc['Last Name'] ?? '',
-          specialization: doc['Specialization'] ?? '',
-        ),
-        email: doc['Email'] ?? '',
-        phone: doc['Phone'] ?? '',
-        dateofbirth: doc['DOB'] ?? '',
-      );
-    }).toList(); 
+    if (userDocLawyerCollection.exists) {
+      profileList.add(SignupAttribute(
+        id: userDocLawyerCollection['ID'] ?? '',
+        fname: userDocLawyerCollection["First Name"] ?? '',
+        lname: userDocLawyerCollection['Last Name'] ?? '',
+        specialization: userDocLawyerCollection['Specialization'] ?? '',
+        laywerOrNot: userDocLawyerCollection['Lawyer ID'] ?? '',
+        email: userDocLawyerCollection['Email'] ?? '',
+        phone: userDocLawyerCollection['Phone'] ?? '',
+        dateofbirth: userDocLawyerCollection['DOB'] ?? '',
+      ));
     } else {
-      showToast(message: "No data Found");
+      // User is not a lawyer, check if the user exists in the 'users' collection
+      DocumentSnapshot<Map<String, dynamic>> userDocUserCollection =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
+
+      if (userDocUserCollection.exists) {
+        profileList.add(SignupAttribute(
+          id: userDocUserCollection['ID'] ?? '',
+          fname: userDocUserCollection["First Name"] ?? '',
+          lname: userDocUserCollection['Last Name'] ?? '',
+          specialization: userDocUserCollection['Specialization'] ?? '',
+          laywerOrNot: userDocUserCollection['Lawyer ID'] ?? '',
+          email: userDocUserCollection['Email'] ?? '',
+          phone: userDocUserCollection['Phone'] ?? '',
+          dateofbirth: userDocUserCollection['DOB'] ?? '',
+        ));
+      } else {
+        showToast(message: "No data found for the current user");
+      }
     }
-  }
-  catch (e) {
+  } catch (e) {
     print('---------E-----------$e');
     showToast(message: 'Error fetching data: $e');
-    
   }
   print(profileList);
   return profileList;

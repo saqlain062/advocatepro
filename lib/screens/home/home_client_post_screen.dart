@@ -1,3 +1,5 @@
+import 'package:advocatepro_f/utils/constants/color.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -21,9 +23,23 @@ class _HomePostScreenState extends State<HomePostScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: const Color(
-          0xff0000ff
-        ),
+        leading: FirebaseAnimatedList(
+                          query: FirebaseDatabase.instance
+                              .ref('Post_${uid()}_profile'),
+                          defaultChild:
+                              const Center(child: CircularProgressIndicator()),
+                          itemBuilder: (context, snapshots, animation, index) {
+                            final imageUrl =
+                                snapshots.child('url').value.toString();
+                            return CircleAvatar(
+                                radius: 30,
+                                child: imageUrl.isNotEmpty
+                                    ? Image.network(
+                                        imageUrl,
+                                      )
+                                    : const CircularProgressIndicator());
+                          }),
+        backgroundColor: colorAppbar,
         centerTitle: true,
         automaticallyImplyLeading: false,
         title: const Text('AdvocatePro',style: TextStyle(color: Colors.white),),
@@ -68,7 +84,7 @@ class _HomePostScreenState extends State<HomePostScreen> {
                             leading: const CircleAvatar(
                               backgroundColor: Colors.blue,
                             ),
-                            title: FutureBuilder<List<ProfileAttribute>>(
+                            title: FutureBuilder<List<SignupAttribute>>(
                     future: fetchDataOfCurrentUser(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -80,10 +96,10 @@ class _HomePostScreenState extends State<HomePostScreen> {
                         return const Text('No data available');
                       } else {
                         // Get the user profile data
-                        ProfileAttribute userProfile = snapshot.data!.first;
+                        SignupAttribute userProfile = snapshot.data!.first;
                         // Set the initial values for controllers
-                        final fname = userProfile.object.fname;
-                        final lname = userProfile.object.lname;
+                        final fname = userProfile.fname;
+                        final lname = userProfile.lname;
                         return Text(
                               '$fname $lname',
                             );}}),
@@ -113,9 +129,13 @@ class _HomePostScreenState extends State<HomePostScreen> {
   }
 }
 
-String? uid() {
-  String? uid = FirebaseAuth.instance.currentUser!.displayName;
+String? userName() {
+  String? username = FirebaseAuth.instance.currentUser!.displayName;
+  return username;
+}
 
+String? uid() {
+  String? uid = FirebaseAuth.instance.currentUser!.uid;
   return uid;
 }
 

@@ -1,4 +1,5 @@
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/lawyer_or_user.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
@@ -201,7 +202,7 @@ class _SignInState extends State<SignIn> {
                     height: 55,
                     width: 327,
                     decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 0, 110, 255),
+                        color: colorBlack1,
                         borderRadius: BorderRadius.circular(45)),
                     child: Center(
                       child: boolLginSuccessful
@@ -230,7 +231,7 @@ class _SignInState extends State<SignIn> {
                     height: 55,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: colorBrown,
                         borderRadius: BorderRadius.circular(30)),
                     child: Center(
                       child: LginSuccessful
@@ -276,7 +277,7 @@ class _SignInState extends State<SignIn> {
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
-                              color: Colors.blue,
+                              color:  colorBlack2,
                               fontWeight: FontWeight.bold,
                               fontSize: 20),
                         ))
@@ -311,9 +312,10 @@ class _SignInState extends State<SignIn> {
     if (user != null) {
       final userCollection = FirebaseFirestore.instance
           .collection("users");
+          
       // Check if the user already exists in Firestore
       final userDocument = await userCollection.doc(user.uid).get();
-      if (userDocument.id == user.uid) {
+      if (userDocument.exists) {
         showToast(message: "User is successfully SignIn");
         Navigator.pushNamed(context, ClientHomeScreen.id);
       } else {
@@ -321,7 +323,7 @@ class _SignInState extends State<SignIn> {
             .collection("lawyers");
         // Check if the user already exists in Firestore
         final lawyerDocument = await lawyerCollection.doc(user.uid).get();
-        if (lawyerDocument.id == user.uid) {
+        if (lawyerDocument.exists) {
           showToast(message: "User is successfully SignIn");
           Navigator.pushNamed(context, HomeScreen.id);
         }

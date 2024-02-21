@@ -1,26 +1,53 @@
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
-import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
+import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AdvocatePostAndProfileScreen extends StatefulWidget {
   final String id;
-  const AdvocatePostAndProfileScreen({super.key, required this.id,});
+  const AdvocatePostAndProfileScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
-  State<AdvocatePostAndProfileScreen> createState() => _AdvocatePostAndProfileScreenState();
+  State<AdvocatePostAndProfileScreen> createState() =>
+      _AdvocatePostAndProfileScreenState();
 }
 
-class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScreen> {
+class _AdvocatePostAndProfileScreenState
+    extends State<AdvocatePostAndProfileScreen> {
   final ref = FirebaseDatabase.instance.ref(databasePathPost());
-  final firestore = FirebaseFirestore.instance.collection('lawyers').snapshots();
+  final refprofile =
+        FirebaseDatabase.instance.ref('Post_${uid()}_profile');
+  final firestore =
+      FirebaseFirestore.instance.collection('lawyers').snapshots();
   final controllerEdit = TextEditingController();
   bool verified = false;
+  String imageUrl = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getImageUrl();
+  }
+
+  Future<void> getImageUrl() async {
+    final storage = FirebaseStorage.instance;
+    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final url = await reff.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,77 +65,63 @@ class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScr
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CircleAvatar(
-                  radius: 30,
-                  backgroundImage: AssetImage('images/lawyerIcon.png'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Container(
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all()),
-                    child: TextButton(
-                      child: const Text('Edit Profile'),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const ProfileEditScreen()));
-                      },
-                    ),
-                  ),
-                ),
+                 CircleAvatar(
+                            radius: 50,
+                            child: imageUrl.isNotEmpty
+                                ? Image.network(
+                                    imageUrl,
+                                    height: 100,
+                                    width: 100,
+                                  )
+                                : const CircularProgressIndicator(),
+                          )
               ],
             ),
             Row(
-  children: [
-    StreamBuilder<QuerySnapshot>(
-      stream: firestore,
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          print('-----------1--------${snapshot.error}');
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData ) {
-          return const Text('No data available');
-        } else {
-          // Check if the ID matches and return the username if true
-          final matchingDoc = snapshot.data!.docs.firstWhere(
-            (doc) => doc.id == widget.id,
-          );
-         
-            return Text(
-              '${matchingDoc['First Name']} ${matchingDoc['Last Name']}',
-              style: const TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          
-        }
-      },
-    ),
-    const SizedBox(width: 8),
-    Visibility(
-      visible: verified,
-      child: const Icon(Icons.verified_user, color: Colors.green),
-    )
-  ],
-),
+              children: [
+                StreamBuilder<QuerySnapshot>(
+                  stream: firestore,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      print('-----------1--------${snapshot.error}');
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData) {
+                      return const Text('No data available');
+                    } else {
+                      // Check if the ID matches and return the username if true
+                      final matchingDoc = snapshot.data!.docs.firstWhere(
+                        (doc) => doc.id == widget.id,
+                      );
+
+                      return Text(
+                        '${matchingDoc['First Name']} ${matchingDoc['Last Name']}',
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }
+                  },
+                ),
+                const SizedBox(width: 8),
+                Visibility(
+                  visible: verified,
+                  child: const Icon(Icons.verified_user, color: Colors.green),
+                )
+              ],
+            ),
             const Text('@Username'),
+
             const SizedBox(
               height: 20,
             ),
             Row(
-              
               children: [
                 const Icon(Icons.calendar_month_rounded),
-                Text('Joined Date: ${joinedDate()}'),
+                Text('Joined: ${joinedDate()}'),
               ],
             ),
             const SizedBox(
@@ -157,10 +170,26 @@ class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScr
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                            leading: const CircleAvatar(
-                              backgroundColor: Colors.blue,
-                            ),
-                            title: FutureBuilder<List<ProfileAttribute>>(
+                            leading: FirebaseAnimatedList(
+                                query: FirebaseDatabase.instance
+                                    .ref('Post_${uid()}_profile'),
+                                defaultChild: const Center(
+                                    child: CircularProgressIndicator()),
+                                itemBuilder:
+                                    (context, snapshots, animation, index) {
+                                  final imageUrl =
+                                      snapshots.child('url').value.toString();
+                                  return CircleAvatar(
+                                      radius: 50,
+                                      child: imageUrl.isNotEmpty
+                                          ? Image.network(
+                                              imageUrl,
+                                              height: 100,
+                                              width: 100,
+                                            )
+                                          : const CircularProgressIndicator());
+                                }),
+                            title: FutureBuilder<List<SignupAttribute>>(
                                 future: fetchDataOfCurrentUser(),
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
@@ -176,11 +205,11 @@ class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScr
                                     return const Text('No data available');
                                   } else {
                                     // Get the user profile data
-                                    ProfileAttribute userProfile =
+                                    SignupAttribute userProfile =
                                         snapshot.data!.first;
                                     // Set the initial values for controllers
-                                    final fname = userProfile.object.fname;
-                                    final lname = userProfile.object.lname;
+                                    final fname = userProfile.fname;
+                                    final lname = userProfile.lname;
                                     return Text(
                                       '$fname $lname',
                                     );
@@ -231,6 +260,20 @@ class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScr
     );
   }
 
+  Future<String> getUrl() async {
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref('Post_${uid()}_profile');
+    final event = await ref.once(DatabaseEventType.value);
+    final Map<dynamic, dynamic>? data =
+        event.snapshot.value as Map<dynamic, dynamic>?;
+    if (data != null && data.containsKey('url')) {
+      final imageUrl = data['url'];
+      return imageUrl.toString();
+    } else {
+      return 'Anonymous';
+    }
+  }
+
   Future<void> showDialogbox(String title, String id) async {
     controllerEdit.text = title;
     return showDialog(
@@ -255,7 +298,7 @@ class _AdvocatePostAndProfileScreenState extends State<AdvocatePostAndProfileScr
                       .then((value) => showToast(message: 'Update Post'))
                       .onError((error, stackTrace) =>
                           showToast(message: 'Error:${error.toString()}'));
-                          Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: const Text("Update"),
               ),

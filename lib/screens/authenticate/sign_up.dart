@@ -362,7 +362,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         lname: controllerSecondName.text,
         phone: controllerPassword.text,
         email: controllerEmail.text,
-        laywerOrNot: lawyerID,
+        laywerOrNot: controllerLawyerID.text,
         specialization: lawyerID,
         dateofbirth: lawyerID,
       ).toJson();
@@ -375,7 +375,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         id: uid,
         fname: controllerFirstName.text,
         lname: controllerSecondName.text,
-        phone: controllerPassword.text,
+        phone: controllerphone.text,
+        pass: controllerPassword.text,
         email: controllerEmail.text,
         laywerOrNot: lawyerID,
         specialization: lawyerID,

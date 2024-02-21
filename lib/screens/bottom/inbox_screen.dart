@@ -1,4 +1,7 @@
 import 'package:advocatepro_f/screens/bottom/inbox/chat_screen.dart';
+import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -33,10 +36,24 @@ class _InboxScreenState extends State<InboxScreen> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                        'images/lawyerIcon.png',
-                        height: 100,
-                      ),
+                      FirebaseAnimatedList(
+                          query: FirebaseDatabase.instance
+                              .ref('Post_${uid()}_profile'),
+                          defaultChild:
+                              const Center(child: CircularProgressIndicator()),
+                          itemBuilder: (context, snapshots, animation, index) {
+                            final imageUrl =
+                                snapshots.child('url').value.toString();
+                            return CircleAvatar(
+                                radius: 50,
+                                child: imageUrl.isNotEmpty
+                                    ? Image.network(
+                                        imageUrl,
+                                        height: 100,
+                                        width: 100,
+                                      )
+                                    : const CircularProgressIndicator());
+                          }),
                       const SizedBox(
                         height: 16,
                       ),

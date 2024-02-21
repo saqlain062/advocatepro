@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImage extends StatefulWidget {
@@ -17,10 +20,10 @@ class UploadImage extends StatefulWidget {
 
 class __UploadImagState extends State<UploadImage> {
   File? _image;
+  CroppedFile? _croppedFile;
   final picker = ImagePicker();
+  bool loading = false;
   FirebaseStorage storage = FirebaseStorage.instance;
-  DatabaseReference databaseReference = FirebaseDatabase.instance.ref("Profile_Image") ;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,21 +37,25 @@ class __UploadImagState extends State<UploadImage> {
               onTap: () {
                 getGalleryImage();
               },
-              child: Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(
-                        color: Colors.black,
-                      )),
-                  child: _image != null
-                      ? Image.file(_image!.absolute)
-                      : const Center(
-                          child: Icon(
-                          Icons.cameraswitch_rounded,
-                          size: 100,
-                        ))),
+              child: loading
+                  ? const CircularProgressIndicator(
+                      color: Colors.amber,
+                    )
+                  : Container(
+                      height: 200,
+                      width: 200,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                            color: Colors.black,
+                          )),
+                      child: _image != null
+                          ? Image.file(_image!.absolute)
+                          : const Center(
+                              child: Icon(
+                              Icons.cameraswitch_rounded,
+                              size: 100,
+                            ))),
             ),
             const SizedBox(
               height: 30,
@@ -56,12 +63,12 @@ class __UploadImagState extends State<UploadImage> {
             RoundButton(
                 title: "Uplaod",
                 onTop: () async {
-
+                  setState(() {
+                    loading = true;
+                  });
                   // Reference to the user's folder in Firebase Storage
-                  Reference storageRef = storage
-                      .ref()
-                      .child('users/profile-pic.jpg');
-
+                  Reference storageRef =
+                      storage.ref().child('users/${uid()}/profile-pic.jpg');
                   // Display loading indicator or disable the button
                   // while the image is being uploaded
                   // (You can use a loading state or a modal dialog)
@@ -77,7 +84,27 @@ class __UploadImagState extends State<UploadImage> {
                     if (taskSnapshot.state == TaskState.success) {
                       showToast(message: 'Image uploaded successfully!');
                       String downloadURL = await storageRef.getDownloadURL();
-                      print('Download URL: $downloadURL');
+                      String uid = FirebaseAuth.instance.currentUser!.uid;
+                      String databasePath = 'Post_${uid}_profile';
+                      final databaseReference =
+                          FirebaseDatabase.instance.ref(databasePath);
+                      String id =
+                          DateTime.now().millisecondsSinceEpoch.toString();
+
+                      databaseReference.child(id).set({
+                        'id': id,
+                        'url': downloadURL.toString(),
+                        'time': DateTime.now().toString(),
+                      }).then((value) {
+                        setState(() {
+                          loading = false;
+                        });
+                        print("posted");
+                      }).onError((error, stackTrace) {
+                        setState(() {
+                          loading = false;
+                        });
+                      });
                     } else {
                       showToast(message: 'Error uploading image');
                     }
@@ -85,6 +112,9 @@ class __UploadImagState extends State<UploadImage> {
                     showToast(message: 'Error: $e');
                   }
                   showToast(message: "SuccessFully down");
+                  setState(() {
+                    loading = false;
+                  });
                 })
           ],
         ),
@@ -95,12 +125,41 @@ class __UploadImagState extends State<UploadImage> {
   Future getGalleryImage() async {
     final pickedFile =
         await picker.pickImage(source: ImageSource.gallery); //imageQuality:80
+
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        _cropImage(pickedFile);
       } else {
         showToast(message: "No Image Picked");
       }
     });
+  }
+
+  Future<void> _cropImage(XFile? pickedFile) async {
+    if (pickedFile != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: pickedFile.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 100,
+        uiSettings: [
+          AndroidUiSettings(
+              toolbarTitle: 'Cropper',
+              toolbarColor: Colors.deepOrange,
+              toolbarWidgetColor: Colors.white,
+              initAspectRatio: CropAspectRatioPreset.original,
+              lockAspectRatio: false),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          _croppedFile = croppedFile;
+
+          _image = File(croppedFile.path);
+        });
+      }
+    }
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupFields {
@@ -9,10 +8,11 @@ class SignupFields {
   static const String phone = 'Phone';
   static const String email = 'Email';
   static const String dateofbirth = 'DOB';
+  static const String pass = 'pass';
   static const String specialization = 'Specialization';
   static const String laywerOrNot = 'Lawyer ID';
   static List<String> getFields() =>
-      [id, fname, lname, phone, email, laywerOrNot];
+      [id, fname, lname, phone, email, laywerOrNot,pass,laywerOrNot,dateofbirth,specialization];
 }
 
 class SignupAttribute {
@@ -21,6 +21,7 @@ class SignupAttribute {
   final String lname;
   final String phone;
   final String email;
+  final String? pass;
   final String specialization;
   final String dateofbirth;
   final String laywerOrNot;
@@ -31,6 +32,7 @@ class SignupAttribute {
     required this.lname,
     required this.phone,
     required this.email,
+    this.pass,
     required this.dateofbirth,
     required this.laywerOrNot,
     required this.specialization,
