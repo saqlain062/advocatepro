@@ -21,3 +21,8 @@ const Color colorAppbarIcon = Colors.white;
 
 // Icon Color
 const Color colorIcon = Colors.amber;
+
+class SColors{
+  SColors._();
+  
+}
