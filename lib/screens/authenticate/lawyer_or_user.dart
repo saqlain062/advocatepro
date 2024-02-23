@@ -2,6 +2,7 @@ import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
                 const Image(
                     height: 100,
                     width: 100,
-                    image: AssetImage('images/lawyer.png')),
+                    image: AssetImage(SImages.lightAppLogo)),
                 const Center(
                     child: Text(
                   'who are you ...',
@@ -82,56 +83,6 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
                   height: 10,
                 ),
                 //Signup Button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        final form = _formkey.currentState!;
-                        final isValid = form.validate();
-                        if (isValid) {
-                          _insertUserData();
-                        }
-                      },
-                      child: Container(
-                        width: 335,
-                        height: 55,
-                        decoration: BoxDecoration(
-                            color: Colors.pink,
-                            borderRadius: BorderRadius.circular(50)),
-                        child: Center(
-                            child: boolSignUpSuccessfull
-                                ? const CircularProgressIndicator(
-                                    color: Colors.white,
-                                  )
-                                : const Text(
-                                    'Continue',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                      color: Colors.white,
-                                    ),
-                                  )),
-                      ),
-                    ),
-                  ],
-                ),
-                //Already have account switch between sign in and sign up
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          // widget.toggleView();
-                          Navigator.pushNamed(context, SignIn.id);
-                        },
-                        child: const Text(
-                          'Back',
-                          style:
-                              TextStyle(color: Colors.pink, fontSize: 20),
-                        ))
-                  ],
-                ),
               ]),
             )),
       ),
@@ -143,6 +94,7 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
     final user = _firebaseAuth.currentUser;
     final name = user?.displayName; // User's display name
     final email = user?.email; // User's email address
+    final url = user?.photoURL;
     // Store user data in Firestore
       final userCollection = FirebaseFirestore.instance
           .collection("users");
@@ -155,6 +107,7 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
         laywerOrNot: 'User or Client',
         specialization: 'Google Sign in',
         dateofbirth: 'Google Sign in',
+        profilePhotoUrl: url ?? '',
       ).toJson();
       await userCollection.doc(user.uid).set(newUser);
       Navigator.pushNamed(context, ClientHomeScreen.id);
@@ -166,6 +119,7 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
     final user = _firebaseAuth.currentUser;
     final name = user?.displayName; // User's display name
     final email = user?.email; // User's email address
+    final url = user?.photoURL;
     final lawyerCollection = FirebaseFirestore.instance
         .collection("lawyers");
     final newUser = SignupAttribute(
@@ -177,6 +131,7 @@ class _LawyerOrUserScreenState extends State<LawyerOrUserScreen> {
       laywerOrNot: 'Lawyer',
       specialization: 'Google Sign in',
       dateofbirth: 'Google Sign in',
+      profilePhotoUrl: url ?? '',
     ).toJson();
     await lawyerCollection.doc(user.uid).set(newUser);
     Navigator.pushNamed(context, HomeScreen.id);

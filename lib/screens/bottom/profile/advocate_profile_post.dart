@@ -85,7 +85,7 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const ProfileEditScreen()),
+                                    ProfileEditScreen(imageUrl: imageUrl,)),
                           );
                         },
                         child: const Text(

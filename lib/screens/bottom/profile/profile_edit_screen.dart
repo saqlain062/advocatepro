@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
@@ -11,7 +11,9 @@ import 'package:intl/intl.dart';
 
 class ProfileEditScreen extends StatefulWidget {
   static const String id = 'profile_edit_screen';
-  const ProfileEditScreen({super.key});
+  final String imageUrl ;
+  const ProfileEditScreen({super.key, required this.imageUrl
+  });
 
   @override
   State<ProfileEditScreen> createState() => _ProfileEditScreenState();
@@ -74,11 +76,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const UploadImage(
                                     )));
                                   },
-                                  child: const Image(
-                                      height: 100,
-                                      width: 100,
-                                      image: AssetImage('images/lawyer.png')),
-                                ),
+                                  child: CircleAvatar(
+                    radius: 50,
+                        child: widget.imageUrl.isNotEmpty
+                            ? Image.network(widget.imageUrl)
+                            : const CircularProgressIndicator(),
+                      ),),
                                 const Center(
                                     child: Text(
                                   'Edit picture',

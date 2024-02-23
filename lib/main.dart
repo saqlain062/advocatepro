@@ -2,7 +2,7 @@ import 'dart:io' show Platform;
 import 'package:advocatepro_f/app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:advocatepro_f/config/config.dart';
+import 'package:advocatepro_f/utils/constants/api_constants.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

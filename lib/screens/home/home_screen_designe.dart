@@ -1,5 +1,6 @@
 import 'package:advocatepro_f/Methods/share.dart';
-import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
+import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
@@ -14,7 +15,6 @@ import 'package:advocatepro_f/screens/home/notification/notification.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +52,20 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   final refprofile = FirebaseDatabase.instance.ref('Post_${uid()}_profile');
 
   Future<void> getImageUrl() async {
+    try{
     final storage = FirebaseStorage.instance;
     final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
     final url = await reff.getDownloadURL();
     setState(() {
       imageUrl = url;
     });
+    } catch (e){
+      print('Error getting image URL: $e');
+    // You can set a default image URL or take other appropriate actions
+    setState(() {
+      imageUrl = "";
+    });
+    }
   }
 
   @override

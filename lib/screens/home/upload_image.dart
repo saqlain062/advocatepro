@@ -1,14 +1,12 @@
 import 'dart:io';
-
 import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
+// import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UploadImage extends StatefulWidget {
@@ -21,7 +19,6 @@ class UploadImage extends StatefulWidget {
 
 class __UploadImagState extends State<UploadImage> {
   File? _image;
-  CroppedFile? _croppedFile;
   final picker = ImagePicker();
   bool loading = false;
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -70,9 +67,6 @@ class __UploadImagState extends State<UploadImage> {
                   // Reference to the user's folder in Firebase Storage
                   Reference storageRef =
                       storage.ref().child('users/${uid()}/profile-pic.jpg');
-                  // Display loading indicator or disable the button
-                  // while the image is being uploaded
-                  // (You can use a loading state or a modal dialog)
 
                   try {
                     // Upload the image file
@@ -97,10 +91,12 @@ class __UploadImagState extends State<UploadImage> {
                         'url': downloadURL.toString(),
                         'time': DateTime.now().toString(),
                       }).then((value) {
+                         showToast(message: "SuccessFully down");
                         setState(() {
                           loading = false;
                         });
                         print("posted");
+                        Navigator.pop(context);
                       }).onError((error, stackTrace) {
                         setState(() {
                           loading = false;
@@ -112,10 +108,10 @@ class __UploadImagState extends State<UploadImage> {
                   } catch (e) {
                     showToast(message: 'Error: $e');
                   }
-                  showToast(message: "SuccessFully down");
                   setState(() {
                     loading = false;
                   });
+                 
                 })
           ],
         ),
@@ -129,39 +125,48 @@ class __UploadImagState extends State<UploadImage> {
 
     setState(() {
       if (pickedFile != null) {
-        _cropImage(pickedFile);
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+        // _cropImage(pickedFile);
       } else {
         showToast(message: "No Image Picked");
       }
     });
   }
 
-  Future<void> _cropImage(XFile? pickedFile) async {
-    if (pickedFile != null) {
-      final croppedFile = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
-        uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: 'Cropper',
-              toolbarColor: Colors.deepOrange,
-              toolbarWidgetColor: Colors.white,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
-          IOSUiSettings(
-            title: 'Cropper',
-          ),
-        ],
-      );
-      if (croppedFile != null) {
-        setState(() {
-          _croppedFile = croppedFile;
+  // Future<void> _cropImage(XFile? pickedFile) async {
+  //   if (pickedFile != null) {
+  //     final croppedFile = await ImageCropper().cropImage(
+  //       sourcePath: pickedFile.path,
+  //        aspectRatioPresets: [
+  //       CropAspectRatioPreset.square,
+  //       CropAspectRatioPreset.ratio3x2,
+  //       CropAspectRatioPreset.original,
+  //       CropAspectRatioPreset.ratio4x3,
+  //       CropAspectRatioPreset.ratio16x9
+  //     ],
+  //       compressFormat: ImageCompressFormat.jpg,
+  //       compressQuality: 100,
+  //       uiSettings: [
+  //         AndroidUiSettings(
+  //             toolbarTitle: 'Cropper',
+  //             toolbarColor: Colors.deepOrange,
+  //             toolbarWidgetColor: Colors.white,
+  //             initAspectRatio: CropAspectRatioPreset.original,
+  //             lockAspectRatio: false),
+  //         IOSUiSettings(
+  //           title: 'Cropper',
+  //         ),
+  //       ],
+  //     );
+  //     if (croppedFile != null) {
+  //       setState(() {
 
-          _image = File(croppedFile.path);
-        });
-      }
-    }
-  }
+  //         _image = File(croppedFile.path);
+  //       });
+  //     }
+  //   }
+  // }
 }
 

@@ -1,5 +1,5 @@
 import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/services/auth.dart';

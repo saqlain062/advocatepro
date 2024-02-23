@@ -43,7 +43,7 @@ app.*.map.json
 /android/app/release
 
 # Configuration files
-/lib/config/config.dart
+/lib/constants/api_constants.dart
 /lib/firebase_options.dart
 # warning: in the working copy of 'android/app/google-services.json', LF will be replaced by CRLF the next time Git touches it
 /android/app/google-services.json

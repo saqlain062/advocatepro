@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:advocatepro_f/check_method.dart';
+import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

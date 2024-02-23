@@ -11,8 +11,9 @@ class SignupFields {
   static const String pass = 'pass';
   static const String specialization = 'Specialization';
   static const String laywerOrNot = 'Lawyer ID';
+  static const String profilePhotoUrl = 'Url';
   static List<String> getFields() =>
-      [id, fname, lname, phone, email, laywerOrNot,pass,laywerOrNot,dateofbirth,specialization];
+      [id, fname, lname, phone, email, laywerOrNot,pass,laywerOrNot,dateofbirth,specialization,profilePhotoUrl];
 }
 
 class SignupAttribute {
@@ -25,6 +26,7 @@ class SignupAttribute {
   final String specialization;
   final String dateofbirth;
   final String laywerOrNot;
+  final String? profilePhotoUrl;
 
   const SignupAttribute({
     required this.id,
@@ -36,6 +38,7 @@ class SignupAttribute {
     required this.dateofbirth,
     required this.laywerOrNot,
     required this.specialization,
+    this.profilePhotoUrl,
   });
 
   static SignupAttribute formJson(DocumentSnapshot<Map<String, dynamic>> byId) {
