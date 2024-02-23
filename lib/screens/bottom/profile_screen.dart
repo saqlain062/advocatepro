@@ -8,7 +8,7 @@ import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -21,6 +21,25 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String imageUrl = '';
+  final refprofile =
+        FirebaseDatabase.instance.ref('Post_${uid()}_profile');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getImageUrl();
+  }
+
+  Future<void> getImageUrl() async {
+    final storage = FirebaseStorage.instance;
+    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final url = await reff.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +64,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 return Column(
                   children: [
                     UserAccountsDrawerHeader(
-                      currentAccountPicture: FirebaseAnimatedList(
-                          query: FirebaseDatabase.instance
-                              .ref('Post_${uid()}_profile'),
-                          defaultChild:
-                              const Center(child: CircularProgressIndicator()),
-                          itemBuilder: (context, snapshots, animation, index) {
-                            final imageUrl =
-                                snapshots.child('url').value.toString();
-                            return CircleAvatar(
+                      currentAccountPicture: CircleAvatar(
+
                                 radius: 50,
                                 child: imageUrl.isNotEmpty
                                     ? Image.network(
@@ -61,8 +73,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         height: 100,
                                         width: 100,
                                       )
-                                    : const CircularProgressIndicator());
-                          }),
+                                    : const CircularProgressIndicator()),
+                          
                       accountName: Text(
                         '$fname $lname',
                         style: const TextStyle(

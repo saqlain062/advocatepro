@@ -12,6 +12,7 @@ class AdvocateScreen extends StatefulWidget {
 
 class _AdvocateScreenState extends State<AdvocateScreen> {
   final firestore = FirebaseFirestore.instance.collection('lawyers').snapshots();
+  
 
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
 import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +79,7 @@ class _SignInState extends State<SignIn> {
                     Image(
                         height: 50,
                         width: 50,
-                        image: AssetImage('images/lawyerIcon.png')),
+                        image: AssetImage(SImages.lightAppLogo)),
                     SizedBox(
                       width: 10,
                     ),

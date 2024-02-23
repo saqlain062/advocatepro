@@ -1,11 +1,10 @@
 import 'package:advocatepro_f/utils/constants/color.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
-import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
+import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class HomePostScreen extends StatefulWidget {
   const HomePostScreen({super.key});
@@ -17,115 +16,161 @@ class HomePostScreen extends StatefulWidget {
 class _HomePostScreenState extends State<HomePostScreen> {
   final ref = FirebaseDatabase.instance.ref(databasePathPost());
   bool verified = false;
+  String imageUrl = '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getImageUrl();
+  }
+
+  Future<void> getImageUrl() async {
+    final storage = FirebaseStorage.instance;
+    final ref = storage.ref().child("users/${uid()}/profile-pic.jpg");
+    final url = await ref.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        leading: FirebaseAnimatedList(
-                          query: FirebaseDatabase.instance
-                              .ref('Post_${uid()}_profile'),
-                          defaultChild:
-                              const Center(child: CircularProgressIndicator()),
-                          itemBuilder: (context, snapshots, animation, index) {
-                            final imageUrl =
-                                snapshots.child('url').value.toString();
-                            return CircleAvatar(
-                                radius: 30,
-                                child: imageUrl.isNotEmpty
-                                    ? Image.network(
-                                        imageUrl,
-                                      )
-                                    : const CircularProgressIndicator());
-                          }),
+        leading: CircleAvatar(
+            radius: 25,
+            child: imageUrl.isNotEmpty
+                ? Image.network(
+                    imageUrl,
+                  )
+                : const CircularProgressIndicator()),
         backgroundColor: colorAppbar,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: const Text('AdvocatePro',style: TextStyle(color: Colors.white),),
+        title: const Text(
+          'AdvocatePro',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display lawyer posts
-            Expanded(
-              child: FirebaseAnimatedList(
-                  query: ref,
-                  defaultChild: const Center(child: CircularProgressIndicator()),
-                  itemBuilder: (context, snapshots, animation, index) {
-                     // Format time
-
-                    String postDateTime =
-                        snapshots.child('time').value.toString();
-                    String formattedTime = '';
-
-                    // Convert the string to a DateTime object
-                    DateTime postTime = DateTime.parse(postDateTime);
-                    DateTime currentTime = DateTime.now();
-                    Duration difference = currentTime.difference(postTime);
-                    if (difference.inDays == 0) {
-                      // Post was made today, show time
-                      formattedTime = DateFormat('h:mm a').format(postTime);
-                    } else if (difference.inDays >= 1) {
-                      // Post is older than a day, show date and year
-                      formattedTime = DateFormat('MMM dd').format(postTime);
-                    } else {
-                      formattedTime =
-                          DateFormat('MMM dd, yyyy').format(postTime);
-                    }
-                    return Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ListTile(
-                            tileColor: Colors.white,
-                            leading: const CircleAvatar(
-                              backgroundColor: Colors.blue,
-                            ),
-                            title: FutureBuilder<List<SignupAttribute>>(
-                    future: fetchDataOfCurrentUser(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        print('-----------1--------$snapshot.error');
-                        return Text('Error:${snapshot.error}');
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Text('No data available');
-                      } else {
-                        // Get the user profile data
-                        SignupAttribute userProfile = snapshot.data!.first;
-                        // Set the initial values for controllers
-                        final fname = userProfile.fname;
-                        final lname = userProfile.lname;
-                        return Text(
-                              '$fname $lname',
-                            );}}),
-                            subtitle:
-                                Text(formattedTime),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.linear_scale_sharp),
-                              onPressed: () {},
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Text(snapshots
-                                .child('Caption or Content')
-                                .value
-                                .toString()),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+            const Text("Select Category",style: TextStyle(fontSize: SSizes.fontSizeLg),),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _category(title: "Family", screen: const Text("") ),
+                  _category(title: "Criminal", screen: const Text("") ),
+                  _category(title: "Priviate", screen: const Text("") ),
+                  _category(title: "Divorce", screen: const Text("") ),
+                ],
+              ),
+            ),
+            const Text("NearBy",style: TextStyle(fontSize: SSizes.fontSizeLg),),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children : [
+                _nearBy(title: 'Saqlain', subtitle: 'Lawyer', icon: Icons.access_alarms_sharp, imageUrl: SImages.darkAppLogo, screen: const Text('data')),
+                ]
+                
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget _category({
+    required String title,
+    required Widget screen,
+  }) {
+    return Card(
+      margin: const EdgeInsets.all(5.0),
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20)
+      ),
+      surfaceTintColor: colorWhite,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => screen));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _nearBy({
+    required String imageUrl,
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required Widget screen,
+  }) {
+    return Stack(
+      children: [
+    // Background image
+    Image.asset(
+      imageUrl,
+      // Adjust the height as needed
+    ),
+    // White background for profile info
+    // Positioned(
+    //   bottom: 0,
+    //   left: 0,
+    //   right: 0,
+    //   child: Container(
+    //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    //     color: Colors.white,
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           title,
+    //           style: const TextStyle(
+    //             fontWeight: FontWeight.bold,
+    //             fontSize: SSizes.fontSizeLg,
+    //           ),
+    //         ),
+    //         const SizedBox(height: 4),
+    //         Text(
+    //           subtitle,
+    //           style: const TextStyle(fontSize: 16),
+    //         ),
+    //         const SizedBox(height: 4),
+    //         Row(
+    //           children: [
+    //             Icon(icon, color: Colors.grey),
+    //             const SizedBox(width: 4),
+    //             const Text(
+    //               '+1234567890',
+    //               style: TextStyle(fontSize: 16),
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // ),
+      ],
+    );
+
   }
 }
 

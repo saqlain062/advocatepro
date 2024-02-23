@@ -11,9 +11,11 @@ import 'package:advocatepro_f/screens/home/case/case_screen.dart';
 import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/screens/home/notification/notification.dart';
+import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenDesgine extends StatefulWidget {
@@ -36,6 +38,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   @override
   void initState() {
     super.initState();
+    getImageUrl();
   }
 
   bool isToday(String time) {
@@ -43,6 +46,18 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     final today = DateTime(now.year, now.month, now.day + 2);
     final format = dateformat(time);
     return format.isAtSameMomentAs(today);
+  }
+
+  String imageUrl = '';
+  final refprofile = FirebaseDatabase.instance.ref('Post_${uid()}_profile');
+
+  Future<void> getImageUrl() async {
+    final storage = FirebaseStorage.instance;
+    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final url = await reff.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+    });
   }
 
   @override
@@ -91,21 +106,13 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                     padding: EdgeInsets.zero,
                     children: [
                       UserAccountsDrawerHeader(
-                        currentAccountPicture: FirebaseAnimatedList(
-                          query: FirebaseDatabase.instance
-                              .ref('Post_${uid()}_profile'),
-                          itemBuilder: (context, snapshots, animation, index) {
-                            final imageUrl =
-                                snapshots.child('url').value.toString();
-                            return CircleAvatar(
-                                child: imageUrl.isNotEmpty
-                                    ? Image.network(
-                                        imageUrl,
-                                     
-                                      )
-                                    : const CircularProgressIndicator());
-                          }),
-                        
+                        currentAccountPicture: CircleAvatar(
+                            radius: SSizes.profileImageRadius,
+                            child: imageUrl.isNotEmpty
+                                ? Image.network(
+                                    imageUrl,
+                                  )
+                                : const CircularProgressIndicator()),
                         accountName: Text('$fname $lname'),
                         accountEmail: Text(gmail),
                         decoration: const BoxDecoration(
@@ -225,7 +232,8 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
               //   ),
               // ),
 
-              Row(// Row before More with advocatepro
+              Row(
+                // Row before More with advocatepro
                 children: [
                   _card(
                       title: 'Add Post',
@@ -392,6 +400,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     required Widget screen,
   }) {
     return Card(
+      color: Colors.white,
       margin: const EdgeInsets.all(20.0),
       elevation: 0,
       surfaceTintColor: colorWhite,

@@ -7,6 +7,7 @@ import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -21,6 +22,26 @@ class AdvocateProfileScreen extends StatefulWidget {
 
 class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
   final ref = FirebaseDatabase.instance.ref(databasePathPost());
+
+  String imageUrl = '';
+  final refprofile =
+        FirebaseDatabase.instance.ref('Post_${uid()}_profile');
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getImageUrl();
+  }
+
+  Future<void> getImageUrl() async {
+    final storage = FirebaseStorage.instance;
+    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final url = await reff.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+    });
+  }
   final controllerEdit = TextEditingController();
   bool verified = false;
 
@@ -42,25 +63,12 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Wrap FirebaseAnimatedList with Container and provide height
-                  Container(
-                    height: 100, // Adjust height as needed
-                    child: FirebaseAnimatedList(
-                      query: FirebaseDatabase.instance
-                          .ref('Post_${uid()}_profile'),
-                      defaultChild:
-                          const Center(child: CircularProgressIndicator()),
-                      itemBuilder: (context, snapshots, animation, index) {
-                        final imageUrl =
-                            snapshots.child('url').value.toString();
-                        return CircleAvatar(
-                          child: imageUrl.isNotEmpty
-                              ? Image.network(imageUrl)
-                              : const CircularProgressIndicator(),
-                        );
-                      },
-                    ),
-                  ),
+                   CircleAvatar(
+                    radius: 50,
+                        child: imageUrl.isNotEmpty
+                            ? Image.network(imageUrl)
+                            : const CircularProgressIndicator(),
+                      ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(

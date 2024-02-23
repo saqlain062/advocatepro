@@ -62,21 +62,16 @@ class _AdvocatePostAndProfileScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                 CircleAvatar(
-                            radius: 50,
-                            child: imageUrl.isNotEmpty
-                                ? Image.network(
-                                    imageUrl,
-                                    height: 100,
-                                    width: 100,
-                                  )
-                                : const CircularProgressIndicator(),
-                          )
-              ],
-            ),
+            CircleAvatar(
+                       radius: 50,
+                       child: imageUrl.isNotEmpty
+                           ? Image.network(
+                               imageUrl,
+                               height: 100,
+                               width: 100,
+                             )
+                           : const CircularProgressIndicator(),
+                     ),
             Row(
               children: [
                 StreamBuilder<QuerySnapshot>(
