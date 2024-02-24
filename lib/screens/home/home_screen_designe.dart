@@ -3,7 +3,7 @@ import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_in.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signin/sign_in.dart';
 import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/support/supportscreen/feedback_screen.dart';
