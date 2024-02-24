@@ -31,13 +31,13 @@ class SSizes {
 
   // Default spacing between sections
   static const double defaultSpaces = 24.0;
-  static const double spaceBetween = 16.0;
+  static const double spaceBetweenItems = 16.0;
   static const double spaceBetweenSections = 32.0;
 
   // Border radius
   static const double borderRadiusSm = 4.0;
   static const double borderRadiusMd = 8.0;
-  static const double borderRadiusLg = 12.0;
+  static const double borderRadiusLg = 14.0;
 
   // Divider height
   static const double dividerHeight = 1.0;

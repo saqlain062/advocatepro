@@ -104,7 +104,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                         decoration: InputDecoration(
                                             prefixIcon: const Icon(
                                               Icons.person,
-                                              color: colorIcon,
+                                              color: SColors.iconColor,
                                             ),
                                             label: const Text('First Name'),
                                             hintText: 'Enter your first name',
@@ -129,7 +129,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                         decoration: InputDecoration(
                                             prefixIcon: const Icon(
                                               Icons.person,
-                                              color: colorIcon,
+                                              color: SColors.iconColor,
                                             ),
                                             label: const Text('Second Name'),
                                             hintText: 'Enter your Second Name',
@@ -154,7 +154,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       decoration: InputDecoration(
                                         prefixIcon: const Icon(
                                           Icons.person_pin_rounded,
-                                          color: colorIcon,
+                                          color: SColors.iconColor,
                                         ),
                                         labelText: 'Enter Your lawyer ID',
                                         hintText: 'Enter Your lawyer ID',
@@ -177,7 +177,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       decoration: InputDecoration(
                                         prefixIcon: const Icon(
                                           Icons.format_list_bulleted_rounded,
-                                          color: colorIcon,
+                                          color: SColors.iconColor,
                                         ),
                                         labelText: 'Specialization',
                                         hintText: 'Specialization Field',
@@ -201,7 +201,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.email,
-                                        color: colorIcon,
+                                        color: SColors.iconColor,
                                       ),
                                       label: const Text('Email'),
                                       hintText: 'Enter your email',
@@ -225,7 +225,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.calendar_month,
-                                        color: colorIcon,
+                                        color: SColors.iconColor,
                                       ),
                                       label: const Text('DOB'),
                                       hintText: 'Enter your Date of Birth',
@@ -249,7 +249,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                   decoration: InputDecoration(
                                       prefixIcon: const Icon(
                                         Icons.phone,
-                                        color: colorIcon,
+                                        color: SColors.iconColor,
                                       ),
                                       label: const Text('Phone'),
                                       hintText: '0300-1234567',

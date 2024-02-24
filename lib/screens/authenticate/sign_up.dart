@@ -68,9 +68,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Column(
                     children: [
                       const Image(
-                          height: 200,
+                          height: 100,
                           width: 200,
-                          image: AssetImage('images/lawyer.png')),
+                          image: AssetImage('assets/logos/advocatelogo.png')),
                       const Center(
                           child: Text(
                         'Create Account',

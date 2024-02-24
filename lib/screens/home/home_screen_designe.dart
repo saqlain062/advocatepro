@@ -1,5 +1,4 @@
 import 'package:advocatepro_f/Methods/share.dart';
-import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/screens/Forms/form_attribute.dart';
@@ -130,7 +129,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(
                           Icons.home,
-                          color: colorIcon,
+                          color: SColors.iconColor,
                         ),
                         title: const Text('Home'),
                         onTap: () {
@@ -140,7 +139,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(
                           Icons.share,
-                          color: colorIcon,
+                          color: SColors.iconColor,
                         ),
                         title: const Text('Share'),
                         onTap: () {
@@ -150,7 +149,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       ListTile(
                         leading: const Icon(
                           Icons.logout,
-                          color: colorIcon,
+                          color: SColors.iconColor,
                         ),
                         title: const Text('Log out'),
                         onTap: () {
@@ -383,7 +382,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
               Icon(
                 icon,
                 size: 30,
-                color: colorIcon,
+                color: SColors.iconColor,
               ),
               const SizedBox(
                 height: 8,
@@ -424,7 +423,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
             Icon(
               icon,
               size: 30,
-              color: colorIcon,
+              color: SColors.iconColor,
             ),
             const SizedBox(
               height: 8,
@@ -463,7 +462,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                 leading: Icon(
                   icon,
                   size: 40,
-                  color: colorIcon,
+                  color: SColors.iconColor,
                 ),
                 title: Text(
                   title,

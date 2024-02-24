@@ -128,46 +128,47 @@ class _HomePostScreenState extends State<HomePostScreen> {
     // Background image
     Image.asset(
       imageUrl,
-      // Adjust the height as needed
+      height: 150,
+      width: 150,
     ),
     // White background for profile info
-    // Positioned(
-    //   bottom: 0,
-    //   left: 0,
-    //   right: 0,
-    //   child: Container(
-    //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-    //     color: Colors.white,
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           title,
-    //           style: const TextStyle(
-    //             fontWeight: FontWeight.bold,
-    //             fontSize: SSizes.fontSizeLg,
-    //           ),
-    //         ),
-    //         const SizedBox(height: 4),
-    //         Text(
-    //           subtitle,
-    //           style: const TextStyle(fontSize: 16),
-    //         ),
-    //         const SizedBox(height: 4),
-    //         Row(
-    //           children: [
-    //             Icon(icon, color: Colors.grey),
-    //             const SizedBox(width: 4),
-    //             const Text(
-    //               '+1234567890',
-    //               style: TextStyle(fontSize: 16),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // ),
+    Positioned(
+      top: 100,
+      left: 15,
+      right: 15,
+      bottom: -2,
+      child: Container(
+        height: 30,
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+        color: Colors.white,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: SSizes.fontSizeMd,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: const TextStyle(fontSize: 10),
+            ),
+            Row(
+              children: [
+                Icon(icon, color: Colors.grey),
+                const SizedBox(width: 4),
+                const Text(
+                  '+1234567890',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    ),
       ],
     );
 

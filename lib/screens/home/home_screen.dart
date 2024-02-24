@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           type: BottomNavigationBarType.fixed,
           backgroundColor: colorWhite,
           iconSize: 30,
-          selectedItemColor: colorIcon,
+          selectedItemColor: SColors.iconColor,
           unselectedItemColor: const Color.fromRGBO(141, 141, 141, 1),
           showUnselectedLabels: false,
           showSelectedLabels: false,

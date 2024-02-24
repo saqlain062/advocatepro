@@ -19,11 +19,16 @@ const Color colorAppbarText = Colors.amber;
 // AppBar Icon Color
 const Color colorAppbarIcon = Colors.white;
 
-// Icon Color
-const Color colorIcon = Colors.amber;
 
 class SColors{
   SColors._();
+
+  // AppBar 
+  static const Color icondark = Colors.black;
+  static const Color iconColorin = Colors.white;
+
+  static const Color iconColor = Color(0xFF6F6E6E);
+  
   
   // App Basic Colors
   static const Color primary = Color(0xff2c344c);
@@ -34,10 +39,11 @@ class SColors{
   static const Color textPrimary = Color(0xff333333);
   static const Color textSecondary = Color(0xff6c7570);
   static const Color textWhite = Colors.white;
+  static const Color textinbox = Colors.white;
 
   // background Colors
   static const Color light = Color(0xfff6f6f6);
-  static const Color dart = Color(0xff272727);
+  static const Color dark = Color(0xff272727);
   static const Color primaryBackground = Color(0xfff3f5ff);
 
   // background Container Colors

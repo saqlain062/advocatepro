@@ -143,7 +143,7 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
                 children: [
                   const Icon(
                     Icons.calendar_month_rounded,
-                    color: colorIcon,
+                    color: SColors.iconColor,
                   ),
                   const SizedBox(width: 5),
                   Text('Joined Date: ${joinedDate()}'),
