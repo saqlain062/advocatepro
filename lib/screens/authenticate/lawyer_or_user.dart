@@ -1,4 +1,4 @@
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/utils/constants/image_strings.dart';

@@ -1,4 +1,4 @@
-import 'package:advocatepro_f/screens/authenticate/controllers.onboarding/onboarding_controller.dart';
+import 'package:advocatepro_f/screens/authenticate/controllers/onboarding/onboarding_controller.dart';
 import 'package:advocatepro_f/screens/authenticate/screens/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:advocatepro_f/screens/authenticate/screens/onboarding/widgets/onboarding_next_button.dart';
 import 'package:advocatepro_f/screens/authenticate/screens/onboarding/widgets/onboarding_page.dart';

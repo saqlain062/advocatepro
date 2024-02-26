@@ -1,5 +1,5 @@
 import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/advocate_attaribute.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

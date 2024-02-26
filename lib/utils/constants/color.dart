@@ -17,7 +17,7 @@ const Color colorBorder = Color.fromRGBO(238, 238, 238, 1);
 const Color colorAppbarText = Colors.amber;
 
 // AppBar Icon Color
-const Color colorAppbarIcon = Colors.white;
+const Color colorAppbarIcon = Color(0xff2c344c);
 
 
 class SColors{

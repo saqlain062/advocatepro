@@ -2,7 +2,7 @@ import 'package:advocatepro_f/Methods/round_button.dart';
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/home/upload_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -114,7 +114,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                 borderSide: const BorderSide(
                                                     width: 4))),
                                         validator: (value) {
-                                          return checkname(value);
+                                          return SValidator.checkname(value);
                                         },
                                       ),
                                     ),
@@ -139,7 +139,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                                 borderSide: const BorderSide(
                                                     width: 4))),
                                         validator: (value) {
-                                          return checkname(value);
+                                          return SValidator.checkname(value);
                                         },
                                       ),
                                     ),
@@ -166,7 +166,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       ),
                                       keyboardType: TextInputType.number,
                                       validator: (value) {
-                                        return checklist(value);
+                                        return SValidator.checkDigits(value);
                                       }),
                                 const SizedBox(
                                   height: 10,
@@ -189,7 +189,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                       ),
                                       keyboardType: TextInputType.text,
                                       validator: (value) {
-                                        return checkname(value);
+                                        return SValidator.checkname(value);
                                       }),
                                 const SizedBox(
                                   height: 10,
@@ -211,7 +211,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                           borderSide:
                                               const BorderSide(width: 4))),
                                   validator: (value) {
-                                    return checkEmail(value);
+                                    return SValidator.checkEmail(value);
                                   },
                                 ),
                                 const SizedBox(
@@ -259,7 +259,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                           borderSide:
                                               const BorderSide(width: 4))),
                                   validator: (value) {
-                                    return checknumber(value);
+                                    return SValidator.checkPhoneNumber(value);
                                   },
                                 ),
                                 const SizedBox(

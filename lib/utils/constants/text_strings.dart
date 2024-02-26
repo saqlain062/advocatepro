@@ -18,6 +18,7 @@ class STexts {
   // -- Authentication Form Text
   static const String firstName = "First Name";
   static const String lastName = "Last Name";
+  static const String barNumber = "Bar Number";
   static const String email = "E-Mail";
   static const String password = "Password";
   static const String newPassword = "New Password";
@@ -31,6 +32,7 @@ class STexts {
   static const String orSignUpWith = "or sign up with";
   static const String iAgreeTo = "I agree to";
   static const String privacyPolicy = "Privacy Policy";
+  static const String and = "and";
   static const String termsOfUse = "Terms of use";
   static const String verificationCode = "verificationCode";
   static const String resendEmail = "Resend Email";
@@ -40,5 +42,19 @@ class STexts {
   // -- Authentication Headings Text
   static const String loginTitle = "Welcome";
   static const String lgoinSubTitle = "Unlock Your World of Possibilities, Effortlessly.";
+  static const String signupTitle = "Let's create your account";
+  static const String forgetPasswordTitle = "Forget password";
+  static const String forgetPasswordSubTitle = "Dont't worry sometimes people can forget too, enter your email and we well send you ";
+  static const String changeYourPassowrdTitle = "Password Reset Email Sent";
+  static const String changeYourPassowrdSubTile = "Your Account Security is Our Priority! We've Sent You a Secure Link to Safety";
+  static const String confimeEmail = "Verify your email address!";
+  static const String confimeEmailSubTitle ="Congratulations! Your Account Awaits: Verify Your Email to";
+  static const String emailNotReceivedMessage = "Didn't get the email? Check your junk/spam or resent it.";
+  static const String yourAccountCreatedTitle = "Your account successfully created!";
+  static const String yourAccountCreatedSubTitle = "Your Account is Created";
+
+  static const String signupLawyerText = "Are you a Lawyer";
+  static const String scontinue = "Continue";
+  static const String submit = "Submit";
   
 }

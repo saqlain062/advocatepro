@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/Methods/share.dart';
 import 'package:advocatepro_f/screens/authenticate/screens/signin/sign_in.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/bottom/profile/support/support_screen.dart';

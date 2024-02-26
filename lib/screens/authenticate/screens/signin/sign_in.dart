@@ -1,10 +1,10 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/common/styles/spacing_styles.dart';
-import 'package:advocatepro_f/common/widgets.login_signup/form_divider.dart';
+import 'package:advocatepro_f/common/widgets/login_signup/form_divider.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
-import 'package:advocatepro_f/screens/authenticate/forgot_password.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/password_configuration/forgot_password.dart';
 import 'package:advocatepro_f/screens/authenticate/lawyer_or_user.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up.dart';
 import 'package:advocatepro_f/screens/home/home_client_screen.dart';
 import 'package:advocatepro_f/screens/home/home_screen.dart';
 import 'package:advocatepro_f/services/auth.dart';
@@ -66,7 +66,6 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
           padding: SSpacingStyle.paddingWithAppBarHeight,
@@ -192,9 +191,7 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       width: double.infinity,
                       child: OutlinedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, SignUpScreen.id);
-                        },
+                        onPressed: () => Get.to(() => const SignUpScreen()),
                         child: const Text(STexts.createAccount),
                       ),
                     ),

@@ -127,7 +127,7 @@ class _FormScreenState extends State<FormScreen> {
                           ),
                           keyboardType: TextInputType.number,
                           validator: (value) {
-                            return checklist(value);
+                            return SValidator.checkDigits(value);
                           }
                           // value != null && value.isEmpty ? 'Enter List Number': null,
                           ),
@@ -141,7 +141,7 @@ class _FormScreenState extends State<FormScreen> {
                             border: OutlineInputBorder(),
                           ),
                           validator: (value) {
-                            return checkname(value);
+                            return SValidator.checkname(value);
                           }
                           // value != null && value.isEmpty ? 'Enter Name ': null,
                           ),
@@ -157,7 +157,7 @@ class _FormScreenState extends State<FormScreen> {
                             border: OutlineInputBorder(),
                           ),
                           validator: (value) {
-                            return checknumber(value);
+                            return SValidator.checkPhoneNumber(value);
                             // if(value == null || value.isEmpty){
                             //   return 'Enter Phone Number';
                             // }

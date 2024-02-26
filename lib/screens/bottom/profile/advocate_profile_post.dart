@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/Methods/toast.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
-import 'package:advocatepro_f/screens/authenticate/sign_up_attribute.dart';
+import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_attribute.dart';
 import 'package:advocatepro_f/screens/bottom/profile/profile_edit_screen.dart';
 import 'package:advocatepro_f/screens/home/home_client_post_screen.dart';

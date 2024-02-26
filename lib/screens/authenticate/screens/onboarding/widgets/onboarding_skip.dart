@@ -1,4 +1,4 @@
-import 'package:advocatepro_f/screens/authenticate/controllers.onboarding/onboarding_controller.dart';
+import 'package:advocatepro_f/screens/authenticate/controllers/onboarding/onboarding_controller.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:advocatepro_f/utils/device/device_utility.dart';
 import 'package:flutter/material.dart';
