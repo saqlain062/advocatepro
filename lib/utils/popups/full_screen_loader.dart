@@ -25,13 +25,15 @@ class SFullScreenLoader {
                   : SColors.white,
               width: double.infinity,
               height: double.infinity,
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 250,
-                  ),
-                  SAnimationLoaderWidget(text: text, animation: animation),
-                ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 250,
+                    ),
+                    SAnimationLoaderWidget(text: text, animation: animation),
+                  ],
+                ),
               ),
             )));
   }

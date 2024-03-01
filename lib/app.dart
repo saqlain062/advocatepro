@@ -1,15 +1,15 @@
-import 'package:advocatepro_f/screens/Forms/form_screen.dart';
-import 'package:advocatepro_f/screens/authenticate/screens/password_configuration/forgot_password.dart';
-import 'package:advocatepro_f/screens/authenticate/screens/onboarding/onboarding.dart';
-import 'package:advocatepro_f/screens/authenticate/screens/signin/sign_in.dart';
-import 'package:advocatepro_f/screens/authenticate/screens/signup/sign_up.dart';
-import 'package:advocatepro_f/screens/bottom/advocate_screen.dart';
-import 'package:advocatepro_f/screens/bottom/inbox_screen.dart';
-import 'package:advocatepro_f/screens/bottom/profile_screen.dart';
-import 'package:advocatepro_f/screens/home/home_client_screen.dart';
-import 'package:advocatepro_f/screens/home/home_screen.dart';
-import 'package:advocatepro_f/screens/home/home_screen_designe.dart';
-import 'package:advocatepro_f/screens/home/upload_image.dart';
+import 'package:advocatepro_f/bindings/general_bindings.dart';
+import 'package:advocatepro_f/features/Forms/form_screen.dart';
+import 'package:advocatepro_f/features/authenticate/screens/password_configuration/forgot_password.dart';
+import 'package:advocatepro_f/features/authenticate/screens/signin/sign_in.dart';
+import 'package:advocatepro_f/features/authenticate/screens/signup/sign_up.dart';
+import 'package:advocatepro_f/features/bottom/advocate_screen.dart';
+import 'package:advocatepro_f/features/bottom/inbox_screen.dart';
+import 'package:advocatepro_f/features/bottom/profile_screen.dart';
+import 'package:advocatepro_f/features/home/home_client_screen.dart';
+import 'package:advocatepro_f/features/home/lawyer_navigation_menu_.dart';
+import 'package:advocatepro_f/features/home/home_screen_designe.dart';
+import 'package:advocatepro_f/features/home/upload_image.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       theme: SAppTheme.lightTheme,
       darkTheme: SAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
+      initialBinding: GeneralBindings(),
 
       /// Show Loader or Circular Progress Indicator meanwhilte Authentication Repository is deciding to show relevent screen.
       home: const Scaffold(
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         SignIn.id: (context) => const SignIn(),
         SignUpScreen.id: (context) => const SignUpScreen(),
         UploadImage.id: (context) => const UploadImage(),
-        HomeScreen.id: (context) => const HomeScreen(),
+        LawyerNavigationMenu.id: (context) => const LawyerNavigationMenu(),
         ClientHomeScreen.id: (context) => const ClientHomeScreen(),
         HomeScreenDesgine.id: (context) => const HomeScreenDesgine(),
         AdvocateScreen.id: (context) => const AdvocateScreen(),
