@@ -1,7 +1,7 @@
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 
 /// A widget for displaying on animated loading indicator with optimal text and action button.
 class SAnimationLoaderWidget extends StatelessWidget {
@@ -32,7 +32,8 @@ class SAnimationLoaderWidget extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8), // Display Lottie animaiton
+          //Lottie.asset(animation, width: MediaQuery.of(context).size.width * 0.8), // Display Lottie animaiton
+          Image.asset(animation, width: MediaQuery.of(context).size.width * 0.8),
           const SizedBox(height: SSizes.defaultSpaces,),
           Text(text,
           style: Theme.of(context).textTheme.bodyMedium,

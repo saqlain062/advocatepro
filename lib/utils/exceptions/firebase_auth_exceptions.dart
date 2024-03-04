@@ -55,8 +55,42 @@ class SFirebaseAuthException implements Exception {
         return 'The email template varification message payload is invalid.';
       case 'invalid-sender':
         return 'The email template sender is invalid. Please verify ther sender\'s email.';
+      case 'invalid-recipient-email':
+        return 'The recipient email address is invalid. Please provide a valid recipient email';
+      case 'missing-iframe-start':
+        return 'The email template is missing the iframe start tag.';
+      case 'missing-iframe-end':
+        return 'The email template is missing the iframe end tag';
+      case 'missing-iframe-src':
+        return 'The smail template is missing the iframe src attribute.';
+      case 'auth-domain-config-required':
+        return 'The authDomian configuration is required for the action code verification link';
+      case 'missing-app-credential':
+        return 'The app credential is missing. Please provide valid app credentials.';
+      case 'invalid-app-credential':
+        return 'The app credential is invalid. Please provide a valid app credentials.';
+      case "session-cookie-expired":
+        return 'The Firebase session cookie has expired. Please sign in agian';
+      case 'uid-already-exists':
+        return 'The provided user ID is already in use by another user';
+      case 'invalid-cordove-configuration':
+        return 'The provided Cordova configuration is invalid.';
+      case 'app-deleted':
+        return 'This instance of FirebaseApp has been deleted.';
+      case 'user-token-mismatch':
+        return 'The provided user\'s token has a mismatch with the authenticated user\'s user ID';
+      case 'web-storage-unsupported':
+        return 'Web storage is not supported or is disabled';
+      case 'app-not-authorized':
+        return 'The app is not authorized to use Firebase Authentication with the provided API key';
+      case 'keychain-error':
+      return 'A keychain error occurred. Please check the keychain and try again.';
+      case 'internal-error':
+      return 'An internal authentication error occurred. Please try again later.';
+      case 'INVALID_LOGIN_CREDENTIALS':
+      return 'invalid login credentials.';
       default: 
-        return '$code Auth Exceptions. Please try again';
+        return '$code Authentication Exceptions. Please try again';
     }
   }
 }

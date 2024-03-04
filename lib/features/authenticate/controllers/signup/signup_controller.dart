@@ -3,6 +3,7 @@ import 'package:advocatepro_f/data/repositories/authentication/authentication_re
 import 'package:advocatepro_f/data/repositories/user/user_repository.dart';
 import 'package:advocatepro_f/models/user/user_model.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signup/verify_email.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/helpers/network_manager.dart';
 import 'package:advocatepro_f/utils/popups/full_screen_loader.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +30,8 @@ class SignupController extends GetxController {
   void signup() async {
     try {
       /// Start Loading
-      // SFullScreenLoader.openLoadingDialog(
-      //     "We are processing your information...", SImages.onBoardingImage1);
+      SFullScreenLoader.openLoadingDialog(
+          "We are processing your information...", SImages.onBoardingImage1);
 
       /// Check Internet Connectivity
       final isConnected = await NetworkManager.instance.isConnected();
@@ -77,7 +78,7 @@ class SignupController extends GetxController {
       // Remove Loader
       SFullScreenLoader.stopLoading();
       // Show Success Message
-      // SLoaders.successSnackBar(title: "Congratulations", message: "Your account has been created! Verify email to continue.");
+      SLoaders.successSnackBar(title: "Congratulations", message: "Your account has been created! Verify email to continue.");
 
       // Move to Verify Email Screen
       Get.to(() => VerifyEmailScreen(email: email.text.trim(),));

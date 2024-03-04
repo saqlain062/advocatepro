@@ -1,3 +1,5 @@
+import 'package:advocatepro_f/features/authenticate/controllers/forget_password/forget_password_controller.dart';
+import 'package:advocatepro_f/features/authenticate/screens/signin/sign_in.dart';
 import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:advocatepro_f/utils/constants/text_strings.dart';
@@ -6,7 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen({super.key, required this.email});
+
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +39,11 @@ class ResetPasswordScreen extends StatelessWidget {
 
             ///Title & SubTitle
             Text(
+              email,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+            Text(
               STexts.changeYourPassowrdTitle,
               style: Theme.of(context).textTheme.headlineMedium,
               textAlign: TextAlign.center,
@@ -55,7 +64,7 @@ class ResetPasswordScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: (){},
+                onPressed: () => Get.offAll(() => const SignIn()),
                 child: const Text(STexts.scontinue),
               ),
             ),
@@ -63,7 +72,7 @@ class ResetPasswordScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: TextButton(
-                onPressed: (){},
+                onPressed: () => ForgetPasswordController.instance.resendPasswordResetEmail(email),
                 child: const Text(STexts.resendEmail),
               ),
             ),

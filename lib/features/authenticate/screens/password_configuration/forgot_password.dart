@@ -1,25 +1,17 @@
-import 'package:advocatepro_f/Methods/round_button.dart';
-import 'package:advocatepro_f/Methods/toast.dart';
-import 'package:advocatepro_f/features/authenticate/screens/password_configuration/reset_password.dart';
+import 'package:advocatepro_f/features/authenticate/controllers/forget_password/forget_password_controller.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:advocatepro_f/utils/constants/text_strings.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ForgetPasswordScreen extends StatefulWidget {
+class ForgetPasswordScreen extends StatelessWidget {
   static const String id = 'forget_password';
   const ForgetPasswordScreen({super.key});
 
   @override
-  State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
-}
-
-class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  final contorlloremail = TextEditingController();
-  final auth = FirebaseAuth.instance;
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgetPasswordController());
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -44,31 +36,22 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
           ),
 
           /// Text Field
-          TextFormField(
-            controller: contorlloremail,
-            decoration: const InputDecoration(
-                labelText: STexts.email, prefixIcon: Icon(Icons.email_outlined)),
+          Form(
+            key: controller.forgetPasswordFormKey,
+            child: TextFormField(
+              controller: controller.email,
+              decoration: const InputDecoration(
+                  labelText: STexts.email, prefixIcon: Icon(Icons.email_outlined)),
+                  validator: (value) => SValidator.checkEmail(value),
+            ),
           ),
           const SizedBox(
             height: SSizes.spaceBetweenSections,
           ),
+
+          /// Submit Button
           SizedBox(
-            width: double.infinity, child: ElevatedButton(onPressed: () => Get.off(() => const ResetPasswordScreen()), child: const Text(STexts.submit))),
-          RoundButton(
-            title: "Forgot Password",
-            onTop: () {
-              auth
-                  .sendPasswordResetEmail(
-                      email: contorlloremail.text.toString())
-                  .then((value) {
-                showToast(
-                    message:
-                        "We have sent you email to recover password, please check your password");
-              }).onError((error, stackTrace) {
-                showToast(message: error.toString());
-              });
-            },
-          ),
+            width: double.infinity, child: ElevatedButton(onPressed: () => controller.sendPasswordRestEmail(), child: const Text(STexts.submit))),
         ]),
       ),
     );

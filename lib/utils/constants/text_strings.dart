@@ -56,5 +56,7 @@ class STexts {
   static const String signupLawyerText = "Are you a Lawyer";
   static const String scontinue = "Continue";
   static const String submit = "Submit";
+
+  static const String homeAppbarTitle = 'AdvocatePro';
   
 }

@@ -18,7 +18,7 @@ class SImages {
   
 
   // -- LoaderScreen
-  static const String loadingImage1 = "assets/images/animations/abc1.jpg";
+  static const String docerAnimation = "assets/images/animations/abc1.jpg";
 
   // success
   static const String successfullyRegisterAnimation = "assets/images/on_boarding_image/features-list.gif";
