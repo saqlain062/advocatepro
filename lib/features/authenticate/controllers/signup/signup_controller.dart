@@ -1,7 +1,7 @@
 import 'package:advocatepro_f/common/widgets/loaders/loaders.dart';
 import 'package:advocatepro_f/data/repositories/authentication/authentication_repository.dart';
 import 'package:advocatepro_f/data/repositories/user/user_repository.dart';
-import 'package:advocatepro_f/models/user/user_model.dart';
+import 'package:advocatepro_f/features/personalization/models/user_model.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signup/verify_email.dart';
 import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/helpers/network_manager.dart';

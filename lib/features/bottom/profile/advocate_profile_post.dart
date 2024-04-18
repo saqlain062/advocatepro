@@ -179,7 +179,7 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          leading: Container(
+                          leading: SizedBox(
                             height: 50,
                             width: 50,
                             child: FirebaseAnimatedList(

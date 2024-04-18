@@ -29,7 +29,6 @@ dependencies:
 
   fluttertoast: ^8.2.4
   font_awesome_flutter: ^10.6.0
-  image_picker: ^1.0.7
   shared_preferences: ^2.2.2
   share_plus: ^7.2.2
   image_cropper: ^5.0.1
@@ -39,7 +38,10 @@ dependencies:
   intl: ^0.18.1
   lottie: ^3.1.0
   logger: ^2.0.2+1
+  readmore: ^2.2.0
+  image_picker: ^1.0.7
   url_launcher: ^6.2.5
+  carousel_slider: ^4.2.1
   connectivity_plus: ^5.0.2
   flutter_native_splash: ^2.3.10
   smooth_page_indicator: ^1.1.0
@@ -52,6 +54,7 @@ dependencies:
   get: ^4.6.6
   get_storage: ^2.1.1
 
+
   # Firebase
   firebase_core: ^2.24.2
   firebase_auth: ^4.16.0
@@ -59,6 +62,8 @@ dependencies:
   firebase_storage: ^11.6.0
   firebase_database: ^10.4.0
   google_sign_in: ^6.2.1
+  flutter_rating_bar: ^4.0.1
+  cached_network_image: ^3.3.1
 
   
 
@@ -87,9 +92,10 @@ flutter:
 
   # ------------------ LOCAT ASSETS ---------------#
   assets:
-    - assets/images/
-    - assets/images/on_boarding_image/
+    - assets/icons/categories/
     - assets/images/animations/
+    - assets/images/banners/
+    - assets/images/on_boarding_image/  
     - assets/logos/
 
   # ------------------ LOCAT FONTS ---------------#

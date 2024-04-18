@@ -17,11 +17,19 @@ class SImages {
   static const String resetImage1 = "assets/images/animations/abc1.jpg";
   
 
-  // -- LoaderScreen
+  // -- Animations
   static const String docerAnimation = "assets/images/animations/abc1.jpg";
 
   // success
   static const String successfullyRegisterAnimation = "assets/images/on_boarding_image/features-list.gif";
 
+  // Catergories
+  static const String landIcon = "assets/icons/categories/lawyer1.png";
+
+  //Banners
+  static const String promoBanner1 = "assets/images/banners/logo-dark.png";
+  static const String promoBanner2 = "assets/images/banners/lawyerIcon.png";
+  static const String promoBanner3 = "assets/images/banners/advocatelogo.png";
+  static const String promoBanner4 = "assets/images/banners/lawyer1.png";
 
 }

@@ -10,6 +10,7 @@ import 'package:advocatepro_f/features/home/home_client_screen.dart';
 import 'package:advocatepro_f/features/home/lawyer_navigation_menu_.dart';
 import 'package:advocatepro_f/features/home/home_screen_designe.dart';
 import 'package:advocatepro_f/features/home/upload_image.dart';
+import 'package:advocatepro_f/routes/app_routes.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       darkTheme: SAppTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       initialBinding: GeneralBindings(),
+      getPages: AppRoutes.pages,
 
       /// Show Loader or Circular Progress Indicator meanwhilte Authentication Repository is deciding to show relevent screen.
       home: const Scaffold(

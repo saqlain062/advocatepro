@@ -114,7 +114,7 @@ class _InboxScreenState extends State<InboxScreen> {
 
   //fetching messages from a database
   Future<List<String>> _fetchMessages() async {
-    await Future.delayed(Duration(seconds: 2)); //Simulating delay
+    await Future.delayed(const Duration(seconds: 2)); //Simulating delay
     return ["Message 1", "Message 2"];
   }
 }

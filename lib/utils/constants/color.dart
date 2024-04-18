@@ -32,7 +32,7 @@ class SColors{
   
   // App Basic Colors
   static const Color primary = Color(0xff2c344c);
-  static const Color secondary = Color(0xff2c344c);
+  static const Color secondary = Color(0xff2c344c); // new
   static const Color accent = Color(0xff2c344c);
 
   // Text Colors
