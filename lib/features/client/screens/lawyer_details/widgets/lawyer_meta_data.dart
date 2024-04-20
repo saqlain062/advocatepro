@@ -23,7 +23,7 @@ class SLawyerMetaData extends StatelessWidget {
         /// Title
         Row(
           children: [
-            SCircularImage(image: lawyer.brand != null ? lawyer.brand!.image : '',
+            SCircularImage(image: lawyer.agency != null ? lawyer.agency!.image : '',
             width: 32,
             height: 32,
             overlayColor: dark ? SColors.white : SColors.black,),

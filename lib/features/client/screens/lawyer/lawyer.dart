@@ -4,8 +4,10 @@ import 'package:advocatepro_f/common/widgets/appbar/tabbar.dart';
 import 'package:advocatepro_f/common/widgets/custom_shapes/containers/serach_container.dart';
 import 'package:advocatepro_f/common/widgets/lawyers/lawyers_cards/lawyer_card.dart';
 import 'package:advocatepro_f/common/widgets/texts/section_heading.dart';
+import 'package:advocatepro_f/features/client/controllers/agency_controller.dart';
 import 'package:advocatepro_f/features/client/controllers/category_controller.dart';
-import 'package:advocatepro_f/features/client/screens/feature/court.dart';
+import 'package:advocatepro_f/features/client/screens/feature/agency.dart';
+import 'package:advocatepro_f/features/client/screens/feature/agency_lawyer.dart';
 import 'package:advocatepro_f/features/client/screens/lawyer/widgets/category_tab.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
@@ -18,6 +20,7 @@ class LawyerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final agencyController = Get.put(AgencyController());
     final categories = CategoryController.instance.featuredCategories;
     return DefaultTabController(
       length: categories.length,
@@ -59,9 +62,9 @@ class LawyerScreen extends StatelessWidget {
                         height: SSizes.spaceBetweenSections,
                       ),
 
-                      /// -- Featured
+                      /// -- Featured Agencies
                       SSectionHeading(
-                        title: 'Featured Brands',
+                        title: 'Featured Agencies',
                         onPressed: () =>
                             Get.to(() => const CourtLawyersScreen()),
                       ),
@@ -69,14 +72,26 @@ class LawyerScreen extends StatelessWidget {
                         height: SSizes.spaceBetweenItems / 1.5,
                       ),
 
-                      SGridLayout(
-                          itemCount: 4,
-                          mainAxisExtent: 80,
-                          itemBuilder: (_, index) {
-                            return const SlawyerCard(
-                              showBorder: true,
+                      /// -- Agencies Grid
+                      Obx(
+                        () {
+                          if(agencyController.isLoading.value) return const CircularProgressIndicator();
+                          if(agencyController.featuredAgencies.isEmpty){
+                            return Center(
+                              child: Text('No data Found!', style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.white),),
                             );
-                          })
+                          }
+                          return SGridLayout(
+                            itemCount: agencyController.featuredAgencies.length,
+                            mainAxisExtent: 80,
+                            itemBuilder: (_, index) {
+                              final agency = agencyController.featuredAgencies[index];
+                              return SlawyerCard(
+                                showBorder: true, agency: agency, onTap: () => Get.to(() => CourtLawyers(agency: agency)),
+                              );
+                            });
+                        } 
+                      )
                     ],
                   ),
                 ),
@@ -87,7 +102,8 @@ class LawyerScreen extends StatelessWidget {
                         .map((category) => Tab(
                               child: Text(category.name),
                             ))
-                        .toList()),
+                        .toList(),
+                        ),
               )
             ];
           },

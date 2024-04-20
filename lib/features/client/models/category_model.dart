@@ -34,15 +34,14 @@ class CategoryModel {
       DocumentSnapshot<Map<String, dynamic>> document) {
     if (document.data() != null) {
       final data = document.data()!;
-
       // Map JSON Record to the Model
       return CategoryModel(
-          id: document.id,
-          name: data['Name'] ?? '',
-          image: data['Image'] ?? '',
-          parentId: data['ParentId'] ?? '',
-          isFeatured: data['IsFeatured'] ?? false,
-          );
+        id: document.id,
+        name: data['Name'] ?? '',
+        image: data['Image'] ?? '',
+        parentId: data['ParentId'] ?? '',
+        isFeatured: data['IsFeatured'] ?? false,
+      );
     } else {
       return CategoryModel.empty();
     }

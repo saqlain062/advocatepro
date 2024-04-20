@@ -1,4 +1,4 @@
-import 'package:advocatepro_f/features/client/models/brand_model.dart';
+import 'package:advocatepro_f/features/client/models/agency_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LawyerModel {
@@ -8,7 +8,7 @@ class LawyerModel {
   DateTime? date;
   String thumbnail;
   bool? isFeatured;
-  BrandModel? brand;
+  AgencyModel? agency;
   String? description;
   String? categoryId;
   List<String>? images;
@@ -18,7 +18,7 @@ class LawyerModel {
     required this.title,
     required this.spec,
     required this.thumbnail,
-    this.brand,
+    this.agency,
     this.categoryId,
     this.date,
     this.description,
@@ -38,7 +38,7 @@ class LawyerModel {
       'Thumbnail': thumbnail,
       'IsFeatured': isFeatured,
       'CategoryId': categoryId,
-      'Brand': brand!.toJson(),
+      'Agency': agency!.toJson(),
       'Description': description,
     };
   }
@@ -52,11 +52,11 @@ class LawyerModel {
       id: document.id,
       title: data['Title'],
       spec: data['specialization'],
-      isFeatured: data['isFeatured'] ?? false,
+      isFeatured: data['IsFeatured'] ?? false,
       thumbnail: data['Thumbnail'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
-      brand: BrandModel.fromJson(data['Brand']),
+      agency: AgencyModel.fromJson(data['Agency']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
     );
   }
@@ -69,11 +69,11 @@ class LawyerModel {
       id: document.id,
       title: data['Title'],
       spec: data['specialization'],
-      isFeatured: data['isFeatured'] ?? false,
+      isFeatured: data['IsFeatured'] ?? false,
       thumbnail: data['Thumbnail'] ?? '',
       categoryId: data['CategoryId'] ?? '',
       description: data['Description'] ?? '',
-      brand: BrandModel.fromJson(data['Brand']),
+      agency: AgencyModel.fromJson(data['Agency']),
       images: data['Images'] != null ? List<String>.from(data['Images']) : [],
     );
   }

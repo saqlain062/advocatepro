@@ -8,6 +8,7 @@ import 'package:advocatepro_f/features/client/screens/all_lawyers/all_lawyers.da
 import 'package:advocatepro_f/features/client/screens/home/widgets/home_appbar.dart';
 import 'package:advocatepro_f/features/client/screens/home/widgets/home_categories.dart';
 import 'package:advocatepro_f/features/client/screens/home/widgets/promo_slider.dart';
+import 'package:advocatepro_f/features/client/screens/lawyer/lawyer.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -83,7 +84,7 @@ class HomeScreenClient extends StatelessWidget {
                     /// Heading
                     SSectionHeading(
                       title: 'Popular Lawyer',
-                      onPressed: () {},
+                      onPressed: () => Get.to(() => const LawyerScreen()),
                     ),
 
                     const SizedBox(
@@ -92,8 +93,7 @@ class HomeScreenClient extends StatelessWidget {
 
                     /// -- Popular Advocats
                     Obx(() {
-                      if (controller.isLoading.value)
-                        return const CircularProgressIndicator();
+                      if (controller.isLoading.value) return const CircularProgressIndicator();
 
                       if (controller.featuredLawyer.isEmpty) {
                         return Center(

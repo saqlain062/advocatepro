@@ -1,6 +1,7 @@
 
 import 'package:advocatepro_f/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:advocatepro_f/common/widgets/lawyers/lawyers_cards/lawyer_card.dart';
+import 'package:advocatepro_f/features/client/models/agency_model.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -12,16 +13,16 @@ class SLawyerCase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SRoundedContainer(
+    return SRoundedContainer(
       showBorder: true,
       borderColor: SColors.darkGrey,
       backgroundColor: Colors.transparent,
-      margin: EdgeInsets.only(bottom: SSizes.spaceBetweenItems),
+      margin: const EdgeInsets.only(bottom: SSizes.spaceBetweenItems),
       child: Column(
         children: [
           /// Lawyer with reviews
-          SlawyerCard(showBorder: false,),
-          Padding(
+          SlawyerCard(showBorder: false, agency: AgencyModel.empty(),),
+          const Padding(
             padding: EdgeInsets.symmetric(horizontal: SSizes.medium),
             child: Row(
               children: [

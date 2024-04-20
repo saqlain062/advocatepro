@@ -1,6 +1,8 @@
 import 'package:advocatepro_f/common/widgets/loaders/loaders.dart';
 import 'package:advocatepro_f/data/repositories/categories/category_repository.dart';
+import 'package:advocatepro_f/data/repositories/lawyer/lawyer_repository.dart';
 import 'package:advocatepro_f/features/client/models/category_model.dart';
+import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
 import 'package:get/get.dart';
 
 class CategoryController extends GetxController{
@@ -38,7 +40,13 @@ class CategoryController extends GetxController{
       isLoading.value = false;
     }
   }
-  /// -- Load selected category data
+  /// Load selected category data
   
   /// Get Category or Sub-Category 
+  Future<List<LawyerModel>> getCategoryLawyer({required String categoryId, int limit = 4}) async {
+    // Fetch limitedd (4) lawyers against each subCategory;
+    final lawyers = await LawyerRepository.instance.getLawyersForCategroy(categoryId: categoryId, limit: limit);
+    return lawyers;
+  }
+
 }
