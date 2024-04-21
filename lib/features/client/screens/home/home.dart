@@ -8,7 +8,6 @@ import 'package:advocatepro_f/features/client/screens/all_lawyers/all_lawyers.da
 import 'package:advocatepro_f/features/client/screens/home/widgets/home_appbar.dart';
 import 'package:advocatepro_f/features/client/screens/home/widgets/home_categories.dart';
 import 'package:advocatepro_f/features/client/screens/home/widgets/promo_slider.dart';
-import 'package:advocatepro_f/features/client/screens/lawyer/lawyer.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
@@ -25,23 +24,23 @@ class HomeScreenClient extends StatelessWidget {
         child: Column(
           /// Header
           children: [
-            SPrimaryHeaderContainer(
+            const SPrimaryHeaderContainer(
               child: Column(children: [
                 /// -- Appbar
-                const SHomeAppBarClient(),
-                const SizedBox(
+                SHomeAppBarClient(),
+                SizedBox(
                   height: SSizes.spaceBetweenSections,
                 ),
 
                 /// -- Searchbar
-                const SSearchContainer(text: 'Search'),
-                const SizedBox(
+                SSearchContainer(text: 'Search'),
+                SizedBox(
                   height: SSizes.spaceBetweenSections,
                 ),
 
                 /// -- Categories
                 Padding(
-                  padding: const EdgeInsets.only(left: SSizes.defaultSpaces),
+                  padding: EdgeInsets.only(left: SSizes.defaultSpaces),
                   child: Column(
                     children: [
                       /// -- Heading
@@ -49,19 +48,14 @@ class HomeScreenClient extends StatelessWidget {
                         title: 'Popular Categories',
                         showActionButton: false,
                         textColor: SColors.white,
-                        onPressed: () => Get.to(() => AllLawyers(
-                              title: 'Popular Lawyers',
-                              
-                                  futureMethod: controller.fetchAllFeaturedLawyers(),
-                            )),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: SSizes.spaceBetweenItems,
                       ),
 
                       /// -- Categories
-                      const SHomeCategories(),
-                      const SizedBox(
+                      SHomeCategories(),
+                      SizedBox(
                         height: SSizes.spaceBetweenSections,
                       ),
                     ],
@@ -84,7 +78,7 @@ class HomeScreenClient extends StatelessWidget {
                     /// Heading
                     SSectionHeading(
                       title: 'Popular Lawyer',
-                      onPressed: () => Get.to(() => const LawyerScreen()),
+                      onPressed: () => Get.to(() => AllLawyers(title: "Popular Lawyer",futureMethod: controller.fetchAllFeaturedLawyers(),)),
                     ),
 
                     const SizedBox(

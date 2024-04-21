@@ -1,7 +1,7 @@
-import 'package:advocatepro_f/common/icons/S_circular_icon.dart';
 import 'package:advocatepro_f/common/styles/shadoows.dart';
 import 'package:advocatepro_f/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:advocatepro_f/common/widgets/images/S_rounded_image.dart';
+import 'package:advocatepro_f/common/widgets/lawyers/favourite_icon/favourite_icon.dart';
 import 'package:advocatepro_f/common/widgets/texts/lawyer_title_text.dart';
 import 'package:advocatepro_f/common/widgets/texts/s_lawyer_name_with_verified_icon.dart';
 import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
@@ -46,28 +46,28 @@ class SlawyerCardVertical extends StatelessWidget {
                   Center(child: SRoundImage(imageUrl: lawyer.thumbnail, applyImageRadius: true,isNetworkImage: true,)),
       
                   /// -- New Tag
-                  Positioned(
-                    top: 12,
-                    child: SRoundedContainer(
-                      radius: SSizes.smallmedium,
-                      backgroundColor: SColors.secondary.withOpacity(0.8),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: SSizes.smallmedium, vertical: SSizes.small),
-                      child: Text(
-                        'New',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .apply(color: Colors.black),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   top: 12,
+                  //   child: SRoundedContainer(
+                  //     radius: SSizes.smallmedium,
+                  //     backgroundColor: SColors.secondary.withOpacity(0.8),
+                  //     padding: const EdgeInsets.symmetric(
+                  //         horizontal: SSizes.smallmedium, vertical: SSizes.small),
+                  //     child: Text(
+                  //       'New',
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .labelLarge!
+                  //           .apply(color: Colors.black),
+                  //     ),
+                  //   ),
+                  // ),
 
                   /// Favourite Icon
-                  const Positioned(
+                  Positioned(
                     top: 0,
                     right: 0,
-                    child: SCirularIcon(icon: Icons.favorite, color: Colors.red,), )
+                    child: SFavouriteIcon(lawyerId: lawyer.id) )
                 ],
               ),
             ),

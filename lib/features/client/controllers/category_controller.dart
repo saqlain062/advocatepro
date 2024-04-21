@@ -5,14 +5,13 @@ import 'package:advocatepro_f/features/client/models/category_model.dart';
 import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
 import 'package:get/get.dart';
 
-class CategoryController extends GetxController{
+class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();
 
   final isLoading = false.obs;
   final _categoryRepository = Get.put(CategoryRepository());
   final RxList<CategoryModel> allCategories = <CategoryModel>[].obs;
   final RxList<CategoryModel> featuredCategories = <CategoryModel>[].obs;
-
 
   @override
   void onInit() {
@@ -33,20 +32,39 @@ class CategoryController extends GetxController{
       allCategories.assignAll(categories);
 
       // Filter featured categories
-      featuredCategories.assignAll(allCategories.where((category) => category.isFeatured && category.parentId.isEmpty).take(8).toList());
+      featuredCategories.assignAll(allCategories
+          .where((category) => category.isFeatured && category.parentId.isEmpty)
+          .take(8)
+          .toList());
     } catch (e) {
       SLoaders.errorSnackBar(title: 'Oh Snap c!', message: e.toString());
     } finally {
       isLoading.value = false;
     }
   }
+
   /// Load selected category data
-  
-  /// Get Category or Sub-Category 
-  Future<List<LawyerModel>> getCategoryLawyer({required String categoryId, int limit = 4}) async {
-    // Fetch limitedd (4) lawyers against each subCategory;
-    final lawyers = await LawyerRepository.instance.getLawyersForCategroy(categoryId: categoryId, limit: limit);
-    return lawyers;
+  Future<List<CategoryModel>> getSubCategories(String categoryId) async {
+    try {
+      final subCategories = await _categoryRepository.getSubCategories(categoryId);
+      return subCategories;
+    } catch (e) {
+      SLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      return [];
+    }
   }
 
+  /// Get Category or Sub-Category
+  Future<List<LawyerModel>> getCategoryLawyer(
+      {required String categoryId, int limit = 4}) async {
+    try {
+      // Fetch limitedd (4) lawyers against each subCategory;
+      final lawyers = await LawyerRepository.instance
+          .getLawyersForCategroy(categoryId: categoryId, limit: limit);
+      return lawyers;
+    } catch (e) {
+      SLoaders.errorSnackBar(title: 'Oh Snap!', message: e.toString());
+      return [];
+    }
+  }
 }

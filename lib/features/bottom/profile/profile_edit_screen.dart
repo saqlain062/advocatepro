@@ -299,18 +299,18 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     
     // Check if the user is a lawyer
     DocumentSnapshot<Map<String, dynamic>> userDocLawyerCollection =
-        await FirebaseFirestore.instance.collection('lawyers').doc(uid).get();
+        await FirebaseFirestore.instance.collection('Users').doc(uid).get();
 
     if (userDocLawyerCollection.exists) {
       profileList.add(SignupAttribute(
-        id: userDocLawyerCollection['ID'] ?? '',
-        fname: userDocLawyerCollection["First Name"] ?? '',
-        lname: userDocLawyerCollection['Last Name'] ?? '',
-        specialization: userDocLawyerCollection['Specialization'] ?? '',
-        laywerOrNot: userDocLawyerCollection['Lawyer ID'] ?? '',
+        id: userDocLawyerCollection['BarID'] ?? '',
+        fname: userDocLawyerCollection["FirstName"] ?? '',
+        lname: userDocLawyerCollection['LastName'] ?? '',
+        specialization: userDocLawyerCollection['BarID'] ?? '',
+        laywerOrNot: userDocLawyerCollection['BarID'] ?? '',
         email: userDocLawyerCollection['Email'] ?? '',
-        phone: userDocLawyerCollection['Phone'] ?? '',
-        dateofbirth: userDocLawyerCollection['DOB'] ?? '',
+        phone: userDocLawyerCollection['PhoneNumber'] ?? '',
+        dateofbirth: userDocLawyerCollection['BarID'] ?? '',
       ));
     } else {
       // User is not a lawyer, check if the user exists in the 'users' collection

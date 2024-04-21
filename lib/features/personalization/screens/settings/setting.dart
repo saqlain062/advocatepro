@@ -11,11 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
+import '../../controllers/user_controller.dart';
+
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -77,62 +80,62 @@ class SettingScreen extends StatelessWidget {
                       onTap: () {},
                     ),
                     SSettingMenuTile(
-                      icon: Iconsax.security_card,
-                      title: "Account Privacy",
-                      subTitle: "Manage data usage and connected accounts",
+                      icon: Iconsax.share,
+                      title: "Invite friends",
+                      subTitle: "Invite Your friends to join this app",
                       onTap: () {},
                     ),
 
                     /// -- App Settings
-                    const SizedBox(
-                      height: SSizes.spaceBetweenSections,
-                    ),
-                    const SSectionHeading(
-                      title: 'App Settings',
-                      showActionButton: false,
-                    ),
-                    const SizedBox(
-                      height: SSizes.spaceBetweenItems,
-                    ),
-                    SSettingMenuTile(
-                      icon: Iconsax.document_upload,
-                      title: "Load Data",
-                      subTitle: "Upload Data to your Cloud Firebase",
-                      onTap: () {},
-                    ),
-                    SSettingMenuTile(
-                      icon: Iconsax.location,
-                      title: "Geolocation",
-                      subTitle: "Set recommendation based on location",
-                      trailing: Switch(
-                        value: true,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    SSettingMenuTile(
-                      icon: Iconsax.security_user,
-                      title: "Safe Mode",
-                      subTitle: "Search result is safe",
-                      trailing: Switch(
-                        value: false,
-                        onChanged: (value) {},
-                      ),
-                    ),
-                    SSettingMenuTile(
-                      icon: Iconsax.image,
-                      title: "HD Image Quality",
-                      subTitle: "Set image quality to be seen",
-                      trailing: Switch(
-                        value: false,
-                        onChanged: (value) {},
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: SSizes.spaceBetweenSections,
+                    // ),
+                    // const SSectionHeading(
+                    //   title: 'App Settings',
+                    //   showActionButton: false,
+                    // ),
+                    // const SizedBox(
+                    //   height: SSizes.spaceBetweenItems,
+                    // ),
+                    // SSettingMenuTile(
+                    //   icon: Iconsax.document_upload,
+                    //   title: "Load Data",
+                    //   subTitle: "Upload Data to your Cloud Firebase",
+                    //   onTap: () {},
+                    // ),
+                    // SSettingMenuTile(
+                    //   icon: Iconsax.location,
+                    //   title: "Geolocation",
+                    //   subTitle: "Set recommendation based on location",
+                    //   trailing: Switch(
+                    //     value: true,
+                    //     onChanged: (value) {},
+                    //   ),
+                    // ),
+                    // SSettingMenuTile(
+                    //   icon: Iconsax.security_user,
+                    //   title: "Safe Mode",
+                    //   subTitle: "Search result is safe",
+                    //   trailing: Switch(
+                    //     value: false,
+                    //     onChanged: (value) {},
+                    //   ),
+                    // ),
+                    // SSettingMenuTile(
+                    //   icon: Iconsax.image,
+                    //   title: "HD Image Quality",
+                    //   subTitle: "Set image quality to be seen",
+                    //   trailing: Switch(
+                    //     value: false,
+                    //     onChanged: (value) {},
+                    //   ),
+                    // ),
 
                     /// -- Logout Button
                     const SizedBox(height: SSizes.spaceBetweenSections,),
                     SizedBox(
                       width: double.infinity,
-                      child: OutlinedButton(onPressed: (){}, child: const Text('Logout')),
+                      child: OutlinedButton(onPressed: () => controller.logOurUserAccount(), child: const Text('Logout')),
                     ),
                     const SizedBox(height: SSizes.spaceBetweenSections * 2.5,),
                   ],

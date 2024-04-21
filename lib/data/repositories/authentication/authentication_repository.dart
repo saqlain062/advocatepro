@@ -2,11 +2,15 @@ import 'package:advocatepro_f/data/repositories/user/user_repository.dart';
 import 'package:advocatepro_f/features/authenticate/screens/onboarding/onboarding.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signin/sign_in.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signup/verify_email.dart';
+import 'package:advocatepro_f/features/personalization/models/user_model.dart';
+import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
 import 'package:advocatepro_f/navigation_client_menu.dart';
 import 'package:advocatepro_f/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:advocatepro_f/utils/exceptions/firebase_exceptions.dart';
 import 'package:advocatepro_f/utils/exceptions/format_exceptions.dart';
 import 'package:advocatepro_f/utils/exceptions/platform_exceptions.dart';
+import 'package:advocatepro_f/utils/local_storage/storage_utility.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +23,7 @@ class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   /// Variables
+  final _db = FirebaseFirestore.instance;
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 
@@ -40,7 +45,16 @@ class AuthenticationRepository extends GetxController {
       try {
         await user.reload(); // Refresh user data from the server
         if (user.emailVerified) {
-          Get.offAll(() => const NavigationClientMenu());
+          // Initialize User Specific Storage
+          await SLocalStorage.init(user.uid);
+
+          // if ther user's email is verified, navigate to the main Navigation Menu
+    
+          if(await checkLawyer()){
+           Get.offAll(() =>  const LawyerNavigationMenu());
+          } else {
+            Get.offAll( () => const NavigationClientMenu());
+          }          
         } else {
           Get.offAll(() => VerifyEmailScreen(email: user.email));
         }
@@ -66,6 +80,27 @@ class AuthenticationRepository extends GetxController {
   }
 
   /* ------------------------------- Email & Password sign-in -----------------------------------*/
+
+  Future<bool> checkLawyer() async {
+    try {
+      final snapshot = await _db.collection('Users').get();
+      final users =
+          snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
+      for (var user in users) {
+        if (user.barID.isNotEmpty && RegExp(r'^[0-9]+$').hasMatch(user.barID)) {
+          return true;
+        }
+      }
+      // If no user with non-empty barId is found, navigate to the user screen
+      return false;
+    } on FirebaseException catch (e) {
+      throw SFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw SPlatformException(e.code).message;
+    } catch (e) {
+      throw 'list Something went wrong. Please try again';
+    }
+  }
 
   /// - SignIn
   Future<UserCredential> loginWithEmailAndPassword(
@@ -140,10 +175,12 @@ class AuthenticationRepository extends GetxController {
   }
 
   /// [ReAuthentication] - FORGET PASSWORD
-  Future<void> reAuthenticateEmailAndPasswordUser(String email, String password) async {
+  Future<void> reAuthenticateEmailAndPasswordUser(
+      String email, String password) async {
     try {
       // Create a credential
-      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      AuthCredential credential =
+          EmailAuthProvider.credential(email: email, password: password);
 
       // ReAuthenticate
       await _auth.currentUser!.reauthenticateWithCredential(credential);
@@ -227,6 +264,5 @@ class AuthenticationRepository extends GetxController {
     } catch (e) {
       throw "Something went wrong, Please try agian";
     }
-  
   }
 }

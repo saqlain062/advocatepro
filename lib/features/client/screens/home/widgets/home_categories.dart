@@ -30,7 +30,7 @@ class SHomeCategories extends StatelessWidget {
             return SVerticalImageText(
               image: category.image,
               title: category.name,
-              onTap: () => Get.to(() => const SubCategoriesScreen()),
+              onTap: () => Get.to(() => SubCategoriesScreen(category: category)),
             );
           },
         ),

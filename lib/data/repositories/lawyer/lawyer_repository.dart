@@ -16,7 +16,7 @@ class LawyerRepository extends GetxController {
     try {
       final snapshot = await _db
           .collection('Lawyers')
-          .where('isFeatured', isEqualTo: true)
+          .where('IsFeatured', isEqualTo: true)
           .limit(4)
           .get();
       return snapshot.docs.map((e) => LawyerModel.fromSnapshot(e)).toList();
@@ -54,6 +54,20 @@ class LawyerRepository extends GetxController {
           .map((doc) => LawyerModel.fromQuerySnapshot(doc))
           .toList();
       return lawyerList;
+    } on FirebaseException catch (e) {
+      throw SFirebaseException(e.code).message;
+    } on PlatformException catch (e) {
+      throw SPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+   /// Get lawyer based on spec
+  Future<List<LawyerModel>> getFavouriteLawyers(List<String> lawyerIds) async {
+    try {
+      final sanpshot = await _db.collection("Lawyers").where(FieldPath.documentId, whereIn: lawyerIds).get();
+      return sanpshot.docs.map((e) => LawyerModel.fromSnapshot(e)).toList();
     } on FirebaseException catch (e) {
       throw SFirebaseException(e.code).message;
     } on PlatformException catch (e) {

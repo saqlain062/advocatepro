@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/features/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/features/home/home_client_screen.dart';
-import 'package:advocatepro_f/features/home/lawyer_navigation_menu_.dart';
+import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
 import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

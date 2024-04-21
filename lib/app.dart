@@ -7,7 +7,7 @@ import 'package:advocatepro_f/features/bottom/advocate_screen.dart';
 import 'package:advocatepro_f/features/bottom/inbox_screen.dart';
 import 'package:advocatepro_f/features/bottom/profile_screen.dart';
 import 'package:advocatepro_f/features/home/home_client_screen.dart';
-import 'package:advocatepro_f/features/home/lawyer_navigation_menu_.dart';
+import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
 import 'package:advocatepro_f/features/home/home_screen_designe.dart';
 import 'package:advocatepro_f/features/home/upload_image.dart';
 import 'package:advocatepro_f/routes/app_routes.dart';

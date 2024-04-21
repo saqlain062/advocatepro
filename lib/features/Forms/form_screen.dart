@@ -221,11 +221,11 @@ class _FormScreenState extends State<FormScreen> {
                   ),
                 if (internet) const InternetError(),
                 if (showform)
-                ElevatedButton(onPressed: (){
-                  final auth = FirebaseAuth.instance;
-                        auth.signOut();
-                        Get.to(() => const SignIn());
-                }, child: const Text('Log out')),
+                // ElevatedButton(onPressed: (){
+                //   final auth = FirebaseAuth.instance;
+                //         auth.signOut();
+                //         Get.to(() => const SignIn());
+                // }, child: const Text('Log out')),
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {

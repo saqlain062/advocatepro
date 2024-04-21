@@ -1,7 +1,7 @@
-import 'package:advocatepro_f/common/icons/S_circular_icon.dart';
 import 'package:advocatepro_f/common/widgets/appbar/appbar.dart';
 import 'package:advocatepro_f/common/widgets/custom_shapes/curved_edges/curved_edge_widget.dart';
 import 'package:advocatepro_f/common/widgets/images/S_rounded_image.dart';
+import 'package:advocatepro_f/common/widgets/lawyers/favourite_icon/favourite_icon.dart';
 import 'package:advocatepro_f/features/client/controllers/lawyer/images_controller.dart';
 import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
@@ -10,7 +10,6 @@ import 'package:advocatepro_f/utils/helpers/helper_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
 class SLawyerImageSlider extends StatelessWidget {
   const SLawyerImageSlider({
@@ -88,13 +87,10 @@ class SLawyerImageSlider extends StatelessWidget {
               )),
 
           /// Appbar Icons
-          const SAppBar(
+          SAppBar(
             showBackArrow: true,
             actions: [
-              SCirularIcon(
-                icon: Iconsax.heart5,
-                color: Colors.red,
-              )
+              SFavouriteIcon(lawyerId: lawyer.id)
             ],
           )
         ],

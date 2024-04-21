@@ -24,8 +24,6 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
   final ref = FirebaseDatabase.instance.ref(databasePathPost());
 
   String imageUrl = '';
-  final refprofile =
-        FirebaseDatabase.instance.ref('Post_${uid()}_profile');
 
   @override
   void initState() {
@@ -36,7 +34,7 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
 
   Future<void> getImageUrl() async {
     final storage = FirebaseStorage.instance;
-    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final reff = storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
     final url = await reff.getDownloadURL();
     setState(() {
       imageUrl = url;

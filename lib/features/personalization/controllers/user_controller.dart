@@ -170,6 +170,20 @@ class UserController extends GetxController {
     }
   }
 
+    /// Delete User Account
+  void logOurUserAccount() async {
+    try {
+      SFullScreenLoader.openLoadingDialog(
+          'Processing', SImages.onBoardingImage2);
+      // First re-authenticate user
+      final auth = AuthenticationRepository.instance;
+      auth.logout();
+    } catch (e) {
+      SFullScreenLoader.stopLoading();
+      SLoaders.warningSnackBar(title: 'Oh Snap!', message: e.toString());
+    }
+  }
+
   /// Upload Profile Image
   void uploadUserProfilePicture() async {
     try {

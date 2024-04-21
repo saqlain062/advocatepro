@@ -9,7 +9,7 @@ import 'package:advocatepro_f/features/bottom/profile/support/supportscreen/feed
 import 'package:advocatepro_f/features/home/add_post_screen.dart';
 import 'package:advocatepro_f/features/home/case/case_screen.dart';
 import 'package:advocatepro_f/features/home/home_client_post_screen.dart';
-import 'package:advocatepro_f/features/home/lawyer_navigation_menu_.dart';
+import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
 import 'package:advocatepro_f/features/home/notification/notification.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,12 +48,11 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   }
 
   String imageUrl = '';
-  final refprofile = FirebaseDatabase.instance.ref('Post_${uid()}_profile');
 
   Future<void> getImageUrl() async {
     try{
     final storage = FirebaseStorage.instance;
-    final reff = storage.ref().child('users/${uid()}/profile-pic.jpg');
+    final reff = storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
     final url = await reff.getDownloadURL();
     setState(() {
       imageUrl = url;
@@ -70,7 +69,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colorbackground,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         iconTheme: const IconThemeData(color: colorAppbarText),
         centerTitle: true,
@@ -362,7 +361,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
     required Widget screen,
   }) {
     return Container(
-      color: colorbackground,
+      color: Colors.grey[200],
       width: 130,
       height: 130, // Adjust the height of the container as needed
       child: Card(
