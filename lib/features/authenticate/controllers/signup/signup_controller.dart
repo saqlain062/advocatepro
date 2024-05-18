@@ -73,7 +73,7 @@ class SignupController extends GetxController {
           pass: password.text.trim());
 
       final userRepository = Get.put(UserRepository());
-      await userRepository.saveUserRecord(newuser);
+      await userRepository.saveUserRecord("Users",newuser);
 
       // Remove Loader
       SFullScreenLoader.stopLoading();

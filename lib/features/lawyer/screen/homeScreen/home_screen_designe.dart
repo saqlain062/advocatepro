@@ -1,21 +1,20 @@
-import 'package:advocatepro_f/Methods/share.dart';
+
+import 'package:advocatepro_f/features/lawyer/screen/homeScreen/add_detail/add_detail_screen.dart';
 import 'package:advocatepro_f/utils/validators/check_method.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/features/Forms/form_attribute.dart';
-import 'package:advocatepro_f/features/authenticate/screens/signin/sign_in.dart';
-import 'package:advocatepro_f/features/authenticate/screens/signup/sign_up_attribute.dart';
-import 'package:advocatepro_f/features/bottom/profile/profile_attribute.dart';
+
 import 'package:advocatepro_f/features/bottom/profile/support/supportscreen/feedback_screen.dart';
 import 'package:advocatepro_f/features/home/add_post_screen.dart';
 import 'package:advocatepro_f/features/home/case/case_screen.dart';
 import 'package:advocatepro_f/features/home/home_client_post_screen.dart';
-import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
+
 import 'package:advocatepro_f/features/home/notification/notification.dart';
-import 'package:advocatepro_f/utils/constants/sizes.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/home_drawer.dart';
 
 class HomeScreenDesgine extends StatefulWidget {
   static const String id = 'home_screen_desgine';
@@ -50,19 +49,20 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
   String imageUrl = '';
 
   Future<void> getImageUrl() async {
-    try{
-    final storage = FirebaseStorage.instance;
-    final reff = storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
-    final url = await reff.getDownloadURL();
-    setState(() {
-      imageUrl = url;
-    });
-    } catch (e){
+    try {
+      final storage = FirebaseStorage.instance;
+      final reff =
+          storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
+      final url = await reff.getDownloadURL();
+      setState(() {
+        imageUrl = url;
+      });
+    } catch (e) {
       print('Error getting image URL: $e');
-    // You can set a default image URL or take other appropriate actions
-    setState(() {
-      imageUrl = "";
-    });
+      // You can set a default image URL or take other appropriate actions
+      setState(() {
+        imageUrl = "";
+      });
     }
   }
 
@@ -90,76 +90,7 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
           ),
         ],
       ),
-      drawer: Drawer(
-          backgroundColor: Colors.white,
-          child: FutureBuilder<List<SignupAttribute>>(
-              future: fetchDataOfCurrentUser(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return Text('Error:${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No data available');
-                } else {
-                  // Get the user profile data
-                  SignupAttribute userProfile = snapshot.data!.first;
-                  // Set the initial values for controllers
-                  final fname = userProfile.fname;
-                  final lname = userProfile.lname;
-                  final gmail = userProfile.email;
-                  return ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      UserAccountsDrawerHeader(
-                        currentAccountPicture: CircleAvatar(
-                            radius: SSizes.profileImageRadius,
-                            child: imageUrl.isNotEmpty
-                                ? Image.network(
-                                    imageUrl,
-                                  )
-                                : const CircularProgressIndicator()),
-                        accountName: Text('$fname $lname'),
-                        accountEmail: Text(gmail),
-                        decoration: const BoxDecoration(
-                          color: colorAppbar,
-                        ),
-                      ),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.home,
-                          color: SColors.iconColor,
-                        ),
-                        title: const Text('Home'),
-                        onTap: () {
-                          Navigator.pushNamed(context, LawyerNavigationMenu.id);
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.share,
-                          color: SColors.iconColor,
-                        ),
-                        title: const Text('Share'),
-                        onTap: () {
-                          shareApp();
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(
-                          Icons.logout,
-                          color: SColors.iconColor,
-                        ),
-                        title: const Text('Log out'),
-                        onTap: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pushNamed(context, SignIn.id);
-                        },
-                      )
-                    ],
-                  );
-                }
-              })),
+      drawer: SHomeScreenDrawer(imageUrl: imageUrl),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -247,10 +178,10 @@ class _HomeScreenDesgineState extends State<HomeScreenDesgine> {
                       icon: Icons.add_comment_outlined,
                       screen: const AddPostScreen()),
                   _card(
-                      title: 'Cases',
-                      description: 'Null',
-                      icon: Icons.cases_outlined,
-                      screen: const CaseManagementScreen()),
+                      title: 'Add',
+                      description: 'your detail',
+                      icon: Icons.add_box_outlined,
+                      screen: const AddDetailScreen()),
                   _card(
                       title: 'Client',
                       description: 'Null',

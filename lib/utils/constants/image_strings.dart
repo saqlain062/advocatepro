@@ -32,4 +32,7 @@ class SImages {
   static const String promoBanner3 = "assets/images/banners/advocatelogo.png";
   static const String promoBanner4 = "assets/images/banners/lawyer1.png";
 
+  //image
+  static const String noimage = "assets/images/banners/lawyer1.png";
+
 }

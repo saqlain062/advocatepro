@@ -51,7 +51,7 @@ class UpdateNameController extends GetxController {
 
       // Update user's first & last name in the Firebase Firestore
       Map<String,dynamic> name = {'FirstName': firstName.text.trim(), 'LastName' : lastName.text.trim()};
-      await userRepository.updateSingleField(name);
+      await userRepository.updateSingleField("Users",name);
 
       // Update the Rx User value
       userController.user.value.firstName = firstName.text.trim();

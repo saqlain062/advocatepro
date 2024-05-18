@@ -8,13 +8,14 @@ import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
 import 'package:advocatepro_f/features/client/screens/lawyer_details/lawyer_details.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/enums.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:advocatepro_f/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SlawyerCardVertical extends StatelessWidget {
-  const SlawyerCardVertical({super.key ,required this.lawyer});
+  const SlawyerCardVertical({super.key, required this.lawyer});
 
   final LawyerModel lawyer;
 
@@ -24,7 +25,9 @@ class SlawyerCardVertical extends StatelessWidget {
 
     /// Container with side paddings, color, edges, radius and shadow
     return GestureDetector(
-      onTap: () => Get.to(() => LawyerDetailScreen(lawyer: lawyer,)),
+      onTap: () => Get.to(() => LawyerDetailScreen(
+            lawyer: lawyer,
+          )),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -43,8 +46,13 @@ class SlawyerCardVertical extends StatelessWidget {
               child: Stack(
                 children: [
                   /// Thumbnail Image
-                  Center(child: SRoundImage(imageUrl: lawyer.thumbnail, applyImageRadius: true,isNetworkImage: true,)),
-      
+                  Center(
+                      child: SRoundImage(
+                    imageUrl: lawyer.thumbnail.isNotEmpty ? lawyer.thumbnail : SImages.onBoardingImage1 ,
+                    applyImageRadius: true,
+                    isNetworkImage: lawyer.thumbnail.isNotEmpty,
+                  )),
+
                   /// -- New Tag
                   // Positioned(
                   //   top: 12,
@@ -65,29 +73,32 @@ class SlawyerCardVertical extends StatelessWidget {
 
                   /// Favourite Icon
                   Positioned(
-                    top: 0,
-                    right: 0,
-                    child: SFavouriteIcon(lawyerId: lawyer.id) )
+                      top: 0,
+                      right: 0,
+                      child: SFavouriteIcon(lawyerId: lawyer.id))
                 ],
               ),
             ),
-      
+
             const SizedBox(
               height: SSizes.spaceBetweenItems / 2,
             ),
-      
+
             /// -- Details
             Padding(
               padding: const EdgeInsets.only(left: SSizes.smallmedium),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SLawyerNameWithVerifiedIcon(nameTextSize: TextSizes.large, name: lawyer.title,),
+                  SLawyerNameWithVerifiedIcon(
+                    nameTextSize: TextSizes.large,
+                    name: lawyer.title,
+                  ),
                   const SizedBox(
                     height: SSizes.spaceBetweenItems / 2,
                   ),
                   SlawyerTitleText(
-                    text: lawyer.spec,
+                    text: lawyer.spec ?? '',
                     nameTextSize: TextSizes.medium,
                   ),
                 ],

@@ -4,7 +4,6 @@ import 'package:advocatepro_f/common/widgets/appbar/appbar.dart';
 import 'package:advocatepro_f/common/widgets/lawyers/lawyers_cards/lawyer_card_vertical.dart';
 import 'package:advocatepro_f/common/widgets/loaders/animation_loader.dart';
 import 'package:advocatepro_f/features/client/controllers/lawyer/favourites_controller.dart';
-import 'package:advocatepro_f/features/client/screens/home/home.dart';
 import 'package:advocatepro_f/navigation_client_menu.dart';
 import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
@@ -12,8 +11,8 @@ import 'package:advocatepro_f/utils/helpers/cloud_helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class FavouriteScreen extends StatelessWidget {
-  const FavouriteScreen({super.key});
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

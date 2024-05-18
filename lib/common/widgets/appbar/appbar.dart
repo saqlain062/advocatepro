@@ -37,6 +37,7 @@ class SAppBar extends StatelessWidget implements PreferredSizeWidget {
                 : null,
             title: title,
             actions: actions,
+          
       ),
     );
   }
@@ -44,3 +45,4 @@ class SAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(SDeviceUtils.getAppBarHeight());
 }
+

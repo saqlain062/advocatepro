@@ -15,9 +15,9 @@ class UserRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   /// Function to save user data to Firestore
-  Future<void> saveUserRecord(UserModel user) async {
+  Future<void> saveUserRecord(String collection, user) async {
     try {
-      await _db.collection("Users").doc(user.id).set(user.toJson());
+      await _db.collection(collection).doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {
       throw e.code;
     } on FormatException catch (_) {
@@ -71,10 +71,10 @@ class UserRepository extends GetxController {
   }
 
   /// Update any field in specific Users Collection
-  Future<void> updateSingleField(Map<String, dynamic> json) async {
+  Future<void> updateSingleField(String collection,Map<String, dynamic> json) async {
     try {
       await _db
-          .collection("Users")
+          .collection(collection)
           .doc(AuthenticationRepository.instance.authUser?.uid)
           .update(json);
     } on FirebaseException catch (e) {

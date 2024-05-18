@@ -83,7 +83,9 @@ class SColors{
     Color(0xff2c344c)    
   ]);
 
-
+  // Chat Color
+  static const Color senderColor = primary;
+  static const Color receiverColor = white;
   
 
 

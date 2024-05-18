@@ -1,4 +1,5 @@
 import 'package:advocatepro_f/common/widgets/appbar/appbar.dart';
+import 'package:advocatepro_f/features/client/screens/favourite/favourite.dart';
 import 'package:advocatepro_f/features/client/screens/home/home.dart';
 import 'package:advocatepro_f/features/personalization/controllers/user_controller.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
@@ -29,9 +30,10 @@ class SHomeAppBarClient extends StatelessWidget {
           
   }),
       actions: [
-        SNotificationCounterIcon(
-          onPressed: () {},
-        )
+        IconButton(onPressed: () => Get.to(() => const FavoriteScreen()), icon: const Icon(Icons.favorite, color: SColors.iconColorin,))
+        // SNotificationCounterIcon(
+        //   onPressed: () {},
+        // )
       ],
     );
   }

@@ -7,6 +7,8 @@ import 'package:advocatepro_f/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'features/chats/inbox_screen.dart';
+
 class NavigationClientMenu extends StatelessWidget {
   const NavigationClientMenu({super.key});
 
@@ -25,14 +27,14 @@ class NavigationClientMenu extends StatelessWidget {
             backgroundColor: darkMode ? SColors.black : SColors.white,
             indicatorColor: darkMode
                 ? SColors.white.withOpacity(0.1)
-                : SColors.black.withOpacity(0.1),
+                : SColors.primary.withOpacity(0.1),
             destinations: const [
               NavigationDestination(
                   icon: Icon(Icons.home_outlined), label: 'Home'),
               NavigationDestination(
                   icon: Icon(Icons.table_bar_outlined), label: 'Lawyer'),
               NavigationDestination(
-                  icon: Icon(Icons.widgets), label: 'Wishlist'),
+                  icon: Icon(Icons.insert_comment_outlined), label: 'Inbox'),
               NavigationDestination(
                   icon: Icon(Icons.person_2_outlined), label: 'Profile'),
             ]),
@@ -48,7 +50,7 @@ class NavigationController extends GetxController {
   final screens = [
     const HomeScreenClient(),
     const LawyerScreen(),
-    const FavouriteScreen(),
+    const InboxScreen(), //FavoriteScreen(),
     const SettingScreen(),
   ];
 }

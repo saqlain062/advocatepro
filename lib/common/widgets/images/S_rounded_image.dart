@@ -47,12 +47,10 @@ class SRoundImage extends StatelessWidget {
             borderRadius: applyImageRadius
                 ? BorderRadius.circular(borderRadius)
                 : BorderRadius.zero,
-            child: Image(
-              image: isNetworkImage
-                  ? NetworkImage(imageUrl)
-                  : AssetImage(imageUrl) as ImageProvider,
-              fit: fit,
-            ),
+            child: isNetworkImage ?
+            Image.network(imageUrl,fit: fit,) :
+            Image.asset(imageUrl,fit: fit,),
+            
           )),
     );
   }

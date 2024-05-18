@@ -8,10 +8,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 // import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class UploadImage extends StatefulWidget {
   static const String id = 'upload_image';
-  const UploadImage({super.key});
+  UploadImage({super.key, required this.path});
+  String path;
 
   @override
   State<UploadImage> createState() => __UploadImagState();
@@ -21,6 +23,7 @@ class __UploadImagState extends State<UploadImage> {
   File? _image;
   final picker = ImagePicker();
   bool loading = false;
+  final time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
   FirebaseStorage storage = FirebaseStorage.instance;
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,9 @@ class __UploadImagState extends State<UploadImage> {
                     loading = true;
                   });
                   // Reference to the user's folder in Firebase Storage
-                  Reference storageRef =
-                      storage.ref().child('users/${uid()}/profile-pic.jpg');
+                  Reference storageRef = storage
+                      .ref()
+                      .child('users/${uid()}/${widget.path}/$time');
 
                   try {
                     // Upload the image file
@@ -80,18 +84,18 @@ class __UploadImagState extends State<UploadImage> {
                       showToast(message: 'Image uploaded successfully!');
                       String downloadURL = await storageRef.getDownloadURL();
                       String uid = FirebaseAuth.instance.currentUser!.uid;
-                      String databasePath = 'Post_${uid}_profile';
+                      String databasePath = 'users/$uid/${widget.path}/';
                       final databaseReference =
                           FirebaseDatabase.instance.ref(databasePath);
                       String id =
                           DateTime.now().millisecondsSinceEpoch.toString();
-
+                     
                       databaseReference.child(id).set({
                         'id': id,
                         'url': downloadURL.toString(),
                         'time': DateTime.now().toString(),
                       }).then((value) {
-                         showToast(message: "SuccessFully down");
+                        showToast(message: "SuccessFully down");
                         setState(() {
                           loading = false;
                         });
@@ -111,7 +115,6 @@ class __UploadImagState extends State<UploadImage> {
                   setState(() {
                     loading = false;
                   });
-                 
                 })
           ],
         ),
@@ -169,4 +172,3 @@ class __UploadImagState extends State<UploadImage> {
   //   }
   // }
 }
-

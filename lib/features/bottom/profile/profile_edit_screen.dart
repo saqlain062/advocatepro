@@ -73,7 +73,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                               child: Column(children: [
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => const UploadImage(
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => UploadImage(path: 'profile',
                                     )));
                                   },
                                   child: CircleAvatar(

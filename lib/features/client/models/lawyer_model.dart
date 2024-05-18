@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class LawyerModel {
   String id;
   String title;
-  String spec;
+  String? spec;
   DateTime? date;
   String thumbnail;
   bool? isFeatured;
@@ -16,7 +16,7 @@ class LawyerModel {
   LawyerModel({
     required this.id,
     required this.title,
-    required this.spec,
+    this.spec,
     required this.thumbnail,
     this.agency,
     this.categoryId,
@@ -32,6 +32,7 @@ class LawyerModel {
   /// Json Format
   toJson() {
     return {
+      'id' : id,
       'Title': title,
       'specialization' : spec,
       'Images': images ?? [],

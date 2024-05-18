@@ -4,11 +4,11 @@ import 'package:advocatepro_f/features/authenticate/screens/password_configurati
 import 'package:advocatepro_f/features/authenticate/screens/signin/sign_in.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signup/sign_up.dart';
 import 'package:advocatepro_f/features/bottom/advocate_screen.dart';
-import 'package:advocatepro_f/features/bottom/inbox_screen.dart';
+import 'package:advocatepro_f/features/chats/inbox_screen.dart';
 import 'package:advocatepro_f/features/bottom/profile_screen.dart';
 import 'package:advocatepro_f/features/home/home_client_screen.dart';
 import 'package:advocatepro_f/lawyer_navigation_menu_.dart';
-import 'package:advocatepro_f/features/home/home_screen_designe.dart';
+import 'package:advocatepro_f/features/lawyer/screen/homeScreen/home_screen_designe.dart';
 import 'package:advocatepro_f/features/home/upload_image.dart';
 import 'package:advocatepro_f/routes/app_routes.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       routes: {
         SignIn.id: (context) => const SignIn(),
         SignUpScreen.id: (context) => const SignUpScreen(),
-        UploadImage.id: (context) => const UploadImage(),
+        UploadImage.id: (context) => UploadImage(path: ''),
         LawyerNavigationMenu.id: (context) => const LawyerNavigationMenu(),
         ClientHomeScreen.id: (context) => const ClientHomeScreen(),
         HomeScreenDesgine.id: (context) => const HomeScreenDesgine(),

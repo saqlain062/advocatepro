@@ -33,7 +33,6 @@ class SPrimaryHeaderContainer extends StatelessWidget {
               Positioned(
                   top: 50,
                   right: -150,
-                  
                   child: SCircularContainer(
                     height: 200,
                     width: 200,

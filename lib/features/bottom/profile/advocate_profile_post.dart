@@ -1,4 +1,5 @@
 import 'package:advocatepro_f/Methods/toast.dart';
+import 'package:advocatepro_f/common/widgets/images/s_circular_image.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/features/authenticate/screens/signup/sign_up_attribute.dart';
 import 'package:advocatepro_f/features/bottom/profile/profile_attribute.dart';
@@ -9,7 +10,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../../utils/constants/image_strings.dart';
+import '../../personalization/controllers/user_controller.dart';
 
 class AdvocateProfileScreen extends StatefulWidget {
   const AdvocateProfileScreen({
@@ -27,24 +32,26 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getImageUrl();
   }
 
   Future<void> getImageUrl() async {
     final storage = FirebaseStorage.instance;
-    final reff = storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
+    final reff =
+        storage.ref().child('users/${uid()}/Saqlain_profile_photo.jpg');
     final url = await reff.getDownloadURL();
     setState(() {
       imageUrl = url;
     });
   }
+
   final controllerEdit = TextEditingController();
   bool verified = false;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppbar,
@@ -61,12 +68,10 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   CircleAvatar(
-                    radius: 50,
-                        child: imageUrl.isNotEmpty
-                            ? Image.network(imageUrl)
-                            : const CircularProgressIndicator(),
-                      ),
+                  SCircularImage(
+                    image: imageUrl,
+                    isNetworkImage: true,
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
@@ -82,8 +87,9 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    ProfileEditScreen(imageUrl: imageUrl,)),
+                                builder: (context) => ProfileEditScreen(
+                                      imageUrl: imageUrl,
+                                    )),
                           );
                         },
                         child: const Text(
@@ -177,29 +183,44 @@ class _AdvocateProfileScreenState extends State<AdvocateProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ListTile(
-                          leading: SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: FirebaseAnimatedList(
-                              query: FirebaseDatabase.instance
-                                  .ref('Post_${uid()}_profile'),
-                              itemBuilder:
-                                  (context, snapshots, animation, index) {
-                                final imageUrl =
-                                    snapshots.child('url').value.toString();
-                                return CircleAvatar(
-                                  radius: 50,
-                                  child: imageUrl.isNotEmpty
-                                      ? Image.network(
-                                          imageUrl,
-                                          height: 100,
-                                          width: 100,
-                                        )
-                                      : const CircularProgressIndicator(),
-                                );
-                              },
-                            ),
-                          ),
+                          leading: Obx(() {
+                            final networkImage =
+                                controller.user.value.profilePicture;
+                            final image = networkImage.isNotEmpty
+                                ? networkImage
+                                : SImages.noimage;
+
+                            return controller.imageUplodaing.value
+                                ? const CircularProgressIndicator()
+                                : SCircularImage(
+                                    image: image,
+                                    
+                                    isNetworkImage: networkImage.isNotEmpty,
+                                  );
+                          }),
+                          // SizedBox(
+                          //   height: 50,
+                          //   width: 50,
+                          //   child: FirebaseAnimatedList(
+                          //     query: FirebaseDatabase.instance
+                          //         .ref('Post_${uid()}_profile'),
+                          //     itemBuilder:
+                          //         (context, snapshots, animation, index) {
+                          //       final imageUrl =
+                          //           snapshots.child('url').value.toString();
+                          //       return CircleAvatar(
+                          //         radius: 50,
+                          //         child: imageUrl.isNotEmpty
+                          //             ? Image.network(
+                          //                 imageUrl,
+                          //                 height: 100,
+                          //                 width: 100,
+                          //               )
+                          //             : const CircularProgressIndicator(),
+                          //       );
+                          //     },
+                          //   ),
+                          // ),
                           title: FutureBuilder<List<SignupAttribute>>(
                             future: fetchDataOfCurrentUser(),
                             builder: (context, snapshot) {

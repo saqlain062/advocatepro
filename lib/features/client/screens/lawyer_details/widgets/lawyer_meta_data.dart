@@ -4,6 +4,7 @@ import 'package:advocatepro_f/common/widgets/texts/section_heading.dart';
 import 'package:advocatepro_f/features/client/models/lawyer_model.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/enums.dart';
+import 'package:advocatepro_f/utils/constants/image_strings.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
 import 'package:advocatepro_f/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class SLawyerMetaData extends StatelessWidget {
         /// Title
         Row(
           children: [
-            SCircularImage(image: lawyer.agency != null ? lawyer.agency!.image : '',
+            SCircularImage(image: lawyer.agency != null ? lawyer.agency!.image : SImages.onBoardingImage3,
             width: 32,
             height: 32,
             overlayColor: dark ? SColors.white : SColors.black,),

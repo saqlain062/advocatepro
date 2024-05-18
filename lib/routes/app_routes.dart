@@ -10,7 +10,7 @@ class AppRoutes {
   static final pages = [
     GetPage(name: SRoutes.home, page: () => const HomeScreenClient()),
     GetPage(name: SRoutes.lawyer, page: () => const LawyerScreen()),
-    GetPage(name: SRoutes.favourites, page: () => const FavouriteScreen()),
+    GetPage(name: SRoutes.favourites, page: () => const FavoriteScreen()),
     GetPage(name: SRoutes.userProfile, page: () => const ProfileScreen()),
   ];
 }

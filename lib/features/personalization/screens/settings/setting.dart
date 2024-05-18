@@ -4,6 +4,8 @@ import 'package:advocatepro_f/common/widgets/appbar/appbar.dart';
 import 'package:advocatepro_f/common/widgets/custom_shapes/containers/primary_header_container.dart';
 import 'package:advocatepro_f/common/widgets/texts/section_heading.dart';
 import 'package:advocatepro_f/features/client/screens/favourite/favourite.dart';
+import 'package:advocatepro_f/features/client/screens/lawyer_details/add_review.dart';
+import 'package:advocatepro_f/features/lawyer/screen/homeScreen/add_detail/add_detail_screen.dart';
 import 'package:advocatepro_f/features/personalization/screens/address/address.dart';
 import 'package:advocatepro_f/utils/constants/color.dart';
 import 'package:advocatepro_f/utils/constants/sizes.dart';
@@ -71,13 +73,13 @@ class SettingScreen extends StatelessWidget {
                       icon: Iconsax.favorite_chart,
                       title: "My Favourite",
                       subTitle: "Add and remove lawyer",
-                      onTap: () => Get.to(() => const FavouriteScreen()),
+                      onTap: () => Get.to(() => const FavoriteScreen()),
                     ),
                     SSettingMenuTile(
                       icon: Iconsax.notification,
                       title: "Notifications",
                       subTitle: "Set any kind of notification message",
-                      onTap: () {},
+                      onTap: () => Get.to(() => AddReviewInput()),
                     ),
                     SSettingMenuTile(
                       icon: Iconsax.share,

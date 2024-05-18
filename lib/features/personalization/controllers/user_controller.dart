@@ -18,6 +18,8 @@ class UserController extends GetxController {
 
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
+  Rx<UserModel> userdata = UserModel.empty().obs;
+  
 
   final hidePassword = false.obs;
   final imageUplodaing = false.obs;
@@ -32,6 +34,18 @@ class UserController extends GetxController {
     fetchUserRecord();
   }
 
+  /// Fetch user record
+  Future<UserModel> fetchUser() async {
+    try {
+      profileLoading.value = true;
+      final user = await userRepository.fetchUserDetails();
+      return user;
+    } catch (e) {
+      return user(UserModel.empty());
+    } finally {
+      profileLoading.value = false;
+    }
+  }
   /// Fetch user record
   Future<void> fetchUserRecord() async {
     try {
@@ -74,7 +88,7 @@ class UserController extends GetxController {
               pass: '');
 
           // Save user data
-          await userRepository.saveUserRecord(user);
+          await userRepository.saveUserRecord("Users",user);
         }
       }
     } catch (e) {
@@ -190,11 +204,11 @@ class UserController extends GetxController {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxHeight: 512, maxWidth: 512);
     if(image != null){
       imageUplodaing.value = true;
-      final imageUrl = await userRepository.uploadImage('Users/Images/Profile/', image);
+      final imageUrl = await userRepository.uploadImage('Users/${AuthenticationRepository.instance.authUser!.uid}/Images/Profile/', image);
 
       // update User Image Record
       Map<String, dynamic> json = {'ProfilePicture' : imageUrl};
-      await userRepository.updateSingleField(json);
+      await userRepository.updateSingleField("Users",json);
 
       user.value.profilePicture = imageUrl;
       user.refresh();

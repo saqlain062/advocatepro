@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-class SigninController extends GetxController {
+class SigninController extends GetxController { 
   /// Variabler
   final rememberMe = false.obs;
   final hidePassword = true.obs;

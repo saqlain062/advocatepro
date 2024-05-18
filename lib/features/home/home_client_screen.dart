@@ -1,6 +1,6 @@
 import 'package:advocatepro_f/features/Forms/form_screen.dart';
 import 'package:advocatepro_f/features/bottom/advocate_screen.dart';
-import 'package:advocatepro_f/features/bottom/inbox_screen.dart';
+import 'package:advocatepro_f/features/chats/inbox_screen.dart';
 import 'package:advocatepro_f/features/bottom/profile_screen.dart';
 import 'package:advocatepro_f/features/home/home_client_post_screen.dart';
 import 'package:flutter/material.dart';

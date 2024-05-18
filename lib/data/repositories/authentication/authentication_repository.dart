@@ -49,7 +49,6 @@ class AuthenticationRepository extends GetxController {
           await SLocalStorage.init(user.uid);
 
           // if ther user's email is verified, navigate to the main Navigation Menu
-    
           if(await checkLawyer()){
            Get.offAll(() =>  const LawyerNavigationMenu());
           } else {
@@ -83,16 +82,14 @@ class AuthenticationRepository extends GetxController {
 
   Future<bool> checkLawyer() async {
     try {
-      final snapshot = await _db.collection('Users').get();
-      final users =
-          snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
-      for (var user in users) {
-        if (user.barID.isNotEmpty && RegExp(r'^[0-9]+$').hasMatch(user.barID)) {
-          return true;
-        }
+      final snapshot = await _db.collection('Users').doc(_auth.currentUser?.uid).get();
+
+      UserModel currentUser = UserModel.fromSnapshot(snapshot);
+      if(currentUser.barID.isNotEmpty){
+        return true;
+      } else {
+        return false;
       }
-      // If no user with non-empty barId is found, navigate to the user screen
-      return false;
     } on FirebaseException catch (e) {
       throw SFirebaseException(e.code).message;
     } on PlatformException catch (e) {

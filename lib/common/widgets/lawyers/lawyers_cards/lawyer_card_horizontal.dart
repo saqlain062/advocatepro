@@ -95,7 +95,7 @@ class SLawyerCardHorizontal extends StatelessWidget {
                             height: SSizes.spaceBetweenItems / 2,
                           ),
                           SlawyerTitleText(
-                            text: lawyer.spec,
+                            text: lawyer.spec ?? "",
                             nameTextSize: TextSizes.small,
                           )
                         ],
